@@ -1,11 +1,15 @@
 const Db = require('../database');
 
+var ObjectId = Db.Schema.ObjectId;
 var schema = Db.Schema({
     username: String,
     password: String,
     email: String,
+    about: { type: String, default: 'Sorry, nothing about me yet!' },
+    avatar: { type: String, default: 'default.png' },
     created_at: { type: Date, default: Date.now },
-    last_updated: { type: Date, default: Date.now }
+    last_updated: { type: Date, default: Date.now },
+    posts: [{ type:  ObjectId, ref: 'Post' }]
 });
 
 var User = Db.model('User', schema);

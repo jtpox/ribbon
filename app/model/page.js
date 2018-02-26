@@ -4,13 +4,13 @@ var ObjectId = Db.Schema.ObjectId;
 var schema = Db.Schema({
     title: String,
     url: String,
-    content: String,
+    description: String,
+    image: { type: ObjectId, ref: 'Image' },
     created_by: { type: ObjectId, ref: 'User' },
-    tag: { type: ObjectId, ref: 'Tag' },
     created_at: { type: Date, default: Date.now },
     last_updated: { type: Date, default: Date.now }
 });
 
-var Post = Db.model('Post', schema);
+var Page = Db.model('Page', schema);
 
-module.exports = Post;
+module.exports = Page;

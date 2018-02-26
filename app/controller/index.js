@@ -1,7 +1,12 @@
 /*
  * Controller for Index.
  */
-const Post = require('../model/post.js');
+const Post = require('../model/post');
+const User = require('../model/user');
+
+const Config = require('../../config/server');
+
+const Bcrypt = require('bcrypt');
 
  class Index {
 
@@ -18,7 +23,36 @@ const Post = require('../model/post.js');
             res.send(results._id);
         });*/
 
-        res.send('Hello, world!');
+        Post.find({ created_by:1 }).exec((err, result) => {
+            if( result == null )
+            {
+                res.json({
+                    error: 1
+                });
+            }
+            else
+            {
+                res.json({
+                    error: 0,
+                    data: result
+                });
+            }
+        });
+    }
+
+    temp(req, res)
+    {
+        Bcrypt.hash('password', Config.hash.salt_rounds, (err, hash) => {
+            var user = new User({
+                username: 'admin',
+                password: hash,
+                email: 'admin@admin.com'
+            });
+
+            user.save((err, results) => {
+                res.send(results._id);
+            });
+        });
     }
 
  }

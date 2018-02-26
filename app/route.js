@@ -7,5 +7,6 @@ module.exports = function(app) {
     var index   = new Index();
 
     app.get('/', index.index);
+    app.get('/temp', index.temp);
 
 };
