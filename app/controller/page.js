@@ -159,7 +159,8 @@ class PageC {
 
     delete(req, res) {
         //Delete a blog post.
-        User.find({ _id: req.params.id }).remove().exec();
+        Page.find({ _id: req.params.id }).remove().exec();
+        Content.find({ page_id: req.params.id }).remove().exec();
         res.json({
             error: 0
         });

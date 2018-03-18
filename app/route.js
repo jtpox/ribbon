@@ -63,5 +63,7 @@ module.exports = function(app) {
 
     app.get('/api/pages/:id', page.get);
     app.put('/api/pages/:id', AuthMid.isLogged, page.update);
+    app.delete('/api/pages/:id', AuthMid.isLogged, page.delete);
+    app.post('/api/pages/delete/:id', AuthMid.isLogged, page.delete);
 
 };
