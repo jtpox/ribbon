@@ -3,6 +3,7 @@
  */
 const Post = require('../model/post');
 const User = require('../model/user');
+const Tag  = require('../model/tag');
 
 const Config = require('../../config/server');
 
@@ -42,7 +43,7 @@ const Bcrypt = require('bcrypt');
 
     temp(req, res)
     {
-        Bcrypt.hash('password', Config.hash.salt_rounds, (err, hash) => {
+        /*Bcrypt.hash('password', Config.hash.salt_rounds, (err, hash) => {
             var user = new User({
                 username: 'admin',
                 password: hash,
@@ -52,6 +53,16 @@ const Bcrypt = require('bcrypt');
             user.save((err, results) => {
                 res.send(results._id);
             });
+        });*/
+
+        var tag = new Tag({
+            title: 'Example',
+            url: 'example',
+            content: 'Example tag.',
+        });
+
+        tag.save((err, results) => {
+            res.send(results._id);
         });
     }
 

@@ -12,6 +12,10 @@ var schema = Db.Schema({
     posts: [{ type:  ObjectId, ref: 'Post' }]
 });
 
+schema.statics.findByEmail = function(email, cb) {
+    return this.find({ email: email }, cb);
+};
+
 var User = Db.model('User', schema);
 
 module.exports = User;

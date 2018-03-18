@@ -1,7 +1,8 @@
 /*
  * Instantiating the entire system.
  */
-const Config = require('../config/server');
+const Config     = require('../config/server');
+const BodyParser = require('body-parser');
 
 class Ribbon {
 
@@ -13,6 +14,17 @@ class Ribbon {
         this.routes  = null;
 
         //Start the Express server.
+        this.app.use(BodyParser.urlencoded({ extended: true }));
+        this.app.use(BodyParser.json());
+
+        //Enable CORS
+        this.app.use(function(req, res, next) {
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            next();
+        });
+
         this.routes = require('./route')(this.app);
         this.start();
     }
