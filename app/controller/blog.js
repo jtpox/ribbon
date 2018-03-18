@@ -7,7 +7,6 @@ const Tag  = require('../model/tag');
 
 const Config = require('../../config/server');
 
-const Bcrypt  = require('bcrypt');
 const Slugify = require('slugify');
 
 const Db = require('../database');//Soley used for the ObjectId type.
@@ -23,7 +22,7 @@ const Db = require('../database');//Soley used for the ObjectId type.
         }
         //List the blog posts with pagination.
         //https://stackoverflow.com/questions/42700884/select-all-the-fields-in-a-mongoose-schema
-        var fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'updated_at', '_id'];
+        var fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', '_id'];
         var query  = Post.find({}).select(fields.join(' ')).sort({ date: 'descending' })
             .populate('image').populate('created_by', '-password').populate('tag image');
 
@@ -41,7 +40,7 @@ const Db = require('../database');//Soley used for the ObjectId type.
         }
         //List the blog posts with pagination.
         //https://stackoverflow.com/questions/42700884/select-all-the-fields-in-a-mongoose-schema
-        var fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'updated_at', '_id'];
+        var fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', '_id'];
         var query  = Post.find({}).select(fields.join(' ')).sort({ created_at: 'descending' })
             .populate('created_by', '-password').populate('tag');
 
@@ -54,7 +53,7 @@ const Db = require('../database');//Soley used for the ObjectId type.
     view(req, res)
     {
         //View post by id.
-        var fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'updated_at'];
+        var fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated'];
         var query = Post.find({ '_id': req.params.id }).select(fields.join(' '))
             .populate('created_by', '-password').populate('tag');
         query.exec((err, result) => {

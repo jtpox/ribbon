@@ -32,10 +32,11 @@ const Db     = require('../database');//Soley used for the ObjectId type.
 
                                 //Encrypt the token to be stored in the database.
                                 Bcrypt.hash(token, Config.hash.salt_rounds, (err, hash) => {
+                                    //console.log(results[0]._id);
                                     //Insert said token into the database.
                                     var session = new Session({
                                         token: hash,
-                                        user: Db.Types.ObjectId(results._id)
+                                        user: Db.Types.ObjectId(results[0]._id)
                                     });
 
                                     session.save((err, new_session) => {
