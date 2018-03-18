@@ -2,7 +2,9 @@
 A personal content management system project that uses **Express**, **MongoDB** and the **Mustache** template system.
 
 ## Front-end
-I plan to use the React Javascript library for the front-end user interface.
+I plan to use the ~~React Javascript library~~ Angular Framework for the front-end user interface.
+
+I'll learn React when I have more time -.-
 
 ## Dependencies
 
