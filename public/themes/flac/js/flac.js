@@ -38,6 +38,16 @@
         $rootScope.url = '/';
 
         /*
+         * UI elements.
+         * https://morgul.github.io/ui-bootstrap4/
+         */
+        $rootScope.bootstrap = {
+            collapse: {
+                main: false
+            }
+        };
+
+        /*
          * Get all the pages from the API.
          */
         $http.get($rootScope.api + '/pages').then(function(res) {
@@ -51,14 +61,18 @@
      */
     app.filter('markdown', ['$sce', function($sce) {
         return function(val) {
-            var converter = new showdown.Converter();
+            var converter = new showdown.Converter({
+                simpleLineBreaks: true
+            });
             return $sce.trustAsHtml(converter.makeHtml(val));
         };
     }]);
 
     app.filter('markdown_limit', ['$sce', function($sce) {
         return function(val) {
-            var converter = new showdown.Converter();
+            var converter = new showdown.Converter({
+                simpleLineBreaks: true
+            });
             val           =  val.split(' ').splice(0, 50).join(' ');
             //console.log(val);
             return $sce.trustAsHtml(converter.makeHtml(val));

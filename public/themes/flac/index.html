@@ -16,11 +16,11 @@
 
         <div class="col-md-2 side-nav">
             <div class="container toggle-nav">
-                <a href="#nav-wrapper" class="btn btn-default float-right" data-toggle="collapse">
+                <a ng-click="bootstrap.collapse.main = !bootstrap.collapse.main" class="btn btn-default float-right" data-toggle="collapse">
                     <span class="fa fa-bars"></span>
                 </a>
             </div>
-            <div class="container nav-wrapper collapse" id="nav-wrapper">
+            <div class="container nav-wrapper collapse" id="nav-wrapper" uib-collapse="!bootstrap.collapse.main">
                 <h1 class="logo">ribbon</h1>
                 <ul class="main-nav">
                     <li><a ui-sref="index" ui-sref-active="current">Home</a></li>
