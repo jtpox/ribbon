@@ -15,6 +15,7 @@ I'll learn React when I have more time -.-
 
  1. Run `npm install`
  2. Edit `config/database.json` to link it to your MongoDB
- 3. Visit `<url>/install` to set up initial database.
- 4. Go to `<url>/ribbon` and log in with `admin@admin.com` and `password` to enter the admin panel.
- 5. Create a new user before deleting the **admin** account!
+ 3. Run `node index.js` to start the server.
+ 4. Visit `<url>/install` to set up initial database.
+ 5. Go to `<url>/ribbon` and log in with `admin@admin.com` and `password` to enter the admin panel.
+ 6. Create a new user before deleting the **admin** account!
