@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="themes/flac/css/bootstrap.css" />
+
+    <title>ribbon</title>
+  </head>
+  <body ng-app="flac_theme">
+
+    <div class="row no-gutters wrapper">
+
+        <div class="col-md-2 side-nav">
+            <div class="container toggle-nav">
+                <a href="#nav-wrapper" class="btn btn-default float-right" data-toggle="collapse">
+                    <span class="fa fa-bars"></span>
+                </a>
+            </div>
+            <div class="container nav-wrapper collapse" id="nav-wrapper">
+                <h1 class="logo">ribbon</h1>
+                <ul class="main-nav">
+                    <li><a ui-sref="index" ui-sref-active="current">Home</a></li>
+                    <li ng-repeat="page in pages"><a ui-sref="page({ page: page.url })" ui-sref-active="current">{{ page.title }}</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <ui-view class="col-md-10">
+            <div class="container-fluid main-content">
+
+                <ui-view class="row"></ui-view>
+
+            </div>
+        </ui-view>
+
+    </div>
+
+    <script src="themes/flac/js/angular.js"></script>
+    <script src="themes/flac/js/ui-bootstrap-tpls-3.0.3.min.js"></script>
+    <script src="themes/flac/js/angular-ui-router.min.js"></script>
+
+    <script src="themes/flac/js/showdown.min.js"></script>
+
+    <script src="themes/flac/js/flac.js"></script>
+    <script src="themes/flac/js/controllers.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.css" />
+
+    <title>ribbon</title>
+  </head>
+  <body ng-app="ribbonAdmin">
+
+    <div class="row no-gutters wrapper">
+
+        <div class="col-md-2 side-nav">
+            <div class="container toggle-nav">
+                <a class="btn btn-default float-right" ng-click="bootstrap.collapse.main = !bootstrap.collapse.main">
+                    <span class="fa fa-bars"></span>
+                </a>
+            </div>
+            <div class="container nav-wrapper collapse" id="nav-wrapper" uib-collapse="!bootstrap.collapse.main">
+                <div class="dropdown logo" uib-dropdown dropdown-append-to-body>
+                    <span class="h1">ribbon</span> <a href="#" uib-dropdown-toggle class="h5" ng-show="authenticated"></a>
+                    <div class="dropdown-menu" uib-dropdown-menu>
+                        <a ui-sref="logout" class="dropdown-item">Log Out</a>
+                    </div>
+                </div>
+                <div ng-show="authenticated">
+                    <span class="text-muted">Blog</span>
+                    <ul class="main-nav">
+                        <li><a ui-sref="posts" ui-sref-active="current"><i class="fa fa-list-alt"></i> Posts</a></li>
+                        <li><a ui-sref="new_post" ui-sref-active="current"><i class="fa fa-pencil"></i> New Post</a></li>
+                    </ul>
+
+                    <span class="text-muted">Content</span>
+                    <ul class="main-nav">
+                        <li><a ui-sref="users" ui-sref-active="current"><i class="fa fa-user"></i> Users</a></li>
+                        <li><a ui-sref="tags" ui-sref-active="current"><i class="fa fa-tags"></i> Tags</a></li>
+                        <li><a ui-sref="pages" ui-sref-active="current"><i class="fa fa-bookmark"></i> Pages</a></li>
+                        <li><a ui-sref="images" ui-sref-active="current"><i class="fa fa-file-image-o"></i> Images</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-10">
+            <div class="container-fluid main-content">
+
+                <ui-view class="row"></ui-view>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script src="assets/js/angular.js"></script>
+    <script src="assets/js/angular-animate.min.js"></script>
+    <script src="assets/js/ui-bootstrap-tpls-3.0.3.min.js"></script>
+    <script src="assets/js/angular-ui-router.min.js"></script>
+    <script src="assets/js/angular-middleware.min.js"></script>
+    <script src="assets/js/angular-draggable.js"></script>
+    <script src="assets/js/angular-file-upload.min.js"></script>
+
+    <script src="assets/js/simplemde.min.js"></script>
+
+    <script src="assets/js/ribbon.js"></script>
+    <script src="assets/js/controllers.js"></script>
+
+  </body>
+</html>

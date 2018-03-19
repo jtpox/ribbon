@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <h5 class="modal-title">Choose Image</h5>
+    <button type="button" class="close" ng-click="cancel()">&times;</button>
+</div>
+
+<div class="modal-body">
+    <div class="row">
+        
+        <div class="col-md-3">
+            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="choose_image(null)">None</button>
+        </div>
+        <div ng-repeat="image in images" class="col-md-3 border" ng-click="choose_image($index)">
+            <img ng-src="{{ url + '/uploads/images/' + image.file_name }}" class="img-fluid" alt="{{ image.file_name }}" />
+        </div>
+
+    </div>
+</div>

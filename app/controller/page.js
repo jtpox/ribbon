@@ -58,17 +58,27 @@ class PageC {
         query.exec((err, results) => {
             //res.json(results);
 
-            var content_fields = ['title', 'content', 'content_column', '_id'];
-            var content_query  = Content.find({ page_id: results[0]._id }).select(content_fields.join(' '));
+            if( results.length > 0 )
+            {
+                var content_fields = ['title', 'content', 'content_column', '_id'];
+                var content_query  = Content.find({ page_id: results[0]._id }).select(content_fields.join(' '));
 
-            content_query.exec((err, content_results) => {
-                //results[0].boxes = content_results;
+                content_query.exec((err, content_results) => {
+                    //results[0].boxes = content_results;
 
-                res.json({
-                    details: results[0],
-                    boxes: content_results
+                    res.json({
+                        error: 0,
+                        details: results[0],
+                        boxes: content_results
+                    });
                 });
-            });
+            }
+            else
+            {
+                res.json({
+                    error: 1
+                });
+            }
         });
     };
 

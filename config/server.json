@@ -1,5 +1,9 @@
 {
-    "port": 8081,
+    "port": 80,
+
+    "_theme": "Name of the theme folder, located in public/themes.",
+    "theme": "flac",
+
     "hash": {
         "salt_rounds": 10
     }

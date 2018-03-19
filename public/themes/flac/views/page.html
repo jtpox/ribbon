@@ -1,0 +1,26 @@
+<img ng-src="{{ 'uploads/images/' + page.details.image.file_name }}" ng-show="page.details.image !== null" />
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card" ng-class="{ 'post-single': page.details.image !== null, 'post-no-image': page.details.image == null }">
+            <div class="card-body text-center">
+                <h1 class="card-title">{{ page.details.title }}</h1>
+                <p class="card-text" ng-bind-html="page.details.description | markdown"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid main-content">
+    <div class="row">
+
+        <div ng-repeat="box in page.boxes" class="col-md-{{ box.content_column }}">
+            <div class="card post">
+                <div class="card-body">
+                    <h4 class="card-title">{{ box.title }}</h4>
+                    <p class="card-text" ng-bind-html="box.content | markdown"></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

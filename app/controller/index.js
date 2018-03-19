@@ -12,62 +12,18 @@ const Config = require('../../config/server');
 
 const Db     = require('../database');
 const Bcrypt = require('bcrypt');
+const Path   = require('path');
 
  class Index {
 
     index(req, res)
     {
-        /*var post = new Post({
-            title: 'First!',
-            content: 'First!',
-            url: 'first',
-            created_by: 1
-        });
-
-        post.save((err, results) => {
-            res.send(results._id);
-        });*/
-
-        Post.find({ created_by:1 }).exec((err, result) => {
-            if( result == null )
-            {
-                res.json({
-                    error: 1
-                });
-            }
-            else
-            {
-                res.json({
-                    error: 0,
-                    data: result
-                });
-            }
-        });
+        res.sendFile(Path.join(__dirname, '..', '..', 'public', 'themes', Config.theme, 'index.html'));
     }
 
-    temp(req, res)
+    admin(req, res)
     {
-        /*Bcrypt.hash('password', Config.hash.salt_rounds, (err, hash) => {
-            var user = new User({
-                username: 'admin',
-                password: hash,
-                email: 'admin@admin.com'
-            });
-
-            user.save((err, results) => {
-                res.send(results._id);
-            });
-        });*/
-
-        var tag = new Tag({
-            title: 'Example',
-            url: 'example',
-            content: 'Example tag.',
-        });
-
-        tag.save((err, results) => {
-            res.send(results._id);
-        });
+        res.sendFile(Path.join(__dirname, '..', '..', 'public', 'admin.html'));
     }
 
     install(req, res)
@@ -150,8 +106,8 @@ const Bcrypt = require('bcrypt');
 
                         //Add an image to the database.
                         var image = new Image({
-                            title: '1r1AH.gif',
-                            file_name: '1r1AH.gif',
+                            title: 'photo-1499336315816-097655dcfbda.jpg',
+                            file_name: 'photo-1499336315816-097655dcfbda.jpg',
                             created_by: Db.Types.ObjectId(new_user.id)
                         });
 

@@ -1,0 +1,14 @@
+<div class="col-md-8 offset-md-2">
+    <div class="page-header">
+        <h1>Pages <a href="" ui-sref="new_page" class="btn btn-primary btn-sm">New Page</a></h1>
+    </div>
+    <div class="list-group">
+
+        <a href="" ui-sref="edit_page({ id: page._id })" class="list-group-item" ng-repeat="page in pages">
+            <div class="justify-content-between">
+                <h5 class="mb-1">{{ page.title }}</h5>
+            </div>
+        </a>
+
+    </div>
+</div>

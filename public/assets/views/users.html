@@ -1,0 +1,83 @@
+<div class="col-md-9">
+    <div class="page-header">
+        <h1>Users</h1>
+    </div>
+    <div class="list-group">
+
+        <a href="" ng-click="show_user($index)" class="list-group-item" ng-repeat="user in users">
+            <div class="justify-content-between">
+                <h5 class="mb-1">{{ user.username }}</h5>
+            </div>
+            <small>{{ user.about }}</small>
+        </a>
+
+    </div>
+</div>
+
+<div class="col-md-3">
+    <div class="card post" ng-show="edit_user.id != null">
+        <div class="card-body">
+            <h4 class="card-title">Edit User</h4>
+
+            <div class="alert alert-success text-center" ng-show="alert.update_user.success">
+                <h4>
+                    <i class="fa fa-angellist"></i>
+                </h4>
+            </div>
+
+            <div class="alert alert-danger" ng-show="alert.update_user.error.show">{{ alert.update_user.error.msg }}</div>
+
+            <form method="POST" class="card-text" ng-submit="edit_user()">
+                    <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Username" ng-model="edit_user.username" />
+                        </div>
+        
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Password" ng-model="edit_user.password" />
+                        </div>
+        
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Email" ng-model="edit_user.email" />
+                        </div>
+
+                <div class="form-group">
+                    <input type="hidden" ng-model="edit_user.id" />
+                    <input type="submit" class="btn btn-info" value="Edit" />
+                    <button type="button" class="btn btn-danger" ng-click="delete_user()">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card post">
+        <div class="card-body">
+            <h4 class="card-title">New User</h4>
+
+            <div class="alert alert-success text-center" ng-show="alert.new_user.success">
+                <h4>
+                    <i class="fa fa-angellist"></i>
+                </h4>
+            </div>
+
+            <div class="alert alert-danger" ng-show="alert.new_user.error.show">{{ alert.new_user.error.msg }}</div>
+
+            <form method="POST" class="card-text" ng-submit="new_user()">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Username" ng-model="new_user.username" />
+                </div>
+
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" ng-model="new_user.password" />
+                </div>
+
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Email" ng-model="new_user.email" />
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-info" value="New User" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

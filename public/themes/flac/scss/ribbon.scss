@@ -1,0 +1,209 @@
+@import url('fontawesome-all.min.css');
+
+@import url('https://fonts.googleapis.com/css?family=Gentium+Basic:400,400i,700,700i|Rubik');
+
+a, a:link, a:visited, a:hover {
+    /* Transition */
+    transition: 0.2s ease-in-out;
+}
+
+html, body {
+    height: 100%;
+}
+
+.wrapper {
+    height: 100%;
+}
+
+.main-content {
+    max-height: 100%;
+    overflow-y: scroll;
+    /* Margin & Padding */
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+@media screen and (max-width: 767px) {
+
+    .toggle-nav {
+        display: block;
+        overflow: auto;
+    }
+
+    .side-nav {
+        height: auto;
+    }
+
+    .wrapper {
+        height: auto;
+    }
+
+    .main-content {
+        max-height: auto;
+        overflow-y: auto;
+    }
+
+    .card.post-single {
+        /* Margin & Padding */
+        margin-top: none;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .toggle-nav {
+        display: none;
+    }
+
+    .side-nav {
+        height: 100%;
+    }
+
+    .container.nav-wrapper.collapse {
+        display: block;
+    }
+
+    .card.post-single {
+        /* Margin & Padding */
+        margin-top: -30px;
+    }
+}
+
+/*
+ * Navigation
+ */
+.toggle-nav > .btn {
+    /* Margin & Padding */
+    margin: 10px 0 10px 0;
+}
+
+.side-nav {
+    background-color: $gray-100;
+    overflow-y: scroll;
+}
+
+.logo {
+    /* Font */
+    font-family: 'Rubik', sans-serif;
+    text-align: center;
+    /* Margin & Padding */
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/*
+ * Vertical Navigation
+ */
+ul.main-nav {
+    list-style: none;
+    /* Font */
+    font-family: 'Gentium Basic', serif;
+    font-weight: bold;
+    text-align: center;
+    /* Margin & Padding */
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+ul.main-nav > li {
+    /* Border */
+    border-bottom: 1px solid $gray-200;
+}
+
+ul.main-nav > li > a {
+    display: block;
+    /* Font */
+    color: $black;
+    font-size: 18px;
+    /* Margin & Padding */
+    padding: 5px 20px 5px 20px;
+}
+
+ul.main-nav > li > a:hover {
+    /* Font */
+    color: $orange;
+    text-decoration: none;
+    /* Margin & Padding */
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /* Transition */
+    transition: 0.2s ease-in-out;
+}
+
+ul.main-nav > li > a.current, ul.main-nav > li > a.current:hover {
+    display: block;
+    /* Font */
+    color: $orange;
+    font-size: 18px;
+    text-decoration: none;
+    /* Transition */
+    transition: 0.2s ease-in-out;
+}
+
+/*
+ * Card
+ */
+.card.post {
+    background-color: $gray-100;
+    /* Border */
+    border: none;
+    /* Margin & Padding */
+    margin-bottom: 20px;
+}
+
+.card.post .card-title {
+    /* Font */
+    font-family: 'Rubik', sans-serif;
+}
+
+.card.post .card-title a {
+    display: block;
+}
+
+.card.post .card-text, .card.post-single .card-text, .card.post-no-image {
+    /* Font */
+    font-family: 'Gentium Basic', serif;
+    font-size: 20px;
+}
+
+.card.post-single {
+    background-color: $white;
+    /* Margin & Padding */
+    margin-bottom: 30px;
+    /* Border */
+    border: none;
+}
+
+.card.post-no-image {
+    /* Margin & padding */
+    margin-bottom: 30px;
+    border: none;
+}
+
+.post-title {
+    /* Font */
+    font-family: 'Rubik', sans-serif;
+    text-align: center;
+}
+
+span.date {
+    /* Font */
+    color: $red;
+}
+
+/*
+ * Scrollbar
+ */
+::-webkit-scrollbar-track {
+    border-radius: 2px;
+    background-color: transparent; /* $gray-200 */
+}
+  
+::-webkit-scrollbar {
+    width: 5px;
+}
+  
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(101, 109, 120, 0.3);
+}

@@ -1,0 +1,45 @@
+<div class="col-md-10">
+    <div class="alert alert-danger" ng-show="error.show">{{ error.msg }}</div>
+    <form action="" method="POST" class="new_post">
+
+        <div class="form-group">
+            <input type="text" name="title" class="form-control" placeholder="Title" ng-model="post.title" />
+        </div>
+
+        <div class="form-group">
+            <textarea name="content" id="markdown_content"></textarea>
+        </div>
+
+    </form>
+</div>
+
+<div class="col-md-2">
+    <div class="card post">
+        <div class="card-body">
+            <p class="card-text">
+                <button class="btn btn-info btn-lg btn-block" ng-click="submit_post()">Publish</button>
+            </p>
+        </div>
+    </div>
+
+    <div class="card post">
+        <div class="card-body">
+            <h4 class="card-title">Tag</h4>
+            <p class="card-text">
+                <select name="tags" class="form-control" ng-model="post.tag">
+                    <option ng-repeat="tag in tags" value="{{ tag._id }}">{{ tag.title }}</option>
+                </select>
+            </p>
+        </div>
+    </div>
+
+    <div class="card post">
+        <img class="card-img-top" ng-src="{{ url + '/uploads/images/' + widgets.images.selected.file_name }}" ng-show="widgets.images.selected !== null" />
+        <div class="card-body">
+            <h4 class="card-title">Image</h4>
+            <p class="card-text">
+                <span compile="widgets.images.button_html"></span>
+            </p>
+        </div>
+    </div>
+</div>
