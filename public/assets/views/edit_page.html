@@ -19,7 +19,7 @@
     </nav>
 </div>
 
-<div class="col-md-12"  ng-style="{'background-image': 'url(' + url + '/uploads/images/' + ((widgets.images.selected == null)? page.image.file_name : widgets.images.selected.file_name) + ')', 'background-size': 'cover', 'min-height': '120px'}">
+<div class="col-md-12"  ng-style="{'background-image': 'url(' + url + '/uploads/images/' + ((widgets.images.selected == null)? page.image.file_name : widgets.images.selected.file_name) + ')', 'background-size': 'cover', 'min-height': '120px', 'padding-top': '20px', 'padding-bottom': '20px' }">
     <div class="alert alert-danger" ng-show="error.show">{{ error.msg }}</div>
     <form action="" method="POST" class="new_post">
 

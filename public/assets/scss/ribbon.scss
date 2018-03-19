@@ -196,6 +196,7 @@ span.date {
  * New Post
  */
 .new_post .form-control {
+    background: rgba(255, 255, 255, 0.8);
     /* Font */
     font-family: 'Gentium Basic', serif;
     font-size: 30px;
@@ -204,7 +205,12 @@ span.date {
     border: none;
 }
 
+.new_post .form-control:active, .new_post .form-control:focus {
+    background: rgba(255, 255, 255, 1);
+}
+
 .editor-toolbar {
+    background: $white;
     /* background: $gray-100; */
     /* Border */
     border: 0;
@@ -215,12 +221,17 @@ span.date {
 }
 
 .CodeMirror {
+    background: rgba(255, 255, 255, 0.8);
     min-height: 100%;
     /* Font */
     font-family: 'Gentium Basic', serif;
     font-size: 20px;
     /* Border */
     border: 0;
+}
+
+.CodeMirror:active, .CodeMirror:focus {
+    background: rgba(255, 255, 255, 1);
 }
 
 /*
