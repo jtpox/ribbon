@@ -24,10 +24,33 @@ const Db = require('../database');//Soley used for the ObjectId type.
         //https://stackoverflow.com/questions/42700884/select-all-the-fields-in-a-mongoose-schema
         var fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', '_id'];
         var query  = Post.find({}).select(fields.join(' ')).sort({ date: 'descending' })
-            .populate('image').populate('created_by', '-password').populate('tag image');
+            .populate('created_by', '-password').populate('tag image');
 
-        query.exec((err, results) => {
+        /*query.exec((err, results) => {
             res.json(results);
+        });*/
+        var options = {
+            select: 'title url content image created_by tag created_at last_updated _id',
+            sort: { created_at: 'descending' },
+            populate: [
+                {
+                    path: 'created_by',
+                    select: '-password'
+                },
+                {
+                    path: 'tag'
+                },
+                {
+                    path: 'image'
+                }
+            ],
+            lean: false,
+            limit: 10,
+            page: page
+        };
+        Post.paginate({}, options).then(function(result) {
+            //console.log(result);
+            res.json(result);
         });
     }
 
@@ -42,7 +65,7 @@ const Db = require('../database');//Soley used for the ObjectId type.
         //https://stackoverflow.com/questions/42700884/select-all-the-fields-in-a-mongoose-schema
         var fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', '_id'];
         var query  = Post.find({}).select(fields.join(' ')).sort({ created_at: 'descending' })
-            .populate('created_by', '-password').populate('tag');
+            .populate('created_by', '-password').populate('tag, image');
 
         query.exec((err, results) => {
             //console.log(results);
@@ -55,7 +78,18 @@ const Db = require('../database');//Soley used for the ObjectId type.
         //View post by id.
         var fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated'];
         var query = Post.find({ '_id': req.params.id }).select(fields.join(' '))
-            .populate('created_by', '-password').populate('tag');
+            .populate('created_by', '-password').populate('tag image');
+        query.exec((err, result) => {
+            //console.log(result);
+            res.json(result);
+        });
+    }
+
+    from_url(req, res)
+    {
+        var fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated'];
+        var query = Post.find({ 'url': req.params.url }).select(fields.join(' '))
+            .populate('created_by', '-password').populate('tag image');
         query.exec((err, result) => {
             //console.log(result);
             res.json(result);
@@ -68,11 +102,12 @@ const Db = require('../database');//Soley used for the ObjectId type.
         //Add a blog post.
         if( req.body.title && req.body.content && req.body.tag )
         {
+            //console.log(req.body.image);
             var post = new Post({
                 title: req.body.title,
                 url: Slugify(req.body.title),
                 content: req.body.content,
-                image: Db.Types.ObjectId('5aad3461318533ae44eefbcf'),
+                image: ( req.body.image !== null )? Db.Types.ObjectId(req.body.image) : null,
                 created_by: Db.Types.ObjectId(req.currentUser),
                 tag: Db.Types.ObjectId(req.body.tag)
             });
@@ -106,7 +141,7 @@ const Db = require('../database');//Soley used for the ObjectId type.
         //Update a blog post.
         if( req.body.title && req.body.content && req.body.tag )
         {
-            Post.update({ _id: req.params.id }, { title: req.body.title, url: Slugify(req.body.title), content: req.body.content, tag: Db.Types.ObjectId(req.body.tag) }, (err) => {
+            Post.update({ _id: req.params.id }, { title: req.body.title, url: Slugify(req.body.title), content: req.body.content, tag: Db.Types.ObjectId(req.body.tag), image: ( req.body.image !== null )? Db.Types.ObjectId(req.body.image) : null }, (err) => {
                 if( err )
                 {
                     res.json({

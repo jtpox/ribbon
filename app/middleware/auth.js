@@ -4,7 +4,7 @@ const Session = require('../model/session.js');
 
 function isLogged(req, res, next)
 {
-    console.log(req.body);
+    //console.log(req.body);
     if( req.body.session_id && req.body.session_token )
     {
 
@@ -24,6 +24,7 @@ function isLogged(req, res, next)
                     }
                     else
                     {
+                        //console.log('Here');
                         res.json({
                             error: 1
                         });
@@ -41,6 +42,7 @@ function isLogged(req, res, next)
     }
     else
     {
+        //console.log('There');
         res.json({
             error: 1
         });

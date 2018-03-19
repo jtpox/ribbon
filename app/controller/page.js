@@ -28,8 +28,9 @@ class PageC {
 
     get(req, res) {
         //Get page details.
-        var fields = ['title', 'url', 'description','created_at', 'last_updated', '_id'];
-        var query  = Page.find({ _id: req.params.id }).select(fields.join(' '));
+        var fields = ['title', 'url', 'description','created_at', 'last_updated', '_id', 'created_by', 'image'];
+        var query  = Page.find({ _id: req.params.id }).select(fields.join(' '))
+            .populate('created_by', '-password').populate('image');
         
         query.exec((err, results) => {
             //res.json(results);
@@ -48,15 +49,39 @@ class PageC {
         });
     }
 
+    from_url(req, res) {
+        //Get page details.
+        var fields = ['title', 'url', 'description','created_at', 'last_updated', '_id', 'created_by', 'image'];
+        var query  = Page.find({ url: req.params.url }).select(fields.join(' '))
+            .populate('created_by', '-password').populate('image');
+        
+        query.exec((err, results) => {
+            //res.json(results);
+
+            var content_fields = ['title', 'content', 'content_column', '_id'];
+            var content_query  = Content.find({ page_id: results[0]._id }).select(content_fields.join(' '));
+
+            content_query.exec((err, content_results) => {
+                //results[0].boxes = content_results;
+
+                res.json({
+                    details: results[0],
+                    boxes: content_results
+                });
+            });
+        });
+    };
+
     insert(req, res) {
-        //console.log('Here');
+        //console.log(req.body);
         if( req.body.title && req.body.content && req.body.boxes )
         {
             var page = new Page({
                 title: req.body.title,
                 url: Slugify(req.body.title),
                 description: req.body.content,
-                created_by: Db.Types.ObjectId(req.currentUser)
+                created_by: Db.Types.ObjectId(req.currentUser),
+                image: ( req.body.image !== null )? Db.Types.ObjectId(req.body.image) : null
             });
 
             page.save((err, new_page) => {
@@ -75,19 +100,10 @@ class PageC {
                 }
 
                 Content.collection.insert(boxes, (err, docs) => {
-                    if( err )
-                    {
-                        res.json({
-                            error: 1
-                        });
-                    }
-                    else
-                    {
-                        res.json({
-                            error: 0,
-                            page_id: new_page._id
-                        });
-                    }
+                    res.json({
+                        error: 0,
+                        page_id: new_page._id
+                    });
                 });
             });
         }
@@ -101,9 +117,13 @@ class PageC {
 
     update(req, res) {
         //Update a page.
+        //console.log(req.body);
         if( req.body.title && req.body.content && req.body.boxes )
         {
-            Page.update({ id: req.params.id }, { title: req.body.title, url: Slugify(req.body.title), description: req.body.content }, (err) => {
+            var image = ( req.body.image !== null )? Db.Types.ObjectId(req.body.image) : null;
+            //console.log(image);
+
+            Page.update({ _id: req.params.id }, { title: req.body.title, url: Slugify(req.body.title), description: req.body.content, image:image }, (err) => {
                 if( err )
                 {
                     res.json({
@@ -112,10 +132,10 @@ class PageC {
                 }
                 else
                 {
-                    //Delete all content boxes from the db.
-                    Content.find({ page_id: req.params.id }).remove((err) => {
 
-                        //Add the new ones in.
+                    //Delete all content box from the DB.
+                    Content.remove({ page_id: req.params.id }, function(err, result) {
+
                         var boxes    = [];
                         var contents = JSON.parse(req.body.boxes);
                         //console.log(contents);
@@ -123,29 +143,21 @@ class PageC {
                         {
                             boxes.push({
                                 title: contents[i].title,
+                                page_id: Db.Types.ObjectId(req.params.id),
                                 content: contents[i].content,
                                 content_column: contents[i].content_column,
-                                created_by: Db.Types.ObjectId(req.currentUser),
-                                page_id: Db.Types.ObjectId(req.params.id)
+                                created_by: Db.Types.ObjectId(req.currentUser)
                             });
                         }
 
-                        Content.collection.insert(boxes, (err, docs) => {
-                            if( err )
-                            {
-                                res.json({
-                                    error: 1
-                                });
-                            }
-                            else
-                            {
-                                res.json({
-                                    error: 0
-                                });
-                            }
+                        Content.collection.insertMany(boxes, function(err, docs) {
+                            res.json({
+                                error: 0
+                            });
                         });
 
                     });
+
                 }
             });
         }

@@ -3,6 +3,7 @@
  */
 const Config     = require('../config/server');
 const BodyParser = require('body-parser');
+const FileUpload = require('express-fileupload');
 
 class Ribbon {
 
@@ -16,6 +17,7 @@ class Ribbon {
         //Start the Express server.
         this.app.use(BodyParser.urlencoded({ extended: true }));
         this.app.use(BodyParser.json());
+        this.app.use(FileUpload());
 
         //Enable CORS
         this.app.use(function(req, res, next) {

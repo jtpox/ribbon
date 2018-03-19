@@ -25,8 +25,11 @@ module.exports = function(app) {
     const Page  = require('./controller/page');
     var page    = new Page();
 
+    const Image = require('./controller/image');
+    var image   = new Image();
+
     app.get('/', index.index);
-    app.get('/temp', index.temp);
+    app.get('/install', index.install);
 
     app.post('/api/auth', AuthMid.notLogged, auth.signin);
     app.post('/api/auth/check', auth.check);
@@ -38,6 +41,7 @@ module.exports = function(app) {
     app.get('/api/blog/page/:page', blog.paginate);
 
     app.get('/api/blog/:id', blog.view);
+    app.get('/api/blog/url/:url', blog.from_url);
     app.delete('/api/blog/:id', AuthMid.isLogged, blog.delete);//Deleting a blog post. For some reason, it is not working with Angular. But it works with Postman.
     //https://stackoverflow.com/questions/37796227/body-is-empty-when-parsing-delete-request-with-express-and-body-parser
     app.post('/api/blog/delete/:id', AuthMid.isLogged, blog.delete);//Deleting a blog post. Non RESTFUL method.
@@ -62,8 +66,15 @@ module.exports = function(app) {
     app.post('/api/pages', AuthMid.isLogged, page.insert);
 
     app.get('/api/pages/:id', page.get);
+    app.get('/api/pages/url/:url', page.from_url);
     app.put('/api/pages/:id', AuthMid.isLogged, page.update);
     app.delete('/api/pages/:id', AuthMid.isLogged, page.delete);
     app.post('/api/pages/delete/:id', AuthMid.isLogged, page.delete);
+
+    app.put('/api/images', AuthMid.isLogged, image.list);//PUT as GET doesn't allow body.
+    app.post('/api/images', AuthMid.isLogged, image.insert);
+
+    app.delete('/api/images/:id', AuthMid.isLogged, image.delete);
+    app.post('/api/images/delete/:id', AuthMid.isLogged, image.delete);
 
 };

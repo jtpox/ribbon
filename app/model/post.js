@@ -6,7 +6,7 @@ var schema = Db.Schema({
     title: String,
     url: String,
     content: String,
-    image: { type: ObjectId, ref: 'Image' },
+    image: { type: ObjectId, ref: 'Image', default: null },
     created_by: { type: ObjectId, ref: 'User' },
     tag: { type: ObjectId, ref: 'Tag' },
     created_at: { type: Date, default: Date.now },
