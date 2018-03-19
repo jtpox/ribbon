@@ -65,7 +65,7 @@ const Db = require('../database');//Soley used for the ObjectId type.
         //https://stackoverflow.com/questions/42700884/select-all-the-fields-in-a-mongoose-schema
         var fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', '_id'];
         var query  = Post.find({}).select(fields.join(' ')).sort({ created_at: 'descending' })
-            .populate('created_by', '-password').populate('tag, image');
+            .populate('created_by', '-password').populate('tag image');
 
         query.exec((err, results) => {
             //console.log(results);

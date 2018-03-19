@@ -55,7 +55,7 @@
          * Get all posts.
          */
         $http.get($rootScope.api + '/blog').then(function (res) {
-            //console.log(res);
+            console.log(res.data);
             $scope.posts = res.data;
         });
     });
