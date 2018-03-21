@@ -12,9 +12,9 @@
   </head>
   <body ng-app="ribbonAdmin">
 
-    <div class="row no-gutters wrapper">
+    <div ng-class="{ row:authenticated, 'no-gutters':authenticated, wrapper:authenticated }">
 
-        <div class="col-md-2 side-nav">
+        <div class="col-md-2 side-nav" ng-show="authenticated">
             <div class="container toggle-nav">
                 <a class="btn btn-default float-right" ng-click="bootstrap.collapse.main = !bootstrap.collapse.main">
                     <span class="fa fa-bars"></span>
@@ -45,10 +45,10 @@
             </div>
         </div>
 
-        <div class="col-md-10">
-            <div class="container-fluid main-content">
+        <div ng-class="{ 'col-md-10':authenticated }">
+            <div class="container-fluid main-content" ng-class="{ 'container-fluid':authenticated, 'main-content':authenticated }">
 
-                <ui-view class="row"></ui-view>
+                <ui-view class="row" ng-class="{ 'no-gutters':!authenticated, 'wrapper':!authenticated }"></ui-view>
 
             </div>
         </div>

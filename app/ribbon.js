@@ -19,14 +19,7 @@ class Ribbon {
         this.app.use(BodyParser.json());
         this.app.use(FileUpload());
 
-        //Enable CORS
-        this.app.use(function(req, res, next) {
-            res.header("Access-Control-Allow-Origin", "*");
-            res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-            next();
-        });
-
+        this.set_headers();
         this.routes = require('./route')(this.app);
         this.start();
     }
@@ -39,6 +32,19 @@ class Ribbon {
 
         this.app.listen(Config.port, () => {
             this.log.log(['etc'], 'ribbon server started at port ' + Config.port + '.');
+        });
+    }
+
+    set_headers()
+    {
+        this.app.use((req, res, next) => {
+            //Enable CORS
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+            res.header('X-Powered-By', 'ribbon');
+            next();
         });
     }
 
