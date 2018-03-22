@@ -23,6 +23,11 @@ html, body {
     padding-bottom: 20px;
 }
 
+h1, h2, h3, h4 {
+    /* Font */
+    font-family: 'Rubik', sans-serif;
+}
+
 @media screen and (max-width: 767px) {
 
     .toggle-nav {
@@ -189,6 +194,16 @@ ul.main-nav > li > a.current, ul.main-nav > li > a.current:hover {
 span.date {
     /* Font */
     color: $red;
+}
+
+.media .media-body h5 a, .media .media-body h5 a:link, .media .media-body h5 a:visited {
+    /* Font */
+    color: $black;
+}
+
+.media .media-body h5 a:hover {
+    /* Font */
+    color: $danger;
 }
 
 /*

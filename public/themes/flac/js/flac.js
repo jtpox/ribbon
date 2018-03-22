@@ -2,7 +2,7 @@
 
     'use strict';
 
-    var app = angular.module('flac_theme', ['ui.router', 'ui.bootstrap']);
+    var app = angular.module('flac_theme', ['ui.router', 'ui.bootstrap', 'ngAnimate']);
 
     app.config(function($stateProvider, $urlRouterProvider) {
 
@@ -26,6 +26,16 @@
                 url: '/:page',
                 templateUrl: 'themes/flac/views/page.html',
                 controller: 'pageController'
+            })
+            .state('tag', {
+                url: '/tag/:tag',
+                templateUrl: 'themes/flac/views/list_posts.html',
+                controller: 'tagController'
+            })
+            .state('author', {
+                url: '/author/:author',
+                templateUrl: 'themes/flac/views/list_posts.html',
+                controller: 'authorController'
             });
 
     });

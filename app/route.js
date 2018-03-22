@@ -52,12 +52,14 @@ module.exports = function(app) {
     app.post('/api/tags', AuthMid.isLogged, tag.insert);//Inserting a new tag.
 
     app.get('/api/tags/:id', tag.get);
+    app.get('/api/tags/:url/page/:page', tag.posts);//Get posts from tags.
     app.put('/api/tags/:id', AuthMid.isLogged, tag.update);
     app.delete('/api/tags/:id', AuthMid.isLogged, tag.delete);
     app.post('/api/tags/delete/:id', AuthMid.isLogged, tag.delete);//Deleting a blog post. Non RESTFUL method.
 
     app.get('/api/users', user.list);
     app.post('/api/users', AuthMid.isLogged, user.insert);
+    app.get('/api/users/:id/page/:page', user.posts);//Get user info and posts.
 
     app.put('/api/users/:id', AuthMid.isLogged, user.update);
     app.delete('/api/users/:id', AuthMid.isLogged, user.delete);

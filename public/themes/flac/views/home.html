@@ -6,10 +6,15 @@
                     <img class="card-img-top" ng-src="{{ 'uploads/images/' + post.image.file_name }}" />
                 </a>
                 <div class="card-body">
+                    <small>
+                        <a ui-sref="tag({ tag: post.tag.url })">{{ post.tag.title }}</a>
+                    </small>
                     <h5 class="card-title">
                         <a ui-sref="post({ post: post.url })">{{ post.title }}</a>
-                    </h5>
+                    </h5>                  
                     <p class="card-text" ng-bind-html="post.content | markdown_limit"></p>
+                    <p>
+                        <small><a ui-sref="author({ author: post.created_by._id })">{{ post.created_by.username }}</a> on {{ post.created_at | format_date }}</small>
                 </div>
             </div>
         </div>

@@ -71,4 +71,75 @@
         });
     });
 
+    app.controller('tagController', function($scope, $state, $http, $rootScope) {
+        /*
+         * Get posts by tags.
+         */
+        $scope.page        = 1;
+        $scope.total_pages = 0;
+        $scope.posts = [];
+        /*
+         * Get blog posts.
+         */
+        $http.get($rootScope.api + '/tags/' + $state.params.tag + '/page/' + $scope.page).then(function(res) {
+            //console.log(res.data.docs);
+            $scope.list        = res.data.tag;
+            $scope.total_pages = res.data.posts.pages;
+            $scope.posts       = res.data.posts.docs;
+            //console.log($scope.posts);
+        });
+
+        /*
+         * Load older posts.
+         */
+        $scope.load_more = function() {
+            $scope.page = $scope.page + 1;
+
+            $http.get($rootScope.api + '/tags/' + $state.params.tag + '/page/' + $scope.page).then(function(res) {
+                //console.log(res.data.docs);
+                for( var i = 0; i < res.data.posts.docs.length; i++ )
+                {
+                    $scope.posts.push(res.data.posts.docs[i]);
+                }
+            });
+        };
+    });
+
+    app.controller('authorController', function($scope, $state, $http, $rootScope) {
+        /*
+         * Get posts by author.
+         */
+        $scope.page        = 1;
+        $scope.total_pages = 0;
+        $scope.posts = [];
+        /*
+         * Get blog posts.
+         */
+        $http.get($rootScope.api + '/users/' + $state.params.author + '/page/' + $scope.page).then(function(res) {
+            //console.log(res.data.docs);
+            $scope.list        = {
+                title: res.data.user.username,
+                content: res.data.user.about
+            };
+            $scope.total_pages = res.data.posts.pages;
+            $scope.posts       = res.data.posts.docs;
+            //console.log($scope.posts);
+        });
+
+        /*
+         * Load older posts.
+         */
+        $scope.load_more = function() {
+            $scope.page = $scope.page + 1;
+
+            $http.get($rootScope.api + '/users/' + $state.params.author + '/page/' + $scope.page).then(function(res) {
+                //console.log(res.data.docs);
+                for( var i = 0; i < res.data.posts.docs.length; i++ )
+                {
+                    $scope.posts.push(res.data.posts.docs[i]);
+                }
+            });
+        };
+    });
+
 })();

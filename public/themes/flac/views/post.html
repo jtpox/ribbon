@@ -5,7 +5,7 @@
             <p>
                 on
                 <span class="date">{{ post[0].created_at | format_date }}</span> in
-                <a href="">{{ post[0].tag.title }}</a>
+                <a ui-sref="tag({ tag: post[0].tag.url })">{{ post[0].tag.title }}</a>
             </p>
         </div>
 
@@ -25,7 +25,7 @@
             <div class="media">
                 <img class="mr-3 rounded" ng-src="{{ '/uploads/profile/' + post[0].created_by.avatar }}" height="64" width="64" />
                 <div class="media-body">
-                    <h5 class="mt-0">{{ post[0].created_by.username }}</h5>
+                    <h5 class="mt-0"><a ui-sref="author({ author: post[0].created_by._id })">{{ post[0].created_by.username }}</a></h5>
                     {{ post[0].created_by.about }}
                 </div>
             </div>

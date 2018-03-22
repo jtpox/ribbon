@@ -36,6 +36,60 @@ const Slugify = require('slugify');
         });
     }
 
+    posts(req, res)
+    {
+        var page = 1;
+        if( req.params.page != null )
+        {
+            page = req.params.page;
+        }
+
+        var fields = ['title', 'url', 'content', 'created_at'];
+        var query  = Tag.find({ url: req.params.url }).select(fields.join(' '));
+
+        query.exec((err, results) => {
+
+            if( results.length > 0 )
+            {
+                //If the tag exists.
+                var options = {
+                    select: 'title url content image created_by tag created_at last_updated _id',
+                    sort: { created_at: 'descending' },
+                    populate: [
+                        {
+                            path: 'created_by',
+                            select: '-password'
+                        },
+                        {
+                            path: 'tag'
+                        },
+                        {
+                            path: 'image'
+                        }
+                    ],
+                    lean: false,
+                    limit: 10,
+                    page: page
+                };
+                Post.paginate({ tag: results[0]._id }, options).then(function(post_results) {
+                    //console.log(result);
+                    res.json({
+                        tag: results[0],
+                        posts: post_results
+                    });
+                });
+
+            }
+            else
+            {
+                res.json({
+                    error: 1
+                });
+            }
+
+        });
+    }
+
     insert(req, res)
     {
         //Add a tag.
