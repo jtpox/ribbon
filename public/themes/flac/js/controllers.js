@@ -5,7 +5,8 @@
     var app = angular.module('flac_theme');
 
     app.controller('homeController', function ($scope, $state, $http, $rootScope) {
-        $rootScope.loader  = true;
+        $rootScope.loader     = true;
+        $rootScope.page_title = '';
 
         $scope.page        = 1;
         $scope.total_pages = 0;
