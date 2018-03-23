@@ -3,156 +3,132 @@
  */
 const Post = require('../model/post');
 const User = require('../model/user');
-const Tag  = require('../model/tag');
+const Tag = require('../model/tag');
 
 const Config = require('../../config/server');
 
 const Slugify = require('slugify');
 
- class TagC {
-
-    list(req, res)
-    {
-        //List the blog posts with pagination.
-        //https://stackoverflow.com/questions/42700884/select-all-the-fields-in-a-mongoose-schema
-        var fields = ['title', 'url', 'content','created_at', 'last_updated', '_id'];
-        var query  = Tag.find({}).select(fields.join(' '));
+class TagC {
+    list(req, res) {
+        // List the blog posts with pagination.
+        // https://stackoverflow.com/questions/42700884/select-all-the-fields-in-a-mongoose-schema
+        const fields = ['title', 'url', 'content', 'created_at', 'last_updated', '_id'];
+        const query = Tag.find({}).select(fields.join(' '));
 
         query.exec((err, results) => {
-            //console.log(results);
+            // console.log(results);
             res.json(results);
         });
     }
 
-    get(req, res)
-    {
-        //Get tag details.
-        var fields = ['title', 'url', 'content','created_at', 'last_updated', '_id', 'posts'];
-        var query  = Tag.find({ _id: req.params.id }).select(fields.join(' '))
+    get(req, res) {
+        // Get tag details.
+        const fields = ['title', 'url', 'content', 'created_at', 'last_updated', '_id', 'posts'];
+        const query = Tag.find({ _id: req.params.id }).select(fields.join(' '))
             .populate('posts');
-        
+
         query.exec((err, results) => {
             res.json(results);
         });
     }
 
-    posts(req, res)
-    {
-        var page = 1;
-        if( req.params.page != null )
-        {
+    posts(req, res) {
+        let page = 1;
+        if (req.params.page != null) {
             page = req.params.page;
         }
 
-        var fields = ['title', 'url', 'content', 'created_at'];
-        var query  = Tag.find({ url: req.params.url }).select(fields.join(' '));
+        const fields = ['title', 'url', 'content', 'created_at'];
+        const query = Tag.find({ url: req.params.url }).select(fields.join(' '));
 
         query.exec((err, results) => {
-
-            if( results.length > 0 )
-            {
-                //If the tag exists.
-                var options = {
+            if (results.length > 0) {
+                // If the tag exists.
+                const options = {
                     select: 'title url content image created_by tag created_at last_updated _id',
                     sort: { created_at: 'descending' },
                     populate: [
                         {
                             path: 'created_by',
-                            select: '-password'
+                            select: '-password',
                         },
                         {
-                            path: 'tag'
+                            path: 'tag',
                         },
                         {
-                            path: 'image'
-                        }
+                            path: 'image',
+                        },
                     ],
                     lean: false,
                     limit: 10,
-                    page: page
+                    page,
                 };
-                Post.paginate({ tag: results[0]._id }, options).then(function(post_results) {
-                    //console.log(result);
+                Post.paginate({ tag: results[0]._id }, options).then((post_results) => {
+                    // console.log(result);
                     res.json({
                         tag: results[0],
-                        posts: post_results
+                        posts: post_results,
                     });
                 });
-
-            }
-            else
-            {
+            } else {
                 res.json({
-                    error: 1
+                    error: 1,
                 });
             }
-
         });
     }
 
-    insert(req, res)
-    {
-        //Add a tag.
-        if( req.body.title && req.body.content )
-        {
-            var tag = new Tag({
+    insert(req, res) {
+        // Add a tag.
+        if (req.body.title && req.body.content) {
+            const tag = new Tag({
                 title: req.body.title,
                 url: Slugify(req.body.title),
-                content: req.body.content
+                content: req.body.content,
             });
 
             tag.save((err, new_tag) => {
                 res.json({
                     error: 0,
-                    tag: new_tag
+                    tag: new_tag,
                 });
             });
-        }
-        else
-        {
+        } else {
             res.json({
-                error: 1
+                error: 1,
             });
         }
     }
 
-    update(req, res)
-    {
-        //Update a tag.
-        if( req.body.title && req.body.content )
-        {
+    update(req, res) {
+        // Update a tag.
+        if (req.body.title && req.body.content) {
             Tag.update({ _id: req.params.id }, { title: req.body.title, url: Slugify(req.body.title), content: req.body.content }, (err) => {
-                if( err )
-                {
+                if (err) {
                     res.json({
-                        error: 1
+                        error: 1,
                     });
-                }
-                else
-                {
+                } else {
                     res.json({
-                        error: 0
+                        error: 0,
                     });
                 }
             });
-        }
-        else
-        {
+        } else {
             res.json({
-                error: 1
+                error: 1,
             });
         }
     }
 
-    delete(req, res)
-    {
-        //Delete a blog post.
+    delete(req, res) {
+        // Delete a blog post.
         Tag.find({ _id: req.params.id }).remove().exec();
         res.json({
-            error: 0
+            error: 0,
         });
     }
+}
 
- }
-
- module.exports = TagC;
+module.exports = TagC;
