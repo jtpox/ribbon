@@ -46,7 +46,8 @@
         $http.get($rootScope.api + '/blog/url/' + $state.params.post).then(function(res) {
             if( res.data.length > 0 )
             {
-                $scope.post = res.data;
+                $rootScope.page_title = res.data[0].title;
+                $scope.post           = res.data;
             }
             else
             {
@@ -63,7 +64,8 @@
         $http.get($rootScope.api + '/pages/url/' + $state.params.page).then(function(res) {
             if( res.data.error !== 1 )
             {
-                $scope.page = {
+                $rootScope.page_title = res.data.details.title;
+                $scope.page           = {
                     details: res.data.details,
                     boxes: res.data.boxes
                 };
@@ -88,7 +90,8 @@
          * Get blog posts.
          */
         $http.get($rootScope.api + '/tags/' + $state.params.tag + '/page/' + $scope.page).then(function(res) {
-            $rootScope.loader  = false;
+            $rootScope.loader     = false;
+            $rootScope.page_title = res.data.tag.title;
 
             //console.log(res.data.docs);
             $scope.list        = res.data.tag;
@@ -125,7 +128,8 @@
          * Get blog posts.
          */
         $http.get($rootScope.api + '/users/' + $state.params.author + '/page/' + $scope.page).then(function(res) {
-            $rootScope.loader  = false;
+            $rootScope.loader     = false;
+            $rootScope.page_title = res.data.user.username;
 
             //console.log(res.data.docs);
             $scope.list        = {

@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="themes/flac/css/bootstrap.css" />
 
-    <title>{{ page_title + site.name }}</title>
+    <title>{{ ((page_title)? page_title + ' | ' : '') + site.name }}</title>
   </head>
   <body>
 
