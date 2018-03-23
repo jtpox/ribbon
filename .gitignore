@@ -1,5 +1,4 @@
 node_modules/
-public/uploads/
 public/assets/.sass-cache/
 public/themes/flac/.sass-cache/
 config/database.json
