@@ -35,6 +35,8 @@ module.exports = function(app) {
     app.post('/api/auth', AuthMid.notLogged, auth.signin);
     app.post('/api/auth/check', auth.check);
     app.post('/api/auth/logout', AuthMid.isLogged, auth.logout);
+
+    app.get('/api', blog.site);
     
     app.get('/api/blog', blog.list);
     app.post('/api/blog', AuthMid.isLogged, blog.insert);//Inserting a new blog post.

@@ -13,6 +13,11 @@ const Db = require('../database');//Soley used for the ObjectId type.
 
  class Blog {
 
+    site(req, res)
+    {
+        res.json(Config.site);
+    }
+
     paginate(req, res)
     {
         var page = 1;

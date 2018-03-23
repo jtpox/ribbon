@@ -21,7 +21,7 @@
                 </a>
             </div>
             <div class="container nav-wrapper collapse" id="nav-wrapper" uib-collapse="!bootstrap.collapse.main">
-                <h1 class="logo">ribbon</h1>
+                <h1 class="logo">{{ site.name }}</h1>
                 <ul class="main-nav">
                     <li><a ui-sref="index" ui-sref-active="current">Home</a></li>
                     <li ng-repeat="page in pages"><a ui-sref="page({ page: page.url })" ui-sref-active="current">{{ page.title }}</a></li>

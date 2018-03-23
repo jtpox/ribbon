@@ -67,6 +67,13 @@
             $rootScope.pages = res.data;
         });
 
+        /*
+         * Get website details from API.
+         */
+        $http.get($rootScope.api).then(function(res) {
+            $rootScope.site = res.data;
+        })
+
         $transitions.onStart({}, function(transition) {
             $rootScope.loader = true;
             //console.log('start');
