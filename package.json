@@ -4,7 +4,8 @@
   "description": "A personal management system by jtPox",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel * -d lib"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,9 @@
     "mongoose-paginate": "^5.0.3",
     "mustache": "^2.3.0",
     "slugify": "^1.2.9"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-airbnb": "^2.4.0"
   }
 }
