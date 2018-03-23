@@ -5,6 +5,8 @@
     var app = angular.module('flac_theme');
 
     app.controller('homeController', function ($scope, $state, $http, $rootScope) {
+        $rootScope.loader  = true;
+
         $scope.page        = 1;
         $scope.total_pages = 0;
         $scope.posts = [];
@@ -12,6 +14,8 @@
          * Get blog posts.
          */
         $http.get($rootScope.api + '/blog/page/' + $scope.page).then(function(res) {
+            $rootScope.loader  = false;
+
             //console.log(res.data.docs);
             $scope.total_pages = res.data.pages;
             $scope.posts       = res.data.docs;
@@ -72,6 +76,7 @@
     });
 
     app.controller('tagController', function($scope, $state, $http, $rootScope) {
+        $rootScope.loader  = true;
         /*
          * Get posts by tags.
          */
@@ -82,6 +87,8 @@
          * Get blog posts.
          */
         $http.get($rootScope.api + '/tags/' + $state.params.tag + '/page/' + $scope.page).then(function(res) {
+            $rootScope.loader  = false;
+
             //console.log(res.data.docs);
             $scope.list        = res.data.tag;
             $scope.total_pages = res.data.posts.pages;
@@ -106,6 +113,7 @@
     });
 
     app.controller('authorController', function($scope, $state, $http, $rootScope) {
+        $rootScope.loader  = true;
         /*
          * Get posts by author.
          */
@@ -116,6 +124,8 @@
          * Get blog posts.
          */
         $http.get($rootScope.api + '/users/' + $state.params.author + '/page/' + $scope.page).then(function(res) {
+            $rootScope.loader  = false;
+
             //console.log(res.data.docs);
             $scope.list        = {
                 title: res.data.user.username,

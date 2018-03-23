@@ -47,6 +47,8 @@
         $rootScope.api = '/api';
         $rootScope.url = '/';
 
+        $rootScope.loader = false;
+
         /*
          * UI elements.
          * https://morgul.github.io/ui-bootstrap4/
@@ -63,6 +65,16 @@
         $http.get($rootScope.api + '/pages').then(function(res) {
             //console.log(res);
             $rootScope.pages = res.data;
+        });
+
+        $transitions.onStart({}, function(transition) {
+            $rootScope.loader = true;
+            //console.log('start');
+        });
+
+        $transitions.onFinish({}, function(transition) {
+            $rootScope.loader = false;
+            //console.log('finish');
         });
     });
 
