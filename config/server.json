@@ -1,0 +1,19 @@
+{
+    "port": 8080,
+
+    "site": {
+        "name": "ribbon"
+    },
+
+    "_theme": "Name of the theme folder, located in public/themes.",
+    "theme": "flac",
+
+    "hash": {
+        "salt_rounds": 10
+    },
+
+    "key": {
+        "private": "",
+        "cert": ""
+    }
+}

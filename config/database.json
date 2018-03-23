@@ -1,0 +1,8 @@
+{
+    "username": "",
+    "password": "",
+    "host": "localhost",
+    "port": 27017,
+    "auth_database": "admin",
+    "database": "ribbon"
+}
