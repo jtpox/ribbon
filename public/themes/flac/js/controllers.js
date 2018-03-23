@@ -1,12 +1,23 @@
+/* eslint-disable */
 (function () {
 
     'use strict';
 
+    var format_date = function(val) {
+        var date = new Date(val);
+
+            var month_names = ['Jan', 'Fed', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'oct', 'Nov', 'Dec'];
+
+            //MM DD, YY
+            return date.getDate() + ' ' + month_names[date.getMonth()] + ' ' + date.getFullYear();
+    };
+
     var app = angular.module('flac_theme');
 
     app.controller('homeController', function ($scope, $state, $http, $rootScope) {
-        $rootScope.loader     = true;
-        $rootScope.page_title = '';
+        $rootScope.loader           = true;
+        $rootScope.page_title       = '';
+        $rootScope.meta_description = $rootScope.site.name  + ', powered by ribbon.';
 
         $scope.page        = 1;
         $scope.total_pages = 0;
@@ -46,8 +57,9 @@
         $http.get($rootScope.api + '/blog/url/' + $state.params.post).then(function(res) {
             if( res.data.length > 0 )
             {
-                $rootScope.page_title = res.data[0].title;
-                $scope.post           = res.data;
+                $rootScope.page_title       = res.data[0].title;
+                $scope.post                 = res.data;
+                $rootScope.meta_description = res.data[0].title + ' by ' + res.data[0].created_by.username + ' on ' + format_date(res.data[0].created_at);
             }
             else
             {
@@ -64,7 +76,8 @@
         $http.get($rootScope.api + '/pages/url/' + $state.params.page).then(function(res) {
             if( res.data.error !== 1 )
             {
-                $rootScope.page_title = res.data.details.title;
+                $rootScope.page_title       = res.data.details.title;
+                $rootScope.meta_description = res.data.details.title + ' - ' + res.data.details.description.split(' ').splice(0, 50).join(' ');
                 $scope.page           = {
                     details: res.data.details,
                     boxes: res.data.boxes
@@ -91,7 +104,9 @@
          */
         $http.get($rootScope.api + '/tags/' + $state.params.tag + '/page/' + $scope.page).then(function(res) {
             $rootScope.loader     = false;
-            $rootScope.page_title = res.data.tag.title;
+
+            $rootScope.page_title       = res.data.tag.title;
+            $rootScope.meta_description = res.data.tag.title + ' - ' + res.data.tag.content;
 
             //console.log(res.data.docs);
             $scope.list        = res.data.tag;
@@ -129,7 +144,9 @@
          */
         $http.get($rootScope.api + '/users/' + $state.params.author + '/page/' + $scope.page).then(function(res) {
             $rootScope.loader     = false;
-            $rootScope.page_title = res.data.user.username;
+
+            $rootScope.page_title       = res.data.user.username;
+            $rootScope.meta_description = res.data.user.username + ' - ' + res.data.user.about;
 
             //console.log(res.data.docs);
             $scope.list        = {

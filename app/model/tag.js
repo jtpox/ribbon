@@ -2,12 +2,12 @@ const Db = require('../database');
 
 const ObjectId = Db.Schema.ObjectId;
 const schema = Db.Schema({
-    title: String,
-    url: String,
-    content: String,
-    created_at: { type: Date, default: Date.now },
-    last_updated: { type: Date, default: Date.now },
-    posts: [{ type: ObjectId, ref: 'Post' }],
+  title: String,
+  url: String,
+  content: String,
+  created_at: { type: Date, default: Date.now },
+  last_updated: { type: Date, default: Date.now },
+  posts: [{ type: ObjectId, ref: 'Post' }],
 });
 
 const Tag = Db.model('Tag', schema);

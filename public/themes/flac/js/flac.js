@@ -1,3 +1,4 @@
+/* eslint-disable */
 (function() {
 
     'use strict';
@@ -47,8 +48,9 @@
         $rootScope.api = '/api';
         $rootScope.url = '/';
 
-        $rootScope.loader     = false;
-        $rootScope.page_title = '';
+        $rootScope.loader           = false;
+        $rootScope.page_title       = '';
+        $rootScope.meta_description = '';
 
         /*
          * UI elements.

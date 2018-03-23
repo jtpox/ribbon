@@ -48,7 +48,7 @@
         <div ng-class="{ 'col-md-10':authenticated }">
             <div class="container-fluid main-content" ng-class="{ 'container-fluid':authenticated, 'main-content':authenticated }">
 
-                <ui-view class="row" ng-class="{ 'no-gutters':!authenticated, 'wrapper':!authenticated }"></ui-view>
+                <ui-view class="row ng-cloak" ng-class="{ 'no-gutters':!authenticated, 'wrapper':!authenticated }"></ui-view>
 
             </div>
         </div>

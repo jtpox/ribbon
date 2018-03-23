@@ -6455,6 +6455,18 @@ ul.main-nav > li > a.current, ul.main-nav > li > a.current:hover {
   transition: 0.2s ease-in-out; }
 
 /*
+ * Footer
+ */
+footer.footer {
+  background-color: #f5f7fa;
+  height: 54px;
+  /* Font */
+  font-family: 'Rubik', sans-serif;
+  text-align: center;
+  /* Margin & Padding */
+  padding: 15px; }
+
+/*
  * Card
  */
 .card.post {

@@ -4,6 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="{{ meta_description }}">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="themes/flac/css/bootstrap.css" />
@@ -29,13 +30,11 @@
             </div>
         </div>
 
-        <ui-view class="col-md-10">
-            <div class="container-fluid main-content">
-                <p class="text-center" ng-show="loader"><img src="themes/flac/img/ajax-loader.gif" /></p>
-                <ui-view class="row"></ui-view>
-
-            </div>
-        </ui-view>
+        <div class="col-md-10">
+            <p class="text-center" ng-show="loader"><img src="themes/flac/img/ajax-loader.gif" /></p>
+            <ui-view class="ng-cloak">
+            </ui-view>
+        </div>
 
     </div>
 

@@ -11,10 +11,6 @@ module.exports = {
         "sourceType": "module"
     },
     "rules": {
-        "indent": [
-            "error",
-            4
-        ],
         "linebreak-style": [
             "error",
             "windows"
@@ -28,14 +24,18 @@ module.exports = {
             "always"
         ],
         "class-methods-use-this": 0,
-        "no-underscore-dangle": [
-            "warn",
-        ],
+        "no-underscore-dangle": 0,
         "func-names": [
             "error",
             "as-needed"
         ],
         "camelcase": 0,
-        "no-console": 0
+        "no-console": 0,
+        "no-plusplus": [
+            "error",
+            {
+                "allowForLoopAfterthoughts": true
+            }
+        ]
     }
 };

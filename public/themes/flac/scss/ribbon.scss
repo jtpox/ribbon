@@ -146,6 +146,19 @@ ul.main-nav > li > a.current, ul.main-nav > li > a.current:hover {
 }
 
 /*
+ * Footer
+ */
+footer.footer {
+    background-color: $gray-100;
+    height: 54px;
+    /* Font */
+    font-family: 'Rubik', sans-serif;
+    text-align: center;
+    /* Margin & Padding */
+    padding: 15px;
+}
+
+/*
  * Card
  */
 .card.post {
