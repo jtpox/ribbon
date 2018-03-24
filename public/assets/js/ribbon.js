@@ -137,7 +137,7 @@
                 $uibModal.open({
                     size: 'lg',
                     animation: true,
-                    templateUrl: 'assets/views/widgets/images.html',
+                    templateUrl: '/assets/views/widgets/images.html',
                     controller: function($scope, $uibModalInstance) {
                         $scope.cancel = function() {
                             $uibModalInstance.dismiss('close_images_widget');
