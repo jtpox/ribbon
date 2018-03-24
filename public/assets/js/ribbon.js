@@ -21,6 +21,11 @@
                 url: '/logout',
                 controller: 'logOutController'
             })
+            .state('about_me', {
+                url: '/user/about',
+                templateUrl: 'assets/views/about_me.html',
+                controller: 'aboutMeController'
+            })
             .state('posts', {
                 url: '/posts',
                 templateUrl: 'assets/views/posts.html',
@@ -97,7 +102,9 @@
 
         $rootScope.widgets = {};
 
-        var user = JSON.parse(localStorage.getItem('user'));
+        let user                 = JSON.parse(localStorage.getItem('user'));
+        $rootScope.authenticated = false;
+        $rootScope.currentUser   = user;
 
         /*
          * UI elements.

@@ -110,6 +110,41 @@ class Index {
       });
     }
   }
+
+  /*
+   * Get user details.
+   */
+  details(req, res) {
+    const fields = ['username', 'email', 'about', 'avatar', 'created_at', 'last_updated'];
+    const user = User.find({ _id: req.currentUser }).select(fields.join(' '));
+
+    user.exec((err, results) => {
+      res.json(results);
+    });
+  }
+
+  /*
+   * Updating user details.
+   */
+  update_about(req, res) {
+    if (req.body.about) {
+      User.update({ _id: req.currentUser }, { about: req.body.about }, (err) => {
+        if (err) {
+          res.json({
+            error: 1,
+          });
+        } else {
+          res.json({
+            error: 0,
+          });
+        }
+      });
+    } else {
+      res.json({
+        error: 1,
+      });
+    }
+  }
 }
 
 module.exports = Index;

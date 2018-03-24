@@ -102,7 +102,7 @@ class UserC {
 
   update(req, res) {
     // Update a tag.
-    console.log('here');
+    // console.log('here');
     if (req.body.username && req.body.email) {
       // Check if password field is there.
       if (req.body.password && req.body.password !== null) {

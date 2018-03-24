@@ -50,6 +50,44 @@
         });
     });
 
+    app.controller('aboutMeController', function ($scope, $state, $http, $rootScope) {
+        $scope.alert = {
+            about_me: {
+                success: false,
+                error: {
+                    msg: null,
+                    show: false
+                }
+            }
+        };
+
+        /*
+         * Get user details from API.
+         */
+        $http.post($rootScope.api + '/auth/details', { session_id: $rootScope.currentUser.session_id, session_token: $rootScope.currentUser.session_token }).then(function(res) {
+            //console.log(res.data[0].about);
+            $scope.about_me = res.data[0].about;
+        });
+
+        $scope.edit_about = function() {
+            //console.log('Test');
+            $scope.alert.about_me.success = false;
+            $scope.alert.about_me.error   = false;
+            //console.log($rootScope.currentUser);
+            $http.post($rootScope.api + '/auth/update/about', { session_id: $rootScope.currentUser.session_id, session_token: $rootScope.currentUser.session_token, about: $scope.about_me }).then(function(res) {
+                if( res.data.error == 1 )
+                {
+                    $scope.alert.about_me.error = true;
+                    $scope.alert.about_me.msg   = 'Error updating your information.';
+                }
+                else
+                {
+                    $scope.alert.about_me.success = true;
+                }
+            });
+        };
+    });
+
     app.controller('postsController', function ($scope, $state, $http, $rootScope) {
         //console.log('Test');
         /*
