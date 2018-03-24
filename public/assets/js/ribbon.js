@@ -14,7 +14,7 @@
         $stateProvider
             .state('index', {
                 url: '/',
-                templateUrl: 'assets/views/default.html',
+                templateUrl: '/assets/views/default.html',
                 controller: 'indexController'
             })
             .state('logout', {
@@ -23,52 +23,52 @@
             })
             .state('about_me', {
                 url: '/user/about',
-                templateUrl: 'assets/views/about_me.html',
+                templateUrl: '/assets/views/about_me.html',
                 controller: 'aboutMeController'
             })
             .state('posts', {
                 url: '/posts',
-                templateUrl: 'assets/views/posts.html',
+                templateUrl: '/assets/views/posts.html',
                 controller: 'postsController'
             })
             .state('edit_post', {
                 url: '/posts/edit/:id',
-                templateUrl: 'assets/views/edit_post.html',
+                templateUrl: '/assets/views/edit_post.html',
                 controller: 'editPostController'
             })
             .state('new_post', {
                 url: '/posts/new',
-                templateUrl: 'assets/views/new_post.html',
+                templateUrl: '/assets/views/new_post.html',
                 controller: 'newPostController'
             })
             .state('tags', {
                 url: '/tags',
-                templateUrl: 'assets/views/tags.html',
+                templateUrl: '/assets/views/tags.html',
                 controller: 'tagsController'
             })
             .state('users', {
                 url: '/users',
-                templateUrl: 'assets/views/users.html',
+                templateUrl: '/assets/views/users.html',
                 controller: 'usersController'
             })
             .state('images', {
                 url: '/images',
-                templateUrl: 'assets/views/images.html',
+                templateUrl: '/assets/views/images.html',
                 controller: 'imagesController'
             })
             .state('pages', {
                 url: '/pages',
-                templateUrl: 'assets/views/pages.html',
+                templateUrl: '/assets/views/pages.html',
                 controller: 'pagesController'
             })
             .state('new_page', {
                 url: '/pages/new',
-                templateUrl: 'assets/views/new_page.html',
+                templateUrl: '/assets/views/new_page.html',
                 controller: 'newPageController'
             })
             .state('edit_page', {
                 url: '/pages/edit/:id',
-                templateUrl: 'assets/views/edit_page.html',
+                templateUrl: '/assets/views/edit_page.html',
                 controller: 'editPageController'
             });
 
