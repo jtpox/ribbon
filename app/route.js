@@ -31,6 +31,7 @@ function routes(app) {
 
   app.get('/', index.index);
   app.get('/ribbon', index.admin);
+  app.get('/ribbon/', index.admin);
   app.get('/install', index.install);
 
   app.post('/api/auth', AuthMid.notLogged, auth.signin);
