@@ -81,7 +81,8 @@ function routes(app) {
   app.delete('/api/pages/:id', AuthMid.isLogged, page.delete);
   app.post('/api/pages/delete/:id', AuthMid.isLogged, page.delete);
 
-  app.put('/api/images', AuthMid.isLogged, image.list);// PUT as GET doesn't allow body.
+  // app.put('/api/images', AuthMid.isLogged, image.list);// PUT as GET doesn't allow body.
+  app.get('/api/images', AuthMid.isLogged, image.list);
   app.post('/api/images', AuthMid.isLogged, image.insert);
 
   app.delete('/api/images/:id', AuthMid.isLogged, image.delete);

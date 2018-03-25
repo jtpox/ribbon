@@ -102,9 +102,17 @@
 
         $rootScope.widgets = {};
 
-        let user                 = JSON.parse(localStorage.getItem('user'));
+        let user                 = JSON.parse((localStorage.user === undefined)? '{}' : localStorage.getItem('user'));
         $rootScope.authenticated = false;
         $rootScope.currentUser   = user;
+        //console.log(user);
+        //Set headers for authentication with API.
+        if( user.session_id && user.session_token )
+        {
+            //console.log('Here');
+            $http.defaults.headers.common.session_id    = user.session_id;
+            $http.defaults.headers.common.session_token = user.session_token;
+        }
 
         /*
          * UI elements.
@@ -118,6 +126,41 @@
                 main: false
             }
         };
+
+        //console.log(user);
+        if( user && user.session_id && user.session_token )
+        {
+            //User is logged in.
+            $http.post($rootScope.api + '/auth/check', { session_id: user.session_id, session_token: user.session_token }).then(function(res) {
+                if( res.data.error == 1 )
+                {
+                    //Remove the token entirely as it doesn't exist.
+                    localStorage.removeItem('user');
+                    $state.go('index');
+                }
+                else
+                {
+                    $rootScope.authenticated = true;
+                    $rootScope.currentUser   = user;
+                    //Set headers for authentication with API.
+                    //$http.defaults.headers.common.session_id    = user.session_id;
+                    //$http.defaults.headers.common.session_token = user.session_id;
+                    
+                    if( $state.current.name == "index" )
+                    {
+                        $state.go('posts');
+                    }
+                }
+            });
+        }
+        else
+        {
+            //User is not logged in.
+            $rootScope.authenticated = false;
+            $rootScope.currentUser   = null;
+
+            $state.go('index');
+        }
 
         /*
          * Images Widget
@@ -147,7 +190,7 @@
                         * Get all images.
                         */
                         $scope.images = [];
-                        $http.put($rootScope.api + '/images', { session_id: $rootScope.currentUser.session_id, session_token: $rootScope.currentUser.session_token }).then(function(res) {
+                        $http.put($rootScope.api + '/images').then(function(res) {
                             $scope.images = res.data;
                         });
 
@@ -182,38 +225,6 @@
                 $rootScope.load_images_widget();
             }
         });
-
-        //console.log(user);
-        if( user && user.session_id && user.session_token )
-        {
-            //User is logged in.
-            $http.post($rootScope.api + '/auth/check', { session_id: user.session_id, session_token: user.session_token }).then(function(res) {
-                if( res.data.error == 1 )
-                {
-                    //Remove the token entirely as it doesn't exist.
-                    localStorage.removeItem('user');
-                    $state.go('index');
-                }
-                else
-                {
-                    $rootScope.authenticated = true;
-                    $rootScope.currentUser   = user;
-                    
-                    if( $state.current.name == "index" )
-                    {
-                        $state.go('posts');
-                    }
-                }
-            });
-        }
-        else
-        {
-            //User is not logged in.
-            $rootScope.authenticated = false;
-            $rootScope.currentUser   = null;
-
-            $state.go('index');
-        }
     });
 
     /*

@@ -29,6 +29,10 @@
                     $rootScope.authenticated = true;
                     $rootScope.currentUser = session;
 
+                    //Set headers for authentication with API.
+                    $http.defaults.headers.common.session_id      = res.data.session_id;
+                    $http.defaults.headers.common.session_token   = res.data.session_token;
+
                     $state.go('posts');
                 }
             });
@@ -36,7 +40,7 @@
     });
 
     app.controller('logOutController', function ($scope, $state, $http, $rootScope) {
-        $http.post($rootScope.api + '/auth/logout', { session_id: $rootScope.currentUser.session_id, session_token: $rootScope.currentUser.session_token }).then(function (res) {
+        $http.post($rootScope.api + '/auth/logout').then(function (res) {
             //console.log(res);
             //console.log($rootScope.currentUser);
             if (res.data.error == 0) {
@@ -44,6 +48,9 @@
 
                 $rootScope.authenticated = false;
                 $rootScope.currentUser = null;
+
+                delete $http.defaults.headers.common.session_id;
+                delete $http.defaults.headers.common.session_token;
 
                 $state.go('index');
             }
@@ -64,7 +71,7 @@
         /*
          * Get user details from API.
          */
-        $http.post($rootScope.api + '/auth/details', { session_id: $rootScope.currentUser.session_id, session_token: $rootScope.currentUser.session_token }).then(function(res) {
+        $http.post($rootScope.api + '/auth/details').then(function(res) {
             //console.log(res.data[0].about);
             $scope.about_me = res.data[0].about;
         });
@@ -74,7 +81,7 @@
             $scope.alert.about_me.success = false;
             $scope.alert.about_me.error   = false;
             //console.log($rootScope.currentUser);
-            $http.post($rootScope.api + '/auth/update/about', { session_id: $rootScope.currentUser.session_id, session_token: $rootScope.currentUser.session_token, about: $scope.about_me }).then(function(res) {
+            $http.post($rootScope.api + '/auth/update/about', { about: $scope.about_me }).then(function(res) {
                 if( res.data.error == 1 )
                 {
                     $scope.alert.about_me.error = true;
@@ -126,7 +133,7 @@
             var selected_image = ($rootScope.widgets.images.selected == null)? null : $rootScope.widgets.images.selected._id;
             //console.log($rootScope.widgets.images.selected);
 
-            $http.post($rootScope.api + '/blog', { session_id: $rootScope.currentUser.session_id, session_token: $rootScope.currentUser.session_token, title: $scope.post.title, content: simplemde.value(), tag: $scope.post.tag, image: selected_image }).then(function (res) {
+            $http.post($rootScope.api + '/blog', { title: $scope.post.title, content: simplemde.value(), tag: $scope.post.tag, image: selected_image }).then(function (res) {
                 //console.log(res);
                 $rootScope.widgets.images.selected = null;//Remove image from selected.
 
@@ -204,7 +211,7 @@
                 selected_image = $scope.post.image._id;
             }
 
-            $http.put($rootScope.api + '/blog/' + $state.params.id, { session_id: $rootScope.currentUser.session_id, session_token: $rootScope.currentUser.session_token, title: $scope.post.title, content: simplemde.value(), tag: $scope.post.tag, image: selected_image }).then(function (res) {
+            $http.put($rootScope.api + '/blog/' + $state.params.id, { title: $scope.post.title, content: simplemde.value(), tag: $scope.post.tag, image: selected_image }).then(function (res) {
                 //console.log(res);
                 $scope.post.image                  = $rootScope.widgets.images.selected;
                 $rootScope.widgets.images.selected = null;//Remove image from selected.
@@ -226,7 +233,7 @@
             $scope.alert.success = false;
             $scope.alert.error.show = false;
 
-            $http.post($rootScope.api + '/blog/delete/' + $state.params.id, { session_id: $rootScope.currentUser.session_id, session_token: $rootScope.currentUser.session_token }).then(function (res) {
+            $http.post($rootScope.api + '/blog/delete/' + $state.params.id).then(function (res) {
                 //console.log(res);
                 if (res.data.error == 1) {
                     $scope.alert.error.show = true;
@@ -270,7 +277,7 @@
             $scope.alert.new_tag.error.show = false;
             $scope.alert.new_tag.success = false;
 
-            $http.post($rootScope.api + '/tags', { session_id: $rootScope.currentUser.session_id, session_token: $rootScope.currentUser.session_token, title: $scope.new_tag.title, content: $scope.new_tag.content }).then(function (res) {
+            $http.post($rootScope.api + '/tags', { title: $scope.new_tag.title, content: $scope.new_tag.content }).then(function (res) {
                 if (res.data.error == 1) {
                     $scope.alert.new_tag.error.show = true;
                     $scope.alert.new_tag.error.msg = 'Error adding new tag.';
@@ -300,7 +307,7 @@
             $scope.alert.update_tag.error.show = false;
             $scope.alert.update_tag.success = false;
 
-            $http.put($rootScope.api + '/tags/' + $scope.edit_tag.id, { session_id: $rootScope.currentUser.session_id, session_token: $rootScope.currentUser.session_token, title: $scope.edit_tag.title, content: $scope.edit_tag.content }).then(function (res) {
+            $http.put($rootScope.api + '/tags/' + $scope.edit_tag.id, { title: $scope.edit_tag.title, content: $scope.edit_tag.content }).then(function (res) {
                 if (res.data.error == 1) {
                     $scope.alert.update_tag.error.show = true;
                     $scope.alert.update_tag.error.msg = 'Error updating tag.';
@@ -321,7 +328,7 @@
 
         //Delete tag.
         $scope.delete_tag = function () {
-            $http.post($rootScope.api + '/tags/delete/' + $scope.edit_tag.id, { session_id: $rootScope.currentUser.session_id, session_token: $rootScope.currentUser.session_token }).then(function (res) {
+            $http.post($rootScope.api + '/tags/delete/' + $scope.edit_tag.id).then(function (res) {
                 if (res.data.error == 0) {
                     //Remove the tag from the list.
                     //console.log($scope.tags);
@@ -381,7 +388,7 @@
             $scope.alert.new_user.error.show = false;
             $scope.alert.new_user.success = false;
 
-            $http.post($rootScope.api + '/users', { session_id: $rootScope.currentUser.session_id, session_token: $rootScope.currentUser.session_token, username: $scope.new_user.username, password: $scope.new_user.password, email: $scope.new_user.email }).then(function (res) {
+            $http.post($rootScope.api + '/users', { username: $scope.new_user.username, password: $scope.new_user.password, email: $scope.new_user.email }).then(function (res) {
                 if (res.data.error == 1) {
                     $scope.alert.new_user.error.show = true;
                     $scope.alert.new_user.error.msg = 'Error adding new user.';
@@ -398,7 +405,7 @@
              $scope.alert.new_user.error.show = false;
              $scope.alert.new_user.success = false;
  
-             $http.put($rootScope.api + '/users/' + $scope.edit_user.id, { session_id: $rootScope.currentUser.session_id, session_token: $rootScope.currentUser.session_token, username: $scope.edit_user.username, password: $scope.edit_user.password, email: $scope.edit_user.email }).then(function (res) {
+             $http.put($rootScope.api + '/users/' + $scope.edit_user.id, { username: $scope.edit_user.username, password: $scope.edit_user.password, email: $scope.edit_user.email }).then(function (res) {
                  if (res.data.error == 1) {
                      $scope.alert.update_user.error.show = true;
                      $scope.alert.update_user.error.msg = 'Error updating tag.';
@@ -419,7 +426,7 @@
 
         $scope.delete_user = function() {
             //console.log($rootScope.currentUser);
-            $http.post($rootScope.api + '/users/delete/' + $scope.edit_user.id, { session_id: $rootScope.currentUser.session_id, session_token: $rootScope.currentUser.session_token }).then(function (res) {
+            $http.post($rootScope.api + '/users/delete/' + $scope.edit_user.id).then(function (res) {
                 if (res.data.error == 0) {
                     //Remove the tag from the list.
                     //console.log($scope.tags);
@@ -520,7 +527,7 @@
 
             var selected_image = ($rootScope.widgets.images.selected == null)? null : $rootScope.widgets.images.selected._id;
 
-            $http.post($rootScope.api + '/pages', { session_id: $rootScope.currentUser.session_id, session_token: $rootScope.currentUser.session_token, title: $scope.page.title, content: simplemde.value(), boxes: JSON.stringify($scope.content_boxes), image: selected_image }).then(function(res) {
+            $http.post($rootScope.api + '/pages', { title: $scope.page.title, content: simplemde.value(), boxes: JSON.stringify($scope.content_boxes), image: selected_image }).then(function(res) {
                 //console.log(res);
                 $rootScope.widgets.images.selected = null;
 
@@ -620,9 +627,9 @@
             }
 
             //console.log(selected_image);
-            console.log($scope.content_boxes);
+            //console.log($scope.content_boxes);
 
-            $http.put($rootScope.api + '/pages/' + $state.params.id, { session_id: $rootScope.currentUser.session_id, session_token: $rootScope.currentUser.session_token, title: $scope.page.title, content: simplemde.value(), boxes: JSON.stringify($scope.content_boxes), image: selected_image }).then(function(res) {
+            $http.put($rootScope.api + '/pages/' + $state.params.id, { title: $scope.page.title, content: simplemde.value(), boxes: JSON.stringify($scope.content_boxes), image: selected_image }).then(function(res) {
                 //console.log(res);
                 $scope.page.image                  =  (chosen_image)? $rootScope.widgets.images.selected : $scope.page.image;
                 $rootScope.widgets.images.selected = null;
@@ -640,7 +647,7 @@
         };
 
         $scope.delete_page = function() {
-            $http.post($rootScope.api + '/pages/delete/' + $state.params.id, { session_id: $rootScope.currentUser.session_id, session_token: $rootScope.currentUser.session_token }).then(function(res) {
+            $http.post($rootScope.api + '/pages/delete/' + $state.params.id).then(function(res) {
                 $state.go('pages');
             });
         };
@@ -653,7 +660,7 @@
          * As $rootScope is not working, use localStorage natively.
          */
         var user      = JSON.parse(localStorage.getItem('user'));
-        var form_data = { session_id: user.session_id, session_token: user.session_token };
+        // var form_data = { session_id: user.session_id, session_token: user.session_token };
         //console.log(form_data);
 
         /*
@@ -661,7 +668,8 @@
          */
         //console.log(form_data);
         $scope.images = [];
-        $http.put($rootScope.api + '/images', form_data).then(function(res) {
+        //console.log($http.defaults.headers.common);
+        $http.get($rootScope.api + '/images').then(function(res) {
             //console.log(res);
             $scope.images = res.data;
         });
@@ -681,9 +689,9 @@
             }
         });
 
-        uploader.onBeforeUploadItem = function(item) {
+        /*uploader.onBeforeUploadItem = function(item) {
             item.formData.push(form_data);
-        };
+        };*/
 
         uploader.onCompleteItem = function(fileItem, response, status, headers) {
             //fileItem.remove();
@@ -694,7 +702,7 @@
         //Delete image.
         $scope.delete_image = function(index) {
             //console.log(index);
-            $http.post($rootScope.api + '/images/delete/' + $scope.images[index]._id, { session_id: $rootScope.currentUser.session_id, session_token: $rootScope.currentUser.session_token }).then(function(res) {
+            $http.post($rootScope.api + '/images/delete/' + $scope.images[index]._id).then(function(res) {
                 $scope.images.splice(index, 1);
             });
         };

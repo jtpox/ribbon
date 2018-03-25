@@ -3,12 +3,12 @@ const Bcrypt = require('bcrypt');
 const Session = require('../model/session.js');
 
 function isLogged(req, res, next) {
-  // console.log(req.body);
-  if (req.body.session_id && req.body.session_token) {
-    Session.findBySessionId(req.body.session_id, (err, results) => {
+  // console.log(req.headers);
+  if (req.headers.session_id && req.headers.session_token) {
+    Session.findBySessionId(req.headers.session_id, (err, results) => {
       if (results.length > 0) {
         // Check if the token is valid.
-        Bcrypt.compare(req.body.session_token, results[0].token, (bcryptErr, check) => {
+        Bcrypt.compare(req.headers.session_token, results[0].token, (bcryptErr, check) => {
           if (check) {
             req.currentUser = results[0].user;
             /*
@@ -38,7 +38,8 @@ function isLogged(req, res, next) {
 }
 
 function notLogged(req, res, next) {
-  if (req.body.sessionid && req.body.session_token) {
+  // console.log(req.headers);
+  if (req.headers.session_id && req.headers.session_token) {
     res.json({
       error: 1,
     });
