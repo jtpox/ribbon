@@ -24,6 +24,9 @@ class Ribbon {
     this.app.use(BodyParser.json());
     this.app.use(FileUpload());
 
+    // Redirect the route to the theme directory.
+    this.app.use('/', this.express.static(`themes/${Config.theme}`));
+
     this.set_headers();
     this.routes = Routes.routes(this.app);
     this.start();

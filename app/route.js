@@ -29,7 +29,7 @@ function routes(app) {
   const page = new Page();
   const image = new Image();
 
-  app.get('/', index.index);
+  // app.get('/', index.index);
   app.get('/ribbon', index.admin);
   app.get('/ribbon/', index.admin);
   app.get('/install', index.install);

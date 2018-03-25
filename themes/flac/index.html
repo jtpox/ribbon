@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="{{ meta_description }}">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="themes/flac/css/bootstrap.css" />
+    <!-- FLAC theme by Jian Ting (Default theme for ribbon) -->
+    <link rel="stylesheet" href="css/bootstrap.css" />
 
     <title>{{ ((page_title)? page_title + ' | ' : '') + site.name }}</title>
   </head>
@@ -22,8 +22,8 @@
                 </a>
             </div>
             <div class="container nav-wrapper collapse" id="nav-wrapper" uib-collapse="!bootstrap.collapse.main">
-                <h1 class="logo">{{ site.name }}</h1>
-                <ul class="main-nav">
+                <h1 class="logo ng-cloak">{{ site.name }}</h1>
+                <ul class="main-nav ng-cloak">
                     <li><a ui-sref="index" ui-sref-active="current">Home</a></li>
                     <li ng-repeat="page in pages"><a ui-sref="page({ page: page.url })" ui-sref-active="current">{{ page.title }}</a></li>
                 </ul>
@@ -31,22 +31,22 @@
         </div>
 
         <div class="col-md-10">
-            <p class="text-center" ng-show="loader"><img src="themes/flac/img/ajax-loader.gif" /></p>
+            <p class="text-center" ng-show="loader"><img src="img/ajax-loader.gif" /></p>
             <ui-view class="ng-cloak">
             </ui-view>
         </div>
 
     </div>
 
-    <script src="themes/flac/js/angular.js"></script>
-    <script src="themes/flac/js/ui-bootstrap-tpls-3.0.3.min.js"></script>
-    <script src="themes/flac/js/angular-ui-router.min.js"></script>
-    <script src="themes/flac/js/angular-animate.min.js"></script>
+    <script src="js/angular.js"></script>
+    <script src="js/ui-bootstrap-tpls-3.0.3.min.js"></script>
+    <script src="js/angular-ui-router.min.js"></script>
+    <script src="js/angular-animate.min.js"></script>
 
-    <script src="themes/flac/js/showdown.min.js"></script>
+    <script src="js/showdown.min.js"></script>
 
-    <script src="themes/flac/js/flac.js"></script>
-    <script src="themes/flac/js/controllers.js"></script>
+    <script src="js/flac.js"></script>
+    <script src="js/controllers.js"></script>
 
   </body>
 </html>

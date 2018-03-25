@@ -1,6 +1,6 @@
 {
   "name": "ribbon",
-  "version": "2018.3.23",
+  "version": "2018.3.25",
   "description": "A personal management system by jtPox",
   "main": "index.js",
   "scripts": {
