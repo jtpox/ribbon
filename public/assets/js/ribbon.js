@@ -190,7 +190,7 @@
                         * Get all images.
                         */
                         $scope.images = [];
-                        $http.put($rootScope.api + '/images').then(function(res) {
+                        $http.get($rootScope.api + '/images').then(function(res) {
                             $scope.images = res.data;
                         });
 
