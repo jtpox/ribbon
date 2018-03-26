@@ -2,9 +2,7 @@
     <h1 class="display-4">ribbon</h1>
     <div class="card post">
         <div class="card-body">
-            <div class="alert alert-danger" ng-show="signInError">
-                {{ signInErrorMsg }}
-            </div>
+            <div class="alert alert-danger" ng-show="signInError" ng-bind="signInErrorMsg"></div>
 
             <form ng-submit="signIn()">
                 <div class="form-group">

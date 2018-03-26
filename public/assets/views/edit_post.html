@@ -1,5 +1,5 @@
 <div class="col-md-10">
-    <div class="alert alert-danger" ng-show="error.show">{{ error.msg }}</div>
+    <div class="alert alert-danger" ng-show="error.show" ng-bind="error.msg"></div>
     <form action="" method="POST" class="new_post">
 
         <div class="form-group">
@@ -31,7 +31,7 @@
             <h4 class="card-title">Tag</h4>
             <p class="card-text">
                 <select name="tags" class="form-control" ng-model="post.tag">
-                    <option ng-repeat="tag in tags" value="{{ tag._id }}">{{ tag.title }}</option>
+                    <option ng-repeat="tag in tags" value="{{ tag._id }}" ng-bind="tag.title"></option>
                 </select>
             </p>
         </div>

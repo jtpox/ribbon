@@ -6,7 +6,7 @@
 
         <a href="" ui-sref="edit_page({ id: page._id })" class="list-group-item" ng-repeat="page in pages">
             <div class="justify-content-between">
-                <h5 class="mb-1">{{ page.title }}</h5>
+                <h5 class="mb-1" ng-bind="page.title"></h5>
             </div>
         </a>
 

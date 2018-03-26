@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    <div class="alert alert-danger" ng-show="alerts.error.show">{{ alerts.error.msg }}</div>
+    <div class="alert alert-danger" ng-show="alerts.error.show" ng-bind="alerts.error.msg"></div>
     <nav class="navbar navbar-light bg-light">
         <span>
             <button type="button" class="btn btn-default" ng-click="add_content_box()">Add Content Box</button>
@@ -20,7 +20,6 @@
 </div>
 
 <div class="col-md-12"  ng-style="{'background-image': 'url(' + url + '/uploads/images/' + ((widgets.images.selected == null)? page.image.file_name : widgets.images.selected.file_name) + ')', 'background-size': 'contain', 'background-repeat': 'no-repeat', 'margin-bottom': '20px', 'min-height': '120px', 'padding-top': '20px', 'padding-bottom': '20px' }">
-    <div class="alert alert-danger" ng-show="error.show">{{ error.msg }}</div>
     <form action="" method="POST" class="new_post">
 
         <div class="form-group">

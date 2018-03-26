@@ -6,9 +6,9 @@
 
         <a href="" ng-click="show_tag($index)" class="list-group-item" ng-repeat="tag in tags">
             <div class="justify-content-between">
-                <h5 class="mb-1">{{ tag.title }}</h5>
+                <h5 class="mb-1" ng-bind="tag.title"></h5>
             </div>
-            <small>{{ tag.content }}</small>
+            <small ng-bind="tag.content"></small>
         </a>
 
     </div>
@@ -25,7 +25,7 @@
                 </h4>
             </div>
 
-            <div class="alert alert-danger" ng-show="alert.update_tag.error.show">{{ alert.update_tag.error.msg }}</div>
+            <div class="alert alert-danger" ng-show="alert.update_tag.error.show" ng-bind="alert.update_tag.error.msg"></div>
 
             <form method="POST" class="card-text" ng-submit="edit_tag()">
                 <div class="form-group">
@@ -54,7 +54,7 @@
                 </h4>
             </div>
 
-            <div class="alert alert-danger" ng-show="alert.new_tag.error.show">{{ alert.new_tag.error.msg }}</div>
+            <div class="alert alert-danger" ng-show="alert.new_tag.error.show" ng-bind="alert.new_tag.error.msg"></div>
 
             <form method="POST" class="card-text" ng-submit="new_tag()">
                 <div class="form-group">

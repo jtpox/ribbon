@@ -9,7 +9,7 @@
         </h4>
     </div>
 
-    <div class="alert alert-danger" ng-show="alert.about_me.error.show">{{ alert.update_tag.error.msg }}</div>
+    <div class="alert alert-danger" ng-show="alert.about_me.error.show" ng-bind="alert.update_tag.error.msg"></div>
 
     <form ng-submit="edit_about()">
         <div class="form-group">
