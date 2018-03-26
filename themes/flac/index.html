@@ -9,7 +9,7 @@
     <!-- FLAC theme by Jian Ting (Default theme for ribbon) -->
     <link rel="stylesheet" href="css/bootstrap.css" />
 
-    <title>{{ ((page_title)? page_title + ' | ' : '') + site.name }}</title>
+    <title ng-bind="((page_title)? page_title + ' | ' : '') + site.name"></title>
   </head>
   <body>
 
