@@ -33,7 +33,7 @@ function routes(app) {
   app.get('/ribbon', index.admin);
   app.get('/ribbon/', index.admin);
   app.get('/install', index.install);
-  
+
   app.get('/api/update', AuthMid.isLogged, index.update);
 
   app.post('/api/auth', AuthMid.notLogged, auth.signin);

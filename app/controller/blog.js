@@ -3,7 +3,8 @@
  */
 const Post = require('../model/post');
 
-const Config = require('../../config/server');
+const Config  = require('../../config/server');
+const Package = require('../../package');
 
 const Slugify = require('slugify');
 
@@ -11,6 +12,7 @@ const Db = require('../database');// Soley used for the ObjectId type.
 
 class Blog {
   site(req, res) {
+    Config.site.ribbon_version = Package.version;
     res.json(Config.site);
   }
 
