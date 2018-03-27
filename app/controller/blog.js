@@ -47,7 +47,12 @@ class Blog {
       limit: 10,
       page,
     };
-    Post.paginate({}, options).then((result) => {
+    Post.paginate({
+      hidden: false,
+      created_at: {
+        $lte: new Date(),
+      },
+    }, options).then((result) => {
       // console.log(result);
       res.json(result);
     });
@@ -60,7 +65,7 @@ class Blog {
     }
     // List the blog posts with pagination.
     // https://stackoverflow.com/questions/42700884/select-all-the-fields-in-a-mongoose-schema
-    const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', '_id'];
+    const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', '_id', 'hidden'];
     const query = Post.find({}).select(fields.join(' ')).sort({ created_at: 'descending' })
       .populate('created_by', '-password')
       .populate('tag image');
@@ -73,7 +78,7 @@ class Blog {
 
   view(req, res) {
     // View post by id.
-    const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated'];
+    const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
     const query = Post.find({ _id: req.params.id }).select(fields.join(' '))
       .populate('created_by', '-password').populate('tag image');
     query.exec((err, result) => {
@@ -83,7 +88,7 @@ class Blog {
   }
 
   from_url(req, res) {
-    const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated'];
+    const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
     const query = Post.find({ url: req.params.url }).select(fields.join(' '))
       .populate('created_by', '-password').populate('tag image');
     query.exec((err, result) => {
@@ -95,7 +100,7 @@ class Blog {
   insert(req, res) {
     // console.log(req.currentUser);
     // Add a blog post.
-    if (req.body.title && req.body.content && req.body.tag) {
+    if (req.body.title && req.body.content && req.body.tag && req.body.schedule) {
       // console.log(req.body.image);
       const post = new Post({
         title: req.body.title,
@@ -104,6 +109,8 @@ class Blog {
         image: (req.body.image !== null) ? Db.Types.ObjectId(req.body.image) : null,
         created_by: Db.Types.ObjectId(req.currentUser),
         tag: Db.Types.ObjectId(req.body.tag),
+        created_at: new Date(req.body.schedule),
+        hidden: (req.body.hidden) ? req.body.hidden : false,
       });
 
       post.save((err, new_post) => {
@@ -129,9 +136,15 @@ class Blog {
 
   update(req, res) {
     // Update a blog post.
-    if (req.body.title && req.body.content && req.body.tag) {
+    if (req.body.title && req.body.content && req.body.tag && req.body.schedule) {
       Post.update({ _id: req.params.id }, {
-        title: req.body.title, url: Slugify(req.body.title), content: req.body.content, tag: Db.Types.ObjectId(req.body.tag), image: (req.body.image !== null) ? Db.Types.ObjectId(req.body.image) : null,
+        title: req.body.title,
+        url: Slugify(req.body.title),
+        content: req.body.content,
+        tag: Db.Types.ObjectId(req.body.tag),
+        image: (req.body.image !== null) ? Db.Types.ObjectId(req.body.image) : null,
+        created_at: new Date(req.body.schedule),
+        hidden: (req.body.hidden) ? req.body.hidden : false,
       }, (err) => {
         if (err) {
           res.json({

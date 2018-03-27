@@ -34,11 +34,41 @@
     </div>
 
     <div class="card post">
+        <div class="card-body">
+            <h4 class="card-title">Schedule</h4>
+            <p class="card-text">
+                <div class="input-group">
+                    <input type="date" min="{{ post.date | date:'MM/dd/yyyy' }}" ng-model="post.date" class="form-control" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-secondary" ng-click="current_date()" title="Set Today">
+                            <i class="fa fa-clock-o"></i>
+                        </button>
+                    </span>
+                </div>
+            </p>
+        </div>
+    </div>
+
+    <div class="card post">
         <img class="card-img-top" ng-src="{{ url + '/uploads/images/' + widgets.images.selected.file_name }}" ng-show="widgets.images.selected !== null" />
         <div class="card-body">
             <h4 class="card-title">Image</h4>
             <p class="card-text">
                 <span compile="widgets.images.button_html"></span>
+            </p>
+        </div>
+    </div>
+
+    <div class="card post">
+        <div class="card-body">
+            <h4 class="card-title">Options</h4>
+            <p class="card-text">
+                <div class="form-group">
+                    <label>
+                            <input type="checkbox" ng-model="post.hidden" />
+                            Hidden Post
+                    </label>
+                </div>
             </p>
         </div>
     </div>

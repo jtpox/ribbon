@@ -17,6 +17,10 @@
                 templateUrl: '/assets/views/default.html',
                 controller: 'indexController'
             })
+            .state('update', {
+                url: '/update',//Only visit this URL if there is an important update! (E.g. Database schema changes in the most recent update.)
+                controller: 'updateController'
+            })
             .state('logout', {
                 url: '/logout',
                 controller: 'logOutController'
@@ -239,6 +243,15 @@
 
             //MM DD, YY
             return month_names[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
+        }
+    });
+
+    app.filter('date_input', function() {
+        return function(val)
+        {
+            var date = new Date(val);
+
+            return date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate();
         }
     });
 

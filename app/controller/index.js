@@ -23,6 +23,21 @@ class Index {
     res.sendFile(Path.join(__dirname, '..', '..', 'public', 'admin.html'));
   }
 
+  /*
+   * Update database to 2018.3.27.
+   * Version number can be found in package.json
+   */
+  update(req, res) {
+    // Update Post
+    Post.updateMany({}, { hidden: false }, () => {});
+
+    Page.updateMany({}, { hidden: false }, () => {});
+
+    res.json({
+      error: 0,
+    });
+  }
+
   install(req, res) {
     /*
          * Check if a user exists in the database.

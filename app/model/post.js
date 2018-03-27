@@ -1,12 +1,13 @@
 const Db = require('../database');
 const MongoosePaginate = require('mongoose-paginate');
 
-const ObjectId = Db.Schema.ObjectId;
+let ObjectId = Db.Schema.ObjectId;
 const schema = Db.Schema({
   title: String,
   url: String,
   content: String,
   image: { type: ObjectId, ref: 'Image', default: null },
+  hidden: { type: Boolean, default: false },
   created_by: { type: ObjectId, ref: 'User' },
   tag: { type: ObjectId, ref: 'Tag' },
   created_at: { type: Date, default: Date.now },

@@ -1,6 +1,6 @@
 const Db = require('../database');
 
-const ObjectId = Db.Schema.ObjectId;
+let ObjectId = Db.Schema.ObjectId;
 const schema = Db.Schema({
   title: String,
   url: String,

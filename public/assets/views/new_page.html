@@ -12,6 +12,10 @@
             </button>
         </span>
         <span>
+            <button type="button" class="btn btn-primary" ng-click="page.hidden = !page.hidden">
+                <i class="fa" ng-class="{ 'fa-eye': !page.hidden, 'fa-eye-slash': page.hidden }"></i>
+                <span ng-bind="(page.hidden)? 'Page Hidden' : 'Page Viewable'"></span>
+            </button>
             <button type="button" class="btn btn-success" ng-click="new_page()">Publish</button>
         </span>
     </nav>

@@ -33,6 +33,8 @@ function routes(app) {
   app.get('/ribbon', index.admin);
   app.get('/ribbon/', index.admin);
   app.get('/install', index.install);
+  
+  app.get('/api/update', AuthMid.isLogged, index.update);
 
   app.post('/api/auth', AuthMid.notLogged, auth.signin);
   app.post('/api/auth/check', auth.check);
@@ -43,7 +45,7 @@ function routes(app) {
 
   app.get('/api', blog.site);
 
-  app.get('/api/blog', blog.list);
+  app.get('/api/blog', AuthMid.isLogged, blog.list);// Only viewable by admin.
   app.post('/api/blog', AuthMid.isLogged, blog.insert);// Inserting a new blog post.
 
   app.get('/api/blog/page/:page', blog.paginate);
@@ -73,9 +75,10 @@ function routes(app) {
   app.post('/api/users/delete/:id', AuthMid.isLogged, user.delete);
 
   app.get('/api/pages', page.list);
+  app.get('/api/pages/admin', AuthMid.isLogged, page.admin_list);
   app.post('/api/pages', AuthMid.isLogged, page.insert);
 
-  app.get('/api/pages/:id', page.get);
+  app.get('/api/pages/:id', AuthMid.isLogged, page.get);// Only viewable by admin.
   app.get('/api/pages/url/:url', page.from_url);
   app.put('/api/pages/:id', AuthMid.isLogged, page.update);
   app.delete('/api/pages/:id', AuthMid.isLogged, page.delete);

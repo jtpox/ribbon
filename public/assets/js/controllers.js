@@ -39,6 +39,19 @@
         };
     });
 
+    app.controller('updateController', function($scope, $state, $http, $rootScope) {
+        $http.get($rootScope.api + '/update').then(function(res) {
+            if( res.data.error == 0 )
+            {
+                console.log('Update successful!');
+            }
+            else
+            {
+                console.log('Error updating.');
+            }
+        });
+    });
+
     app.controller('logOutController', function ($scope, $state, $http, $rootScope) {
         $http.post($rootScope.api + '/auth/logout').then(function (res) {
             //console.log(res);
@@ -115,10 +128,20 @@
             autoDownloadFontAwesome: false
         });
 
+
         //Error Messages
         $scope.error = {
             show: false,
             msg: null
+        };
+
+        $scope.post = {
+            date: new Date()
+        };
+
+        $scope.current_date = function() {
+            //console.log('Here');
+            $scope.post.date = new Date();
         };
 
         //Getting all the tags.
@@ -133,7 +156,7 @@
             var selected_image = ($rootScope.widgets.images.selected == null)? null : $rootScope.widgets.images.selected._id;
             //console.log($rootScope.widgets.images.selected);
 
-            $http.post($rootScope.api + '/blog', { title: $scope.post.title, content: simplemde.value(), tag: $scope.post.tag, image: selected_image }).then(function (res) {
+            $http.post($rootScope.api + '/blog', { title: $scope.post.title, content: simplemde.value(), tag: $scope.post.tag, image: selected_image, schedule: $scope.post.date, hidden: $scope.post.hidden }).then(function (res) {
                 //console.log(res);
                 $rootScope.widgets.images.selected = null;//Remove image from selected.
 
@@ -184,7 +207,14 @@
             simplemde.value(res.data[0].content);
             $scope.post.tag                    = res.data[0].tag._id;
             //$rootScope.widgets.images.selected = res.data[0].image;
-            $scope.post.image = res.data[0].image;
+            $scope.post.image      = res.data[0].image;
+            $scope.post.hidden     = res.data[0].hidden;
+            $scope.post.created_at = new Date(res.data[0].created_at);
+
+            let original_date      = new Date(res.data[0].created_at);
+            $scope.reset_date      = function() {
+                $scope.post.created_at = original_date;
+            };
         });
 
         /*
@@ -211,7 +241,7 @@
                 selected_image = $scope.post.image._id;
             }
 
-            $http.put($rootScope.api + '/blog/' + $state.params.id, { title: $scope.post.title, content: simplemde.value(), tag: $scope.post.tag, image: selected_image }).then(function (res) {
+            $http.put($rootScope.api + '/blog/' + $state.params.id, { title: $scope.post.title, content: simplemde.value(), tag: $scope.post.tag, image: selected_image, schedule: $scope.post.created_at, hidden: $scope.post.hidden }).then(function (res) {
                 //console.log(res);
                 $scope.post.image                  = $rootScope.widgets.images.selected;
                 $rootScope.widgets.images.selected = null;//Remove image from selected.
@@ -451,7 +481,7 @@
     
     app.controller('pagesController', function ($scope, $state, $http, $rootScope) {
         //Get all pages.
-        $http.get($rootScope.api + '/pages').then(function(res) {
+        $http.get($rootScope.api + '/pages/admin').then(function(res) {
             $scope.pages = res.data;
         });
     });
@@ -522,12 +552,16 @@
             $scope.content_boxes[other_index] = other_obj;
         };
 
+        $scope.page = {
+            hidden: false
+        };
+
         $scope.new_page = function() {
             $scope.alerts.error.show = false;
 
             var selected_image = ($rootScope.widgets.images.selected == null)? null : $rootScope.widgets.images.selected._id;
 
-            $http.post($rootScope.api + '/pages', { title: $scope.page.title, content: simplemde.value(), boxes: JSON.stringify($scope.content_boxes), image: selected_image }).then(function(res) {
+            $http.post($rootScope.api + '/pages', { title: $scope.page.title, content: simplemde.value(), boxes: JSON.stringify($scope.content_boxes), image: selected_image, hidden: $scope.page.hidden }).then(function(res) {
                 //console.log(res);
                 $rootScope.widgets.images.selected = null;
 
@@ -572,6 +606,7 @@
             simplemde.value(res.data.details.description);
             $scope.content_boxes = res.data.boxes;
             $scope.page.image    = res.data.details.image;
+            $scope.page.hidden   = res.data.details.hidden;
             //console.log(res.data);
         });
 
@@ -629,7 +664,7 @@
             //console.log(selected_image);
             //console.log($scope.content_boxes);
 
-            $http.put($rootScope.api + '/pages/' + $state.params.id, { title: $scope.page.title, content: simplemde.value(), boxes: JSON.stringify($scope.content_boxes), image: selected_image }).then(function(res) {
+            $http.put($rootScope.api + '/pages/' + $state.params.id, { title: $scope.page.title, content: simplemde.value(), boxes: JSON.stringify($scope.content_boxes), image: selected_image, hidden: $scope.page.hidden }).then(function(res) {
                 //console.log(res);
                 $scope.page.image                  =  (chosen_image)? $rootScope.widgets.images.selected : $scope.page.image;
                 $rootScope.widgets.images.selected = null;

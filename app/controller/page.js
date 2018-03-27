@@ -14,6 +14,16 @@ class PageC {
     // List the blog posts with pagination.
     // https://stackoverflow.com/questions/42700884/select-all-the-fields-in-a-mongoose-schema
     const fields = ['title', 'url', 'description'];
+    const query = Page.find({ hidden: false }).select(fields.join(' '));
+
+    query.exec((err, results) => {
+      // console.log(results);
+      res.json(results);
+    });
+  }
+
+  admin_list(req, res) {
+    const fields = ['title', 'url', 'description', 'hidden'];
     const query = Page.find({}).select(fields.join(' '));
 
     query.exec((err, results) => {
@@ -24,7 +34,7 @@ class PageC {
 
   get(req, res) {
     // Get page details.
-    const fields = ['title', 'url', 'description', 'created_at', 'last_updated', '_id', 'created_by', 'image'];
+    const fields = ['title', 'url', 'description', 'created_at', 'last_updated', '_id', 'created_by', 'image', 'hidden'];
     const query = Page.find({ _id: req.params.id }).select(fields.join(' '))
       .populate('created_by', '-password').populate('image');
 
@@ -84,6 +94,7 @@ class PageC {
         description: req.body.content,
         created_by: Db.Types.ObjectId(req.currentUser),
         image: (req.body.image !== null) ? Db.Types.ObjectId(req.body.image) : null,
+        hidden: (req.body.hidden) ? req.body.hidden : false,
       });
 
       page.save((err, new_page) => {
@@ -118,11 +129,14 @@ class PageC {
     // Update a page.
     // console.log(req.body);
     if (req.body.title && req.body.content && req.body.boxes) {
-      const image = (req.body.image !== null) ? Db.Types.ObjectId(req.body.image) : null;
       // console.log(image);
 
       Page.update({ _id: req.params.id }, {
-        title: req.body.title, url: Slugify(req.body.title), description: req.body.content, image,
+        title: req.body.title,
+        url: Slugify(req.body.title),
+        description: req.body.content,
+        image: (req.body.image !== null) ? Db.Types.ObjectId(req.body.image) : null,
+        hidden: (req.body.hidden) ? req.body.hidden : false,
       }, (err) => {
         if (err) {
           res.json({

@@ -8,7 +8,10 @@
                 <div class="justify-content-between">
                     <h5 class="mb-1" ng-bind="post.title"></h5>
                 </div>
-                <small>By <span ng-bind="post.created_by.username"></span> - <span ng-bind="post.created_at | format_date"></span> - <span ng-bind="post.tag.title"></span></small>
+                <small>
+                    <i class="fa" ng-class="{ 'fa-eye': !post.hidden, 'fa-eye-slash': post.hidden }"></i>
+                    By <span ng-bind="post.created_by.username"></span> - <span ng-bind="post.created_at | format_date"></span> - <span ng-bind="post.tag.title"></span>
+                </small>
             </a>
 
     </div>

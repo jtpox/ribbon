@@ -7,6 +7,9 @@
         <a href="" ui-sref="edit_page({ id: page._id })" class="list-group-item" ng-repeat="page in pages">
             <div class="justify-content-between">
                 <h5 class="mb-1" ng-bind="page.title"></h5>
+                <small>
+                    Status: <i class="fa" ng-class="{ 'fa-eye': !page.hidden, 'fa-eye-slash': page.hidden }"></i>
+                </small>
             </div>
         </a>
 
