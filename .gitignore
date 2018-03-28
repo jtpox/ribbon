@@ -5,3 +5,4 @@ themes/flac/.sass-cache/
 config/database.json
 config/server.json
 config/analytics.js
+themes/*
