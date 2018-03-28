@@ -1,21 +1,21 @@
 /*
 Error: Undefined variable: "$gray-100".
-        on line 85 of scss/ribbon.scss
+        on line 84 of scss/ribbon.scss
 
-80:     /* Margin & Padding *\/
-81:     margin: 10px 0 10px 0;
-82: }
-83: 
-84: .side-nav {
-85:     background-color: $gray-100;
-86:     overflow-y: scroll;
-87: }
-88: 
-89: .logo {
-90:     /* Font *\/
+79:     /* Margin & Padding *\/
+80:     margin: 10px 0 10px 0;
+81: }
+82: 
+83: .side-nav {
+84:     background-color: $gray-100;
+85:     overflow-y: auto;
+86: }
+87: 
+88: .logo {
+89:     /* Font *\/
 
 Backtrace:
-scss/ribbon.scss:85
+scss/ribbon.scss:84
 C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.5.5/lib/sass/script/tree/variable.rb:49:in `_perform'
 C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.5.5/lib/sass/script/tree/node.rb:50:in `perform'
 C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.5.5/lib/sass/tree/visitors/perform.rb:402:in `visit_prop'
@@ -69,4 +69,4 @@ C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-listen-4.0.0/lib/sass-listen/interna
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined variable: \"$gray-100\".\A         on line 85 of scss/ribbon.scss\A \A 80:     /* Margin & Padding */\A 81:     margin: 10px 0 10px 0;\A 82: }\A 83: \A 84: .side-nav {\A 85:     background-color: $gray-100;\A 86:     overflow-y: scroll;\A 87: }\A 88: \A 89: .logo {\A 90:     /* Font */"; }
+  content: "Error: Undefined variable: \"$gray-100\".\A         on line 84 of scss/ribbon.scss\A \A 79:     /* Margin & Padding */\A 80:     margin: 10px 0 10px 0;\A 81: }\A 82: \A 83: .side-nav {\A 84:     background-color: $gray-100;\A 85:     overflow-y: auto;\A 86: }\A 87: \A 88: .logo {\A 89:     /* Font */"; }

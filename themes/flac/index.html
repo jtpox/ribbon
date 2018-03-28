@@ -17,6 +17,7 @@
 
         <div class="col-md-2 side-nav">
             <div class="container toggle-nav">
+                <span class="logo ng-cloak btn" ng-bind="site.name"></span>
                 <a ng-click="bootstrap.collapse.main = !bootstrap.collapse.main" class="btn btn-default float-right" data-toggle="collapse">
                     <span class="fa fa-bars"></span>
                 </a>
@@ -30,10 +31,14 @@
             </div>
         </div>
 
-        <div class="col-md-10">
+        <div class="col-md-10 main-content">
             <p class="text-center" ng-show="loader"><img src="img/ajax-loader.gif" /></p>
-            <ui-view class="ng-cloak">
+            <ui-view class="ng-cloak" style="height:100%;">
             </ui-view>
+
+            <footer class="footer">
+                powered by <a href="https://github.com/jtpox/ribbon" target="_blank">ribbon</a>
+            </footer>
         </div>
 
     </div>

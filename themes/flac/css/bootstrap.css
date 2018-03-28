@@ -3,9 +3,13 @@
  * Copyright 2011-2018 The Bootstrap Authors
  * Copyright 2011-2018 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ *
+ * Theme: flac
+ * Platform: ribbon (https://github.com/jtpox/ribbon)
+ * By: Jian Ting (https://jtpox.com/)
  */
 @import url("fontawesome-all.min.css");
-@import url("https://fonts.googleapis.com/css?family=Gentium+Basic:400,400i,700,700i|Rubik");
+@import url("https://fonts.googleapis.com/css?family=Gentium+Basic:400,400i,700,700i|Rubik:300,300i,400");
 :root {
   --blue: #3bafda;
   --indigo: #4a89dc;
@@ -6349,11 +6353,13 @@ html, body {
   height: 100%; }
 
 .main-content {
-  max-height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto; }
+
+.page-content {
+  min-height: 100%;
   /* Margin & Padding */
   padding-top: 20px;
-  padding-bottom: 20px; }
+  padding-bottom: 75px; }
 
 h1, h2, h3, h4 {
   /* Font */
@@ -6368,11 +6374,8 @@ h1, h2, h3, h4 {
     height: auto; }
 
   .wrapper {
-    height: auto; }
-
-  .main-content {
-    max-height: auto;
-    overflow-y: auto; }
+    height: auto;
+    /* height: 100%; */ }
 
   .card.post-single {
     /* Margin & Padding */
@@ -6399,7 +6402,7 @@ h1, h2, h3, h4 {
 
 .side-nav {
   background-color: #f5f7fa;
-  overflow-y: scroll; }
+  overflow-y: auto; }
 
 .logo {
   /* Font */
@@ -6459,12 +6462,14 @@ ul.main-nav > li > a.current, ul.main-nav > li > a.current:hover {
  */
 footer.footer {
   background-color: #f5f7fa;
-  height: 54px;
+  height: auto;
   /* Font */
   font-family: 'Rubik', sans-serif;
   text-align: center;
+  font-weight: 300;
   /* Margin & Padding */
-  padding: 15px; }
+  padding: 15px;
+  margin-top: -54px; }
 
 /*
  * Card
@@ -6516,6 +6521,10 @@ span.date {
 .media .media-body h5 a:hover {
   /* Font */
   color: #da4453; }
+
+.page-image {
+  /* Margin & Padding */
+  margin-top: -20px; }
 
 /*
  * Scrollbar

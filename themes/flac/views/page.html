@@ -1,6 +1,7 @@
-<div style="max-height:100%;min-height:100%;overflow-y:scroll;overflow-x:hidden;">
-    <img ng-src="{{ 'uploads/images/' + page.details.image.file_name }}" ng-show="page.details.image !== null" class="img-fluid" />
-    <div class="row">
+<div class="page-content">
+    <img ng-src="{{ 'uploads/images/' + page.details.image.file_name }}" ng-show="page.details.image !== null" class="img-fluid page-image"
+    />
+    <div class="row no-gutters">
         <div class="col-md-8 offset-md-2">
             <div class="card" ng-class="{ 'post-single': page.details.image !== null, 'post-no-image': page.details.image == null }">
                 <div class="card-body text-center">
