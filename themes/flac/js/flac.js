@@ -123,4 +123,10 @@
         }
     });
 
+    app.filter('trust_html', ['$sce', function($sce) {
+        return function(val) {
+            return $sce.trustAsHtml(val);
+        };
+    }]);
+
 })();

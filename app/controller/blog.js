@@ -3,8 +3,9 @@
  */
 const Post = require('../model/post');
 
-const Config  = require('../../config/server');
+const Config = require('../../config/server');
 const Package = require('../../package');
+const Analytic = require('../../config/analytics');
 
 const Slugify = require('slugify');
 
@@ -13,14 +14,12 @@ const Db = require('../database');// Soley used for the ObjectId type.
 class Blog {
   site(req, res) {
     Config.site.ribbon_version = Package.version;
+    Config.site.analytics = Analytic;
     res.json(Config.site);
   }
 
   paginate(req, res) {
-    let page = 1;
-    if (req.params.page != null) {
-      page = req.params.page;
-    }
+    const page = (req.params.page != null) ? req.params.page : 1;
     // List the blog posts with pagination.
     // https://stackoverflow.com/questions/42700884/select-all-the-fields-in-a-mongoose-schema
     /* var fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', '_id'];
@@ -61,10 +60,7 @@ class Blog {
   }
 
   list(req, res) {
-    let page = 1;
-    if (req.params.page != null) {
-      page = req.params.page;
-    }
+    // let page = (req.params.page != null) ? req.params.page : 1;
     // List the blog posts with pagination.
     // https://stackoverflow.com/questions/42700884/select-all-the-fields-in-a-mongoose-schema
     const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', '_id', 'hidden'];
