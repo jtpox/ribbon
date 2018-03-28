@@ -4,3 +4,4 @@ public/assets/.sass-cache/
 themes/flac/.sass-cache/
 config/database.json
 config/server.json
+config/analytics.js
