@@ -205,6 +205,11 @@ footer.footer {
     text-align: center;
 }
 
+.card.post-single p.card-text, .card.post-no-image p.card-text, .card.post p.card-text {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
 span.date {
     /* Font */
     color: $red;
