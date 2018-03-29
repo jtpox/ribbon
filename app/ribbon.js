@@ -60,7 +60,7 @@ class Ribbon {
        * Start secure server.
        */
       this.server = Https.createServer(options, this.app).listen(Config.secure_port, () => {
-        this.log.log(['etc'], `ribbon secure server started at port ${Config.port}.`);
+        this.log.log(['etc'], `ribbon secure server started at port ${Config.secure_port}.`);
       });
 
       /*
