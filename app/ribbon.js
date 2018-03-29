@@ -43,7 +43,30 @@ class Ribbon {
         cert: Fs.readFileSync(Config.key.cert),
       };
 
-      this.server = Https.createServer(options, this.app).listen(Config.port, () => {
+      /*
+       * Force HTTPS on all routes.
+       */
+      this.app.use('*', (req, res, next) => {
+        if(!req.secure) {
+          let secure_url = 'https://' + req.headers['host'] + req.url;
+          res.writeHead(301, { 'Location': secure_url });
+          res.end();
+        }
+
+        next();
+      });
+
+      /*
+       * Start secure server.
+       */
+      this.server = Https.createServer(options, this.app).listen(Config.secure_port, () => {
+        this.log.log(['etc'], `ribbon secure server started at port ${Config.port}.`);
+      });
+
+      /*
+       * Start normal server.
+       */
+      this.app.listen(Config.port, () => {
         this.log.log(['etc'], `ribbon server started at port ${Config.port}.`);
       });
     } else {
