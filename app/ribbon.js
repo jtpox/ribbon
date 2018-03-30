@@ -47,9 +47,9 @@ class Ribbon {
        * Force HTTPS on all routes.
        */
       this.app.use('*', (req, res, next) => {
-        if(!req.secure) {
-          let secure_url = 'https://' + req.headers['host'] + req.url;
-          res.writeHead(301, { 'Location': secure_url });
+        if (!req.secure) {
+          const secure_url = `https://${req.headers.host}${req.url}`;
+          res.writeHead(301, { Location: secure_url });
           res.end();
         }
 
