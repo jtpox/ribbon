@@ -5,6 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="{{ meta_description }}">
+    <meta property="og:title" content="{{ ((page_title)? page_title + ' | ' : '') + site.name }}">
+    <meta property="og:description" content="{{ meta_description }}">
+    <meta name="twitter:title" content="{{ ((page_title)? page_title + ' | ' : '') + site.name }}">
+    <meta name="twitter:description" content="{{ meta_description }}">
 
     <!-- FLAC theme by Jian Ting (Default theme for ribbon) -->
     <link rel="stylesheet" href="css/bootstrap.css" />
