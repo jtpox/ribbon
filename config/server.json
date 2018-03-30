@@ -7,7 +7,7 @@
     },
 
     "_theme": "Name of the theme folder, located in public/themes.",
-    "theme": "flac",
+    "theme": "vue_flac",
 
     "hash": {
         "salt_rounds": 10
