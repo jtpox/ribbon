@@ -14,6 +14,7 @@ const Db = require('../database');// Soley used for the ObjectId type.
 class Blog {
   site(req, res) {
     Config.site.ribbon_version = Package.version;
+    Config.site.url = req.protocol + '://' + req.get('host');
     Config.site.analytics = Analytic;
     res.json(Config.site);
   }
