@@ -1,5 +1,6 @@
 {
     "port": 8080,
+    "secure_port": 8443,
 
     "site": {
         "name": "ribbon"
