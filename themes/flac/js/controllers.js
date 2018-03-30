@@ -18,6 +18,7 @@
         $rootScope.loader           = true;
         $rootScope.page_title       = '';
         $rootScope.meta_description = $rootScope.site.name  + ', powered by ribbon.';
+        $rootScope.meta_image       = '/assets/img/represent.png';
 
         $scope.page        = 1;
         $scope.total_pages = 0;
@@ -60,6 +61,8 @@
                 $rootScope.page_title       = res.data[0].title;
                 $scope.post                 = res.data;
                 $rootScope.meta_description = res.data[0].title + ' by ' + res.data[0].created_by.username + ' on ' + format_date(res.data[0].created_at);
+                console.log(res.data[0].image);
+                $rootScope.meta_image       = (res.data[0].image)? '/uploads/images/' + res.data[0].image.file_name : '/assets/img/represent.png';
             }
             else
             {
@@ -78,6 +81,7 @@
             {
                 $rootScope.page_title       = res.data.details.title;
                 $rootScope.meta_description = res.data.details.title + ' - ' + res.data.details.description.split(' ').splice(0, 50).join(' ');
+                $rootScope.meta_image       = (res.data.details.image)? '/uploads/images/' + res.data.details.image.file_name : '/assets/img/represent.png';
                 $scope.page           = {
                     details: res.data.details,
                     boxes: res.data.boxes
@@ -87,7 +91,6 @@
             {
                 $state.go('index');
             }
-            //console.log(res.data);
         });
     });
 
@@ -107,6 +110,7 @@
 
             $rootScope.page_title       = res.data.tag.title;
             $rootScope.meta_description = res.data.tag.title + ' - ' + res.data.tag.content;
+            $rootScope.meta_image       = '/assets/img/represent.png';
 
             //console.log(res.data.docs);
             $scope.list        = res.data.tag;
@@ -147,6 +151,7 @@
 
             $rootScope.page_title       = res.data.user.username;
             $rootScope.meta_description = res.data.user.username + ' - ' + res.data.user.about;
+            $rootScope.meta_image       = '/uploads/profile/' + res.data.user.avatar;
 
             //console.log(res.data.docs);
             $scope.list        = {

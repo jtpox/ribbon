@@ -51,6 +51,7 @@
         $rootScope.loader           = false;
         $rootScope.page_title       = '';
         $rootScope.meta_description = '';
+        $rootScope.meta_image       = '';
 
         /*
          * UI elements.
@@ -75,6 +76,7 @@
          */
         $http.get($rootScope.api).then(function(res) {
             $rootScope.site = res.data;
+            //console.log(res.data);
         })
 
         $transitions.onStart({}, function(transition) {
