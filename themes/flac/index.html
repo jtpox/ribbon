@@ -7,6 +7,9 @@
     <meta name="description" content="{{ meta_description }}">
     <meta property="og:title" content="{{ ((page_title)? page_title + ' | ' : '') + site.name }}">
     <meta property="og:description" content="{{ meta_description }}">
+    <meta property="og:url" content="{{ site.url }}">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ site.url + meta_image }}">
     <meta name="twitter:title" content="{{ ((page_title)? page_title + ' | ' : '') + site.name }}">
     <meta name="twitter:description" content="{{ meta_description }}">
     <meta name="twitter:site" content="{{ '@' + site.analytics.twitter.username }}" />
