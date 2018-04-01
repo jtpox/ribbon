@@ -22,10 +22,7 @@ class UserC {
   }
 
   posts(req, res) {
-    let page = 1;
-    if (req.params.page != null) {
-      page = req.params.page;
-    }
+    const page = (req.params.page != null)? req.params.page : 1;
 
     const fields = ['username', 'email', 'about', 'created_at', 'avatar', '_id'];
     const query = User.find({ _id: req.params.id }).select(fields.join(' '));
@@ -52,7 +49,7 @@ class UserC {
           limit: 10,
           page,
         };
-        Post.paginate({ created_by: results[0]._id }, options).then((post_results) => {
+        Post.paginate({ created_by: results[0]._id, hidden: false, created_at: { $lte: new Date() } }, options).then((post_results) => {
           // console.log(result);
           res.json({
             user: results[0],

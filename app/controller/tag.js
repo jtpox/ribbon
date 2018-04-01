@@ -23,7 +23,15 @@ class TagC {
     // Get tag details.
     const fields = ['title', 'url', 'content', 'created_at', 'last_updated', '_id', 'posts'];
     const query = Tag.find({ _id: req.params.id }).select(fields.join(' '))
-      .populate('posts');
+      .populate({
+        path: 'posts',
+        match: {
+          hidden: false,
+          created_at: {
+            $lte: new Date(),
+          },
+        },
+      });
 
     query.exec((err, results) => {
       res.json(results);
@@ -31,10 +39,7 @@ class TagC {
   }
 
   posts(req, res) {
-    let page = 1;
-    if (req.params.page != null) {
-      page = req.params.page;
-    }
+    const page = (req.params.page != null)? req.params.page : 1;
 
     const fields = ['title', 'url', 'content', 'created_at'];
     const query = Tag.find({ url: req.params.url }).select(fields.join(' '));
@@ -61,7 +66,7 @@ class TagC {
           limit: 10,
           page,
         };
-        Post.paginate({ tag: results[0]._id }, options).then((post_results) => {
+        Post.paginate({ tag: results[0]._id, hidden: false, created_at: { $lte: new Date() } }, options).then((post_results) => {
           // console.log(result);
           res.json({
             tag: results[0],
