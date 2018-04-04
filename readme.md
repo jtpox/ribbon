@@ -19,3 +19,6 @@ I'll learn React when I have more time -.-
  4. Visit `<url>/install` to set up initial database.
  5. Go to `<url>/ribbon` and log in with `admin@admin.com` and `password` to enter the admin panel.
  6. Create a new user before deleting the **admin** account!
+
+## NGINX Proxy
+If you are using NGINX as a proxy for ribbon, please enable `underscores_in_headers`. More information can be found [here](http://nginx.org/en/docs/http/ngx_http_core_module.html#underscores_in_headers).

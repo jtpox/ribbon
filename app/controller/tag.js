@@ -39,7 +39,7 @@ class TagC {
   }
 
   posts(req, res) {
-    const page = (req.params.page != null)? req.params.page : 1;
+    const page = (req.params.page != null) ? req.params.page : 1;
 
     const fields = ['title', 'url', 'content', 'created_at'];
     const query = Tag.find({ url: req.params.url }).select(fields.join(' '));

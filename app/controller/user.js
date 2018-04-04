@@ -22,7 +22,7 @@ class UserC {
   }
 
   posts(req, res) {
-    const page = (req.params.page != null)? req.params.page : 1;
+    const page = (req.params.page != null) ? req.params.page : 1;
 
     const fields = ['username', 'email', 'about', 'created_at', 'avatar', '_id'];
     const query = User.find({ _id: req.params.id }).select(fields.join(' '));
