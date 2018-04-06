@@ -1,10 +1,8 @@
 ## ribbon
 A personal content management system project that uses **Express**, **MongoDB**.
 
-## Front-end
-I plan to use the ~~React Javascript library~~ Angular Framework for the front-end user interface.
-
-I'll learn React when I have more time -.-
+## User Interface
+The front-end theme `flac` uses the Angular 1 framework while the back-end theme `arabesque` uses the Vue.js 2 framework.
 
 ## Dependencies
 
