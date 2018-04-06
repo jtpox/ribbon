@@ -2,7 +2,9 @@
 A personal content management system project that uses **Express**, **MongoDB**.
 
 ## User Interface
-The front-end theme `flac` uses the Angular 1 framework while the back-end theme `arabesque` uses the Vue.js 2 framework.
+Currently, both the front-end theme `flac` and the back-end administration panel are using the Angular 1 framework.
+
+An extensive update is being applied onto the back-end administration panel. Check out the [arabesque](https://github.com/jtpox/ribbon/tree/arabesque) branch to try it out!
 
 ## Dependencies
 
