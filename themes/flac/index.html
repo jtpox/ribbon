@@ -17,7 +17,7 @@
     <meta name="twitter:card" content="summary">
 
     <!-- FLAC theme by Jian Ting (Default theme for ribbon) -->
-    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="theme/css/bootstrap.css" />
 
     <title ng-bind="((page_title)? page_title + ' | ' : '') + site.name"></title>
   </head>
@@ -42,7 +42,7 @@
         </div>
 
         <div class="col-md-10 main-content">
-            <p class="text-center" ng-show="loader"><img src="img/ajax-loader.gif" /></p>
+            <p class="text-center" ng-show="loader"><img src="theme/img/ajax-loader.gif" /></p>
             <ui-view class="ng-cloak" style="height:100%;">
             </ui-view>
 
@@ -53,15 +53,15 @@
 
     </div>
 
-    <script src="js/angular.js"></script>
-    <script src="js/ui-bootstrap-tpls-3.0.3.min.js"></script>
-    <script src="js/angular-ui-router.min.js"></script>
-    <script src="js/angular-animate.min.js"></script>
+    <script src="theme/js/angular.js"></script>
+    <script src="theme/js/ui-bootstrap-tpls-3.0.3.min.js"></script>
+    <script src="theme/js/angular-ui-router.min.js"></script>
+    <script src="theme/js/angular-animate.min.js"></script>
 
-    <script src="js/showdown.min.js"></script>
+    <script src="theme/js/showdown.min.js"></script>
 
-    <script src="js/flac.js"></script>
-    <script src="js/controllers.js"></script>
+    <script src="theme/js/flac.js"></script>
+    <script src="theme/js/controllers.js"></script>
 
   </body>
 </html>

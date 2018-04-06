@@ -25,7 +25,9 @@ class Ribbon {
     this.app.use(FileUpload());
 
     // Redirect the route to the theme directory.
-    this.app.use('/', this.express.static(`themes/${Config.theme}`));
+    this.app.use('/theme', this.express.static(`themes/${Config.theme}`));
+    this.app.use('/ribbon', this.express.static(`admin/${Config.admin}`));
+    this.app.use('/', this.express.static('public'));
 
     this.set_headers();
     this.routes = Routes.routes(this.app);
@@ -80,8 +82,9 @@ class Ribbon {
     this.app.use((req, res, next) => {
       // Enable CORS
       res.header('Access-Control-Allow-Origin', '*');
-      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+      res.header('Access-Control-Allow-Credentials', 'true');
+      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
+      res.header('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, session_id, session_token');
 
       res.header('X-Powered-By', 'ribbon');
       next();

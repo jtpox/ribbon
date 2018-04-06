@@ -6,8 +6,11 @@
         "name": "ribbon"
     },
 
-    "_theme": "Name of the theme folder, located in public/themes.",
+    "_theme": "Name of the theme folder, located in /themes.",
     "theme": "flac",
+
+    "_admin": "Admin theme. Name of the theme folder, located in /admin",
+    "admin": "arabesque",
 
     "hash": {
         "salt_rounds": 10

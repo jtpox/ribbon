@@ -26,6 +26,7 @@ class ImageC {
   insert(req, res) {
     // Add an image.
     if (req.files) {
+      // console.log(req.files);
       const extension_extract = /(?:\.([^.]+))?$/;
       const extension = extension_extract.exec(req.files.file.name);
       // console.log(extension[1]);

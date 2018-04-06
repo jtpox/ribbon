@@ -15,27 +15,27 @@
         $stateProvider
             .state('index', {
                 url: '/',
-                templateUrl: 'views/home.html',
+                templateUrl: 'theme/views/home.html',
                 controller: 'homeController'
             })
             .state('post', {
                 url: '/post/:post',
-                templateUrl: 'views/post.html',
+                templateUrl: 'theme/views/post.html',
                 controller: 'postController'
             })
             .state('page', {
                 url: '/:page',
-                templateUrl: 'views/page.html',
+                templateUrl: 'theme/views/page.html',
                 controller: 'pageController'
             })
             .state('tag', {
                 url: '/tag/:tag',
-                templateUrl: 'views/list_posts.html',
+                templateUrl: 'theme/views/list_posts.html',
                 controller: 'tagController'
             })
             .state('author', {
                 url: '/author/:author',
-                templateUrl: 'views/list_posts.html',
+                templateUrl: 'theme/views/list_posts.html',
                 controller: 'authorController'
             });
 
