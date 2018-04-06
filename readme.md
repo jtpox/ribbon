@@ -1,10 +1,10 @@
 ## ribbon
 A personal content management system project that uses **Express**, **MongoDB**.
 
-## Front-end
-I plan to use the ~~React Javascript library~~ Angular Framework for the front-end user interface.
+## User Interface
+Currently, both the front-end theme `flac` and the back-end administration panel are using the Angular 1 framework.
 
-I'll learn React when I have more time -.-
+An extensive update is being applied onto the back-end administration panel. Check out the [arabesque](https://github.com/jtpox/ribbon/tree/arabesque) branch to try it out!
 
 ## Dependencies
 
