@@ -41,6 +41,7 @@ function routes(app) {
   app.post('/api/auth/logout', AuthMid.isLogged, auth.logout);
 
   app.post('/api/auth/update/about', AuthMid.isLogged, auth.update_about);
+  app.post('/api/auth/update/avatar', AuthMid.isLogged, auth.update_avatar);
   app.post('/api/auth/details', AuthMid.isLogged, auth.details);
 
   app.get('/api', blog.site);

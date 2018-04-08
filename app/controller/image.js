@@ -39,7 +39,7 @@ class ImageC {
         'bmp',
       ];
 
-      if (allowed_extensions.indexOf(extension[1]) == -1) {
+      if (allowed_extensions.indexOf(extension[1]) === -1) {
         res.json({
           error: 1,
         });
