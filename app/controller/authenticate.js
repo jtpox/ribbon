@@ -189,8 +189,8 @@ class Index {
                   error: 1,
                 });
               } else {
-                User.update({ _id: req.currentUser }, { avatar: `${buffer.toString('hex')}.${extension[1]}` }, (err) => {
-                  if (err) {
+                User.update({ _id: req.currentUser }, { avatar: `${buffer.toString('hex')}.${extension[1]}` }, (update_err) => {
+                  if (update_err) {
                     res.json({
                       error: 1,
                     });
