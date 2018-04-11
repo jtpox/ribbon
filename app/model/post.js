@@ -1,7 +1,7 @@
 const Db = require('../database');
 const MongoosePaginate = require('mongoose-paginate');
 
-let ObjectId = Db.Schema.ObjectId;
+const ObjectId = Db.Schema.ObjectId;
 const schema = Db.Schema({
   title: String,
   url: String,

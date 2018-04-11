@@ -1,6 +1,6 @@
 const Db = require('../database');
 
-let ObjectId = Db.Schema.ObjectId;
+const ObjectId = Db.Schema.ObjectId;
 const schema = Db.Schema({
   token: String,
   user: { type: ObjectId, ref: 'User' },

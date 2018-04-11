@@ -20,6 +20,8 @@ const Page = require('./controller/page');
 
 const Image = require('./controller/image');
 
+const Navigation = require('./controller/navigation');
+
 function routes(app) {
   const index = new Index();
   const blog = new Blog();
@@ -28,6 +30,7 @@ function routes(app) {
   const user = new User();
   const page = new Page();
   const image = new Image();
+  const navigation = new Navigation();
 
   app.get('/', index.index);
   // app.get('/ribbon', index.admin);
@@ -41,9 +44,13 @@ function routes(app) {
   app.post('/api/auth/logout', AuthMid.isLogged, auth.logout);
 
   app.post('/api/auth/update/about', AuthMid.isLogged, auth.update_about);
+  app.post('/api/auth/update/avatar', AuthMid.isLogged, auth.update_avatar);
   app.post('/api/auth/details', AuthMid.isLogged, auth.details);
 
   app.get('/api', blog.site);
+
+  app.get('/api/nav', navigation.list);
+  app.post('/api/nav', AuthMid.isLogged, navigation.update);
 
   app.get('/api/blog', AuthMid.isLogged, blog.list);// Only viewable by admin.
   app.post('/api/blog', AuthMid.isLogged, blog.insert);// Inserting a new blog post.

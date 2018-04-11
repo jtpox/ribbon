@@ -36,7 +36,10 @@
                 <h1 class="logo ng-cloak" ng-bind="site.name"></h1>
                 <ul class="main-nav ng-cloak">
                     <li><a ui-sref="index" ui-sref-active="current">Home</a></li>
-                    <li ng-repeat="page in pages"><a ui-sref="page({ page: page.url })" ui-sref-active="current" ng-bind="page.title"></a></li>
+                    <li ng-repeat="link in nav">
+                        <a ng-if="link.page" ui-sref="page({ page: link.page.url })" ui-sref-active="current" ng-bind="link.title"></a>
+                        <a ng-if="link.link" ng-href="{{ link.link }}" ng-bind="link.title"></a>
+                    </li>
                 </ul>
             </div>
         </div>

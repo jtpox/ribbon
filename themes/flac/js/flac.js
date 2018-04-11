@@ -65,10 +65,17 @@
 
         /*
          * Get all the pages from the API.
-         */
+         *
         $http.get($rootScope.api + '/pages').then(function(res) {
             //console.log(res);
             $rootScope.pages = res.data;
+        });*/
+
+        /*
+         * Get the navigation from the API.
+         */
+        $http.get($rootScope.api + '/nav').then(function(res) {
+            $rootScope.nav = res.data;
         });
 
         /*

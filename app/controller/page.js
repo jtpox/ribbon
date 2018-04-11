@@ -90,7 +90,7 @@ class PageC {
     if (req.body.title && req.body.content && req.body.boxes) {
       const page = new Page({
         title: req.body.title,
-        url: Slugify(req.body.title),
+        url: (req.body.url) ? Slugify(req.body.url) : Slugify(req.body.title),
         description: req.body.content,
         created_by: Db.Types.ObjectId(req.currentUser),
         image: (req.body.image !== null) ? Db.Types.ObjectId(req.body.image) : null,
@@ -133,7 +133,7 @@ class PageC {
 
       Page.update({ _id: req.params.id }, {
         title: req.body.title,
-        url: Slugify(req.body.title),
+        url: (req.body.url) ? Slugify(req.body.url) : Slugify(req.body.title),
         description: req.body.content,
         image: (req.body.image !== null) ? Db.Types.ObjectId(req.body.image) : null,
         hidden: (req.body.hidden) ? req.body.hidden : false,

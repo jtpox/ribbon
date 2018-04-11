@@ -103,7 +103,7 @@ class Blog {
       // console.log(req.body.image);
       const post = new Post({
         title: req.body.title,
-        url: Slugify(req.body.title),
+        url: (req.body.url) ? Slugify(req.body.url) : Slugify(req.body.title),
         content: req.body.content,
         image: (req.body.image !== null) ? Db.Types.ObjectId(req.body.image) : null,
         created_by: Db.Types.ObjectId(req.currentUser),
@@ -138,7 +138,7 @@ class Blog {
     if (req.body.title && req.body.content && req.body.tag && req.body.schedule) {
       Post.update({ _id: req.params.id }, {
         title: req.body.title,
-        url: Slugify(req.body.title),
+        url: (req.body.url) ? Slugify(req.body.url) : Slugify(req.body.title),
         content: req.body.content,
         tag: Db.Types.ObjectId(req.body.tag),
         image: (req.body.image !== null) ? Db.Types.ObjectId(req.body.image) : null,
