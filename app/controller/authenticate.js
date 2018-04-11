@@ -197,7 +197,7 @@ class Index {
                   } else {
                     if (results[0].avatar !== 'default.png') {
                       // Delete the image if it's not default.png.
-                      Fs.unlink(current_avatar, () => {});
+                      Fs.unlink(current_avatar, () => { });
                     }
 
                     res.json({
