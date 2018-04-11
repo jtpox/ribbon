@@ -1,4 +1,5 @@
 ![ribbon logo](https://raw.githubusercontent.com/jtpox/ribbon/master/public/assets/img/ribbon_logo.png)
+
 A personal content management system project that uses **Express** and **MongoDB**.
   
 ## Dependencies
