@@ -7,4 +7,4 @@ A personal content management system project that uses **Express** and **MongoDB
 -  [Mongoose](http://mongoosejs.com/)
 
 ## Initial Setup
-For help in the initial setup, you an find it in the [wiki](https://github.com/jtpox/ribbon/wiki/Initial-Setup).
+For help in the initial setup, you can find it in the [wiki](https://github.com/jtpox/ribbon/wiki/Initial-Setup).
