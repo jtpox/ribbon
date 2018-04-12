@@ -2,6 +2,7 @@
  * Controller for Index.
  */
 const Path = require('path');
+const Config = require('../../config/server');
 
 class Index {
   index(req, res) {
