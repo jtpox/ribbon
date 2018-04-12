@@ -150,72 +150,33 @@ class Index {
 
   /*
    * Updating user display image.
+   * Image upload has been done via middleware.
+   * File name is sent to req.upload.
    */
   update_avatar(req, res) {
-    if (req.files) {
-      // console.log(req.files);
-      const extension_extract = /(?:\.([^.]+))?$/;
-      const extension = extension_extract.exec(req.files.file.name);
-      // console.log(extension[1]);
-
-      const allowed_extensions = [
-        'png',
-        'gif',
-        'jpg',
-        'jpeg',
-        'bmp',
-      ];
-
-      if (allowed_extensions.indexOf(extension[1]) === -1) {
-        res.json({
-          error: 1,
-        });
-      } else {
-        // Get current user to check if the avatar is default.
-        const fields = ['username', 'email', 'about', 'avatar', 'created_at', 'last_updated'];
-        const user = User.find({ _id: req.currentUser }).select(fields.join(' '));
-
-        user.exec((err, results) => {
-          const current_avatar = Path.join(__dirname, '..', '..', 'public', 'uploads', 'profile', results[0].avatar);
-          Crypto.randomBytes(12, (crypto_err, buffer) => {
-            // Generate directory to move the image to.
-            const directory = Path.join(__dirname, '..', '..', 'public', 'uploads', 'profile', `${buffer.toString('hex')}.${extension[1]}`);
-            // console.log(directory);
-
-            req.files.file.mv(directory, (mv_err) => {
-              // console.log(mv_err);
-              if (mv_err) {
-                res.json({
-                  error: 1,
-                });
-              } else {
-                User.update({ _id: req.currentUser }, { avatar: `${buffer.toString('hex')}.${extension[1]}` }, (update_err) => {
-                  if (update_err) {
-                    res.json({
-                      error: 1,
-                    });
-                  } else {
-                    if (results[0].avatar !== 'default.png') {
-                      // Delete the image if it's not default.png.
-                      Fs.unlink(current_avatar, () => { });
-                    }
-
-                    res.json({
-                      error: 0,
-                      image: `${buffer.toString('hex')}.${extension[1]}`,
-                    });
-                  }
-                });
-              }
-            });
+    // Get current user to check if the avatar is default.
+    const fields = ['username', 'email', 'about', 'avatar', 'created_at', 'last_updated'];
+    const user = User.find({ _id: req.currentUser }).select(fields.join(' '));
+    user.exec((err, results) => {
+      User.update({ _id: req.currentUser }, { avatar: req.upload }, (update_err) => {
+        if (update_err) {
+          res.json({
+            error: 1,
           });
-        });
-      }
-    } else {
-      res.json({
-        error: 1,
+        } else {
+          if (results[0].avatar !== 'default.png') {
+            // Delete the image if it's not default.png.
+            const current_avatar = Path.join(__dirname, '..', '..', 'public', 'uploads', 'profile', results[0].avatar);
+            Fs.unlink(current_avatar, () => { });
+          }
+
+          res.json({
+            error: 0,
+            image: req.upload,
+          });
+        }
       });
-    }
+    });
   }
 }
 

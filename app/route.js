@@ -3,6 +3,8 @@
     */
 const AuthMid = require('./middleware/auth');
 
+const ImageMid = require('./middleware/image_upload');
+
 /*
  * Instantiating all controller classes.
  */
@@ -44,7 +46,7 @@ function routes(app) {
   app.post('/api/auth/logout', AuthMid.isLogged, auth.logout);
 
   app.post('/api/auth/update/about', AuthMid.isLogged, auth.update_about);
-  app.post('/api/auth/update/avatar', AuthMid.isLogged, auth.update_avatar);
+  app.post('/api/auth/update/avatar', [AuthMid.isLogged, ImageMid.avatar], auth.update_avatar);
   app.post('/api/auth/details', AuthMid.isLogged, auth.details);
 
   app.get('/api', blog.site);
@@ -93,7 +95,7 @@ function routes(app) {
 
   // app.put('/api/images', AuthMid.isLogged, image.list);// PUT as GET doesn't allow body.
   app.get('/api/images', AuthMid.isLogged, image.list);
-  app.post('/api/images', AuthMid.isLogged, image.insert);
+  app.post('/api/images', [AuthMid.isLogged, ImageMid.library], image.insert);
 
   app.delete('/api/images/:id', AuthMid.isLogged, image.delete);
   app.post('/api/images/delete/:id', AuthMid.isLogged, image.delete);

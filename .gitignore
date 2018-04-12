@@ -7,3 +7,4 @@ config/server.json
 config/analytics.js
 themes/
 admin/
+package-lock.json
