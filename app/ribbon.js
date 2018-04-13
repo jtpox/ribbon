@@ -24,6 +24,10 @@ class Ribbon {
     this.app.use(BodyParser.json());
     this.app.use(FileUpload());
 
+    // Set the template engine. Mustache is used.
+    app.set('views', '../'); // Set to root as we choosing a directory would be more dynamic.
+    app.set('view engine', 'mustache');
+
     // Redirect the route to the theme directory.
     this.app.use('/theme', this.express.static(`themes/${Config.theme}`));
     this.app.use('/ribbon', this.express.static(`admin/${Config.admin}`));
