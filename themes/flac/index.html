@@ -1,70 +1,49 @@
-<!doctype html>
-<html lang="en" ng-app="flac_theme">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="{{ meta_description }}">
-    <meta property="og:title" content="{{ ((page_title)? page_title + ' | ' : '') + site.name }}">
-    <meta property="og:description" content="{{ meta_description }}">
-    <meta property="og:url" content="{{ site.url }}">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="{{ site.url + meta_image }}">
-    <meta name="twitter:title" content="{{ ((page_title)? page_title + ' | ' : '') + site.name }}">
-    <meta name="twitter:description" content="{{ meta_description }}">
-    <meta name="twitter:site" content="{{ '@' + site.analytics.twitter.username }}" />
-    <meta name="twitter:image" content="{{ site.url + meta_image }}" />
-    <meta name="twitter:card" content="summary">
-
-    <!-- FLAC theme by Jian Ting (Default theme for ribbon) -->
-    <link rel="stylesheet" href="theme/css/bootstrap.css" />
-
-    <title ng-bind="((page_title)? page_title + ' | ' : '') + site.name"></title>
-  </head>
-  <body>
-
-    <div class="row no-gutters wrapper">
-
-        <div class="col-md-2 side-nav">
-            <div class="container toggle-nav">
-                <span class="logo ng-cloak btn" ng-bind="site.name"></span>
-                <a ng-click="bootstrap.collapse.main = !bootstrap.collapse.main" class="btn btn-default float-right" data-toggle="collapse">
-                    <span class="fa fa-bars"></span>
-                </a>
-            </div>
-            <div class="container nav-wrapper collapse" id="nav-wrapper" uib-collapse="!bootstrap.collapse.main">
-                <h1 class="logo ng-cloak" ng-bind="site.name"></h1>
-                <ul class="main-nav ng-cloak">
-                    <li><a ui-sref="index" ui-sref-active="current">Home</a></li>
-                    <li ng-repeat="link in nav">
-                        <a ng-if="link.page" ui-sref="page({ page: link.page.url })" ui-sref-active="current" ng-bind="link.title"></a>
-                        <a ng-if="link.link" ng-href="{{ link.link }}" ng-bind="link.title"></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="col-md-10 main-content">
-            <p class="text-center" ng-show="loader"><img src="theme/img/ajax-loader.gif" /></p>
-            <ui-view class="ng-cloak" style="height:100%;">
-            </ui-view>
-
-            <footer class="footer">
-                powered by <a href="https://github.com/jtpox/ribbon" target="_blank">ribbon</a>
-            </footer>
-        </div>
-
-    </div>
-
-    <script src="theme/js/angular.js"></script>
-    <script src="theme/js/ui-bootstrap-tpls-3.0.3.min.js"></script>
-    <script src="theme/js/angular-ui-router.min.js"></script>
-    <script src="theme/js/angular-animate.min.js"></script>
-
-    <script src="theme/js/showdown.min.js"></script>
-
-    <script src="theme/js/flac.js"></script>
-    <script src="theme/js/controllers.js"></script>
-
-  </body>
-</html>
+doctype html
+html(lang="en" ng-app="flac_theme")
+  head
+    // Required meta tags
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    meta(name="description" content="{{ meta_description }}")
+    meta(property="og:title" content="{{ ((page_title)? page_title + ' | ' : '') + site.name }}")
+    meta(property="og:description" content="{{ meta_description }}")
+    meta(property="og:url" content="{{ site.url }}")
+    meta(property="og:type" content="website")
+    meta(property="og:image" content="{{ site.url + meta_image }}")
+    meta(name="twitter:title" content="{{ ((page_title)? page_title + ' | ' : '') + site.name }}")
+    meta(name="twitter:description" content="{{ meta_description }}")
+    meta(name="twitter:site" content="{{ '@' + site.analytics.twitter.username }}")
+    meta(name="twitter:image" content="{{ site.url + meta_image }}")
+    meta(name="twitter:card" content="summary")
+    // FLAC theme by Jian Ting (Default theme for ribbon)
+    link(rel="stylesheet" href="theme/css/bootstrap.css")
+    title(ng-bind="((page_title)? page_title + ' | ' : '') + site.name")=site.name
+  body
+    .row.no-gutters.wrapper
+      .col-md-2.side-nav
+        .container.toggle-nav
+          span.logo.ng-cloak.btn(ng-bind="site.name")
+          a.btn.btn-default.float-right(ng-click="bootstrap.collapse.main = !bootstrap.collapse.main" data-toggle="collapse")
+            span.fa.fa-bars
+        #nav-wrapper.container.nav-wrapper.collapse(uib-collapse="!bootstrap.collapse.main")
+          h1.logo.ng-cloak(ng-bind="site.name")
+          ul.main-nav.ng-cloak
+            li
+              a(ui-sref="index" ui-sref-active="current") Home
+            li(ng-repeat="link in nav")
+              a(ng-if="link.page" ui-sref="page({ page: link.page.url })" ui-sref-active="current" ng-bind="link.title")
+              a(ng-if="link.link" ng-href="{{ link.link }}" ng-bind="link.title")
+      .col-md-10.main-content
+        p.text-center(ng-show="loader")
+          img(src="theme/img/ajax-loader.gif")
+        ui-view.ng-cloak(style="height:100%;")
+        footer.footer
+          | powered by 
+          a(href="https://github.com/jtpox/ribbon" target="_blank") ribbon
+    script(src="theme/js/angular.js")
+    script(src="theme/js/ui-bootstrap-tpls-3.0.3.min.js")
+    script(src="theme/js/angular-ui-router.min.js")
+    script(src="theme/js/angular-animate.min.js")
+    script(src="theme/js/showdown.min.js")
+    script(src="theme/js/flac.js")
+    script(src="theme/js/controllers.js")

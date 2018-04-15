@@ -6,7 +6,11 @@ const Config = require('../../config/server');
 
 class Index {
   index(req, res) {
-    res.sendFile(Path.join(__dirname, '..', '..', 'themes', Config.theme, 'index.html'));
+    // res.sendFile(Path.join(__dirname, '..', '..', 'themes', Config.theme, 'index.html'));
+    const Data = {
+      
+    };
+    res.render(`themes/${Config.theme}/index`);
   }
 
   admin(req, res) {
