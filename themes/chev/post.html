@@ -1,0 +1,33 @@
+extends templates/layout.html
+
+block content
+    if post.image
+        img.img-fluid.page-image(src="/uploads/images/" + post.image.file_name)
+    .container.post-snippet
+        .page-title
+            h1=post.title
+        :markdown-it=post.content
+    
+    .container.post-snippet
+        .media
+            img.mr-3.rounded(src="/uploads/profile/"+post.created_by.avatar height="64" width="64")
+            .media-body
+                h5.mt-0
+                    a(href="/user/"+post.created_by._id)=post.created_by.username
+                p=post.created_by.about
+
+block meta
+    meta(name="description" content=post.content)
+    meta(property="og:title" content=post.title)
+    meta(property="og:description" content=post.content)
+    meta(property="og:url" content=analytics.site.domain)
+    meta(property="og:type" content="website")
+    meta(name="twitter:title" content=post.title)
+    meta(name="twitter:description" content=post.content)
+    meta(name="twitter:card" content="summary")
+    if post.image
+        meta(property="og:image" content=analytics.site.domain+"/uploads/images/" + post.image.file_name)
+        meta(name="twitter:image" content=analytics.site.domain+"/uploads/images/" + post.image.file_name)
+    else
+        meta(property="og:image" content=analytics.site.domain+"/assets/img/represent.png")
+        meta(name="twitter:image" content=analytics.site.domain+"/assets/img/represent.png")

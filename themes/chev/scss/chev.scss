@@ -1,0 +1,96 @@
+@import 'bootstrap';
+@import 'variables';
+@import url('https://fonts.googleapis.com/css?family=Comfortaa:300,400|Lora');
+
+h1, h2, h3, h4, h5 {
+    /* Font */
+    font-family: 'Comfortaa', cursive;
+}
+
+/*
+ * Header and footer.
+ */
+.header {
+    /* Font */
+    text-align: center;
+    /* Margin & Padding */
+    margin-bottom: 30px;
+}
+
+.more-posts {
+    /* Font */
+    text-align: center;
+    /* Margin & Padding */
+    margin-top: 30px;
+}
+
+/*
+ * Posts
+ */
+.post-snippet {
+    /* Margin & Padding */
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    /* Border */
+    border-bottom: 1px solid $gray-200;
+}
+
+.date {
+    overflow: auto;
+    /* Font */
+    font-size: 24px;
+    /* Margin & Padding */
+    padding: 5px;
+    /* Border */
+    border: 1px solid $cyan;
+    /* Border Radius */
+    border-radius: $border-radius;
+}
+
+.date > .day {
+    /* Font */
+    color: $cyan;
+}
+
+.date > .month {
+    background: $cyan;
+    /* Font */
+    color: $white;
+    /* Margin & Padding */
+    margin: 5px -5px -5px -5px;
+}
+
+.post-title h1 a {
+    display: block;
+}
+
+.post {
+    /* Font */
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    text-align: justify;
+    text-justify: inter-word; 
+}
+
+/*
+ * Page
+ */
+.page-title {
+    /* Font */
+    text-align: center;
+    /* Margin & Padding */
+    margin-bottom: 30px;
+}
+
+.page-image {
+    /* Margin & Padding */
+    margin-bottom: 30px;
+}
+
+/*
+ * Footer
+ */
+.footer {
+    /* Margin & Padding */
+    padding: 20px 0 20px 0;
+}

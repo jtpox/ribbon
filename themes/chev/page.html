@@ -1,0 +1,35 @@
+extends templates/layout.html
+
+block content
+    if page.image
+        img.img-fluid.page-image(src="/uploads/images/" + page.image.file_name)
+    .container.post-snippet
+        .page-title
+            h1=page.title
+        :markdown-it=page.description
+    
+    .container.post-snippet
+        .row
+            each box in boxes
+                div(class="col-md-"+box.content_column)
+                    .card
+                        .card-body
+                            h5.card-title=box.title
+                            p.card-text
+                               :markdown-it=box.content
+
+block meta
+    meta(name="description" content=page.description)
+    meta(property="og:title" content=page.title)
+    meta(property="og:description" content=page.description)
+    meta(property="og:url" content=analytics.site.domain)
+    meta(property="og:type" content="website")
+    meta(name="twitter:title" content=page.title)
+    meta(name="twitter:description" content=page.description)
+    meta(name="twitter:card" content="summary")
+    if page.image
+        meta(property="og:image" content=analytics.site.domain+"/uploads/images/" + page.image.file_name)
+        meta(name="twitter:image" content=analytics.site.domain+"/uploads/images/" + page.image.file_name)
+    else
+        meta(property="og:image" content=analytics.site.domain+"/assets/img/represent.png")
+        meta(name="twitter:image" content=analytics.site.domain+"/assets/img/represent.png")
