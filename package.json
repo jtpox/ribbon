@@ -1,13 +1,13 @@
 {
   "name": "ribbon",
-  "version": "2018.4.14",
+  "version": "2018.4.18",
   "description": "A personal management system by jtPox",
   "main": "ribbon.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "./node_modules/.bin/eslint app/*",
     "eslint_fix": "./node_modules/.bin/eslint app/* --fix",
-    "install": "node install.js"
+    "setup": "npm install && node install.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,8 @@
     "eslint-config-airbnb": "^16.1.0",
     "express": "^4.16.3",
     "express-fileupload": "^0.4.0",
+    "jstransformer-markdown-it": "^2.0.0",
+    "moment": "^2.22.1",
     "mongoose": "^5.0.14",
     "mongoose-paginate": "^5.0.3",
     "multer": "^1.3.0",

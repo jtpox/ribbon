@@ -15,13 +15,13 @@ const Prompt = require('prompt');
  * Check if a user exists in the database.
  */
 const query = User.find({});
-
-query.exec((err, results) => {
+query.exec((find_err, results) => {
   if (results.length > 0) {
     // Do not run install if a user exists.
-    console.log('ribbon has already been installed.');
+    console.log('ribbon is already installed.');
     process.exit();
   } else {
+    console.log('Administration details for ribbon back-end.');
     Prompt.start();
     const Schema = {
       properties: {
@@ -60,25 +60,6 @@ query.exec((err, results) => {
           email: prompt_result.email,
         });
         user.save((user_save_err, new_user) => {
-          // Create a new tag entry.
-          const tag = new Tag({
-            title: 'Example Tag',
-            url: 'Example-Tag',
-            content: 'A tag for blog entries.',
-          });
-          tag.save((tag_save_err, new_tag) => {
-            // Create a new post using this tag.
-            const post = new Post({
-              title: 'First Post',
-              url: 'First-Post',
-              content: 'This is the first post for the blog!',
-              image: null,
-              created_by: Db.Types.ObjectId(new_user._id),
-              tag: Db.Types.ObjectId(new_tag._id),
-            });
-
-            post.save();
-          });
           // Create a new page.
           const page = new Page({
             title: 'First Page',
@@ -109,9 +90,28 @@ query.exec((err, results) => {
           });
 
           image.save();
+          // Create a new tag entry.
+          const tag = new Tag({
+            title: 'Example Tag',
+            url: 'Example-Tag',
+            content: 'A tag for blog entries.',
+          });
 
-          console.log(`You can now login to the administrators panel by visiting '<website_url>/ribbon' and logging in using the email '${prompt_result.email}'.`);
-          process.exit();
+          tag.save((tag_save_err, new_tag) => {
+            // Create a new post using this tag.
+            const post = new Post({
+              title: 'First Post',
+              url: 'First-Post',
+              content: 'This is the first post for the blog!',
+              image: null,
+              created_by: Db.Types.ObjectId(new_user._id),
+              tag: Db.Types.ObjectId(new_tag._id),
+            });
+
+            post.save();
+          });
+          console.log(`You can access the administrators panel by visiting '<website_url>/ribbon' and logging in using the email '${prompt_result.email}'.`);
+          console.log('Exit the setup by pressing CTRL+C.');
         });
       });
     });

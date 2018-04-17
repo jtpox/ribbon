@@ -3,13 +3,15 @@
  */
 const Config = require('../config/server');
 const Analytics = require('../config/analytics');
-const BodyParser = require('body-parser');
-const FileUpload = require('express-fileupload');
-const Pug = require('pug').__express;
+const Navigation = require('./model/navigation');
 
 const Fs = require('fs');
 // const Http = require('http');
 const Https = require('https');
+const BodyParser = require('body-parser');
+const FileUpload = require('express-fileupload');
+const Pug = require('pug').__express;
+const Moment = require('moment');
 
 const Routes = require('./route');
 
@@ -103,7 +105,19 @@ class Ribbon {
     this.app.locals = {
       site: Config.site,
       analytics: Analytics,
+      navigation: [],
+      functions: {
+        moment: Moment,
+      },
     };
+
+    // Get Navigation.
+    const fields = ['title', 'post', 'page', 'tag', 'user', 'link', 'created_at', '_id'];
+    const nav = Navigation.find({}).select(fields.join(' '))
+      .populate('page post tag').populate('user', '-password');
+    nav.exec((err, results) => {
+      this.app.locals.navigation = results;
+    });
   }
 }
 
