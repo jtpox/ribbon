@@ -7,7 +7,7 @@
     },
 
     "_theme": "Name of the theme folder, located in /themes.",
-    "theme": "chev",
+    "theme": "flac",
 
     "_admin": "Admin theme. Name of the theme folder, located in /admin",
     "admin": "arabesque",
