@@ -31,7 +31,7 @@ class Blog {
             res.json(results);
         }); */
     const options = {
-      select: 'title url content image created_by tag created_at last_updated _id',
+      select: 'title url content image created_by tag created_at last_updated _id converted_content',
       sort: { created_at: 'descending' },
       populate: [
         {

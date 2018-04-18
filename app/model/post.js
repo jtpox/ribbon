@@ -1,6 +1,8 @@
 const Db = require('../database');
 const MongoosePaginate = require('mongoose-paginate');
 
+const Showdown = require('showdown');
+
 const ObjectId = Db.Schema.ObjectId;
 const schema = Db.Schema({
   title: String,
@@ -12,6 +14,11 @@ const schema = Db.Schema({
   tag: { type: ObjectId, ref: 'Tag' },
   created_at: { type: Date, default: Date.now },
   last_updated: { type: Date, default: Date.now },
+});
+
+schema.virtual('converted_content').get(() => {
+  const converter = new Showdown.Converter();
+  return converter.makeHtml(this.content);
 });
 
 schema.plugin(MongoosePaginate);
