@@ -6823,7 +6823,7 @@ h1, h2, h3, h4, h5 {
 .post-title h1 a {
   display: block; }
 
-.post {
+.post, .post-content {
   /* Font */
   font-family: 'Lora', serif;
   font-size: 18px;

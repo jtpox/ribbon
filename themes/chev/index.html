@@ -18,8 +18,7 @@ block content
                     if post.image
                         a(href="/post/"+post.url)
                             img.img-fluid.rounded(src="/uploads/images/" + post.image.file_name)
-                    .post
-                        :markdown-it=post.content
+                    .post!=post.shorten_html_content
 
 block more_posts
     if (posts.page < posts.pages && posts.pages > 1)

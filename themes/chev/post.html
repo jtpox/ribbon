@@ -6,7 +6,15 @@ block content
     .container.post-snippet
         .page-title
             h1=post.title
-        :markdown-it=post.content
+            span.text-info=functions.moment(post.created_at).format("MM")
+            | 
+            span.text-info=functions.moment(post.created_at).format("MMM") 
+            | 
+            span.text-info=functions.moment(post.created_at).format("YYYY")
+            |  in 
+            a(href="/tag/"+post.tag.url)=post.tag.title
+
+        .post-content!=post.html_content
     
     .container.post-snippet
         .media

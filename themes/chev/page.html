@@ -6,7 +6,7 @@ block content
     .container.post-snippet
         .page-title
             h1=page.title
-        :markdown-it=page.description
+        :markdown-it!=page.html_description
     
     .container.post-snippet
         .row
@@ -15,8 +15,7 @@ block content
                     .card
                         .card-body
                             h5.card-title=box.title
-                            p.card-text
-                               :markdown-it=box.content
+                            p.card-text!=box.html_content
 
 block meta
     meta(name="description" content=page.description)

@@ -14,11 +14,33 @@ const schema = Db.Schema({
   tag: { type: ObjectId, ref: 'Tag' },
   created_at: { type: Date, default: Date.now },
   last_updated: { type: Date, default: Date.now },
+}, {
+  toObject: {
+    virtuals: true,
+  },
+  toJSON: {
+    virtuals: true,
+  },
 });
 
-schema.virtual('converted_content').get(() => {
-  const converter = new Showdown.Converter();
+/*
+ * Forced to break airbnb
+ * https://stackoverflow.com/questions/35794418/virtuals-in-mongoose-this-is-empty-object
+ */
+schema.virtual('html_content').get(function() {
+  const converter = new Showdown.Converter({
+    simpleLineBreaks: true,
+  });
   return converter.makeHtml(this.content);
+});
+
+schema.virtual('shorten_html_content').get(function() {
+  const converter = new Showdown.Converter({
+    simpleLineBreaks: true,
+  });
+
+  const content = this.content.split(' ').splice(0, 50).join(' ');
+  return converter.makeHtml(content);
 });
 
 schema.plugin(MongoosePaginate);
