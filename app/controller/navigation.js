@@ -5,12 +5,7 @@ const Navigation = require('../model/navigation');
 
 class NavigationC {
   list(req, res) {
-    const fields = ['title', 'page', 'post', 'link', 'tag', 'use', 'created_at', 'last_updated', '_id'];
-    const query = Navigation.find({}).select(fields.join(' '))
-      .populate('page').populate('post')
-      .populate('tag')
-      .populate('user', '-password');
-    query.exec((err, results) => {
+    Navigation.list((err, results) => {
       res.json(results);
     });
   }

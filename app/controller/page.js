@@ -11,22 +11,14 @@ const Slugify = require('slugify');
 
 class PageC {
   list(req, res) {
-    // List the blog posts with pagination.
-    // https://stackoverflow.com/questions/42700884/select-all-the-fields-in-a-mongoose-schema
-    const fields = ['title', 'url', 'description'];
-    const query = Page.find({ hidden: false }).select(fields.join(' '));
-
-    query.exec((err, results) => {
+    Page.list(false, (err, results) => {
       // console.log(results);
       res.json(results);
     });
   }
 
   admin_list(req, res) {
-    const fields = ['title', 'url', 'description', 'hidden'];
-    const query = Page.find({}).select(fields.join(' '));
-
-    query.exec((err, results) => {
+    Page.list(true, (err, results) => {
       // console.log(results);
       res.json(results);
     });
@@ -34,11 +26,7 @@ class PageC {
 
   get(req, res) {
     // Get page details.
-    const fields = ['title', 'url', 'description', 'created_at', 'last_updated', '_id', 'created_by', 'image', 'hidden'];
-    const query = Page.find({ _id: req.params.id }).select(fields.join(' '))
-      .populate('created_by', '-password').populate('image');
-
-    query.exec((err, results) => {
+    Page.get(req.params.id, (err, results) => {
       // res.json(results);
 
       const content_fields = ['title', 'content', 'content_column', '_id'];
@@ -57,18 +45,11 @@ class PageC {
 
   from_url(req, res) {
     // Get page details.
-    const fields = ['title', 'url', 'description', 'created_at', 'last_updated', '_id', 'created_by', 'image'];
-    const query = Page.find({ url: req.params.url }).select(fields.join(' '))
-      .populate('created_by', '-password').populate('image');
-
-    query.exec((err, results) => {
+    Page.from_url(req.params.url, (err, results) => {
       // res.json(results);
 
       if (results.length > 0) {
-        const content_fields = ['title', 'content', 'content_column', '_id'];
-        const content_query = Content.find({ page_id: results[0]._id }).select(content_fields.join(' '));
-
-        content_query.exec((content_query_err, content_results) => {
+        Content.get(results[0]._id, (content_query_err, content_results) => {
           // results[0].boxes = content_results;
 
           res.json({

@@ -25,6 +25,30 @@ schema.virtual('html_description').get(function() {
   return converter.makeHtml(`${this.description}`);
 });
 
+/*
+ * Statics
+ */
+schema.statics.list = function (hidden, cb) {
+  const find = (hidden) ? {} : { hidden: false };
+  const fields = (hidden) ? ['title', 'url', 'description', 'hidden'] : ['title', 'url', 'description'];
+  const query = this.find(find).select(fields.join(' '));
+  return query.exec(cb);
+};
+
+schema.statics.get = function (id, cb) {
+  const fields = ['title', 'url', 'description', 'created_at', 'last_updated', '_id', 'created_by', 'image', 'hidden'];
+  const query = this.find({ _id: id }).select(fields.join(' '))
+    .populate('created_by', '-password').populate('image');
+  return query.exec(cb);
+};
+
+schema.statics.from_url = function (url, cb) {
+  const fields = ['title', 'url', 'description', 'created_at', 'last_updated', '_id', 'created_by', 'image'];
+  const query = this.find({ url }).select(fields.join(' '))
+    .populate('created_by', '-password').populate('image');
+  return query.exec(cb);
+};
+
 const Page = Db.model('Page', schema);
 
 module.exports = Page;

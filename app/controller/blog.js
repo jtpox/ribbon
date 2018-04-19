@@ -23,13 +23,6 @@ class Blog {
     const page = (req.params.page != null) ? req.params.page : 1;
     // List the blog posts with pagination.
     // https://stackoverflow.com/questions/42700884/select-all-the-fields-in-a-mongoose-schema
-    /* var fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', '_id'];
-        var query  = Post.find({}).select(fields.join(' ')).sort({ date: 'descending' })
-            .populate('created_by', '-password').populate('tag image'); */
-
-    /* query.exec((err, results) => {
-            res.json(results);
-        }); */
     const options = {
       select: 'title url content image created_by tag created_at last_updated _id converted_content',
       sort: { created_at: 'descending' },
@@ -61,15 +54,7 @@ class Blog {
   }
 
   list(req, res) {
-    // let page = (req.params.page != null) ? req.params.page : 1;
-    // List the blog posts with pagination.
-    // https://stackoverflow.com/questions/42700884/select-all-the-fields-in-a-mongoose-schema
-    const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', '_id', 'hidden'];
-    const query = Post.find({}).select(fields.join(' ')).sort({ created_at: 'descending' })
-      .populate('created_by', '-password')
-      .populate('tag image');
-
-    query.exec((err, results) => {
+    Post.list((err, results) => {
       // console.log(results);
       res.json(results);
     });
@@ -77,20 +62,14 @@ class Blog {
 
   view(req, res) {
     // View post by id.
-    const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
-    const query = Post.find({ _id: req.params.id }).select(fields.join(' '))
-      .populate('created_by', '-password').populate('tag image');
-    query.exec((err, result) => {
+    Post.view(req.params.id, (err, result) => {
       // console.log(result);
       res.json(result);
     });
   }
 
   from_url(req, res) {
-    const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
-    const query = Post.find({ url: req.params.url }).select(fields.join(' '))
-      .populate('created_by', '-password').populate('tag image');
-    query.exec((err, result) => {
+    Post.from_url(req.params.url, (err, result) => {
       // console.log(result);
       res.json(result);
     });

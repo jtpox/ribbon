@@ -8,43 +8,21 @@ const Slugify = require('slugify');
 
 class TagC {
   list(req, res) {
-    // List the blog posts with pagination.
-    // https://stackoverflow.com/questions/42700884/select-all-the-fields-in-a-mongoose-schema
-    const fields = ['title', 'url', 'content', 'created_at', 'last_updated', '_id'];
-    const query = Tag.find({}).select(fields.join(' '));
-
-    query.exec((err, results) => {
+    Tag.list((err, results) => {
       // console.log(results);
       res.json(results);
     });
   }
 
   get(req, res) {
-    // Get tag details.
-    const fields = ['title', 'url', 'content', 'created_at', 'last_updated', '_id', 'posts'];
-    const query = Tag.find({ _id: req.params.id }).select(fields.join(' '))
-      .populate({
-        path: 'posts',
-        match: {
-          hidden: false,
-          created_at: {
-            $lte: new Date(),
-          },
-        },
-      });
-
-    query.exec((err, results) => {
+    Tag.get(req.params.id, (err, results) => {
       res.json(results);
     });
   }
 
   posts(req, res) {
     const page = (req.params.page != null) ? req.params.page : 1;
-
-    const fields = ['title', 'url', 'content', 'created_at'];
-    const query = Tag.find({ url: req.params.url }).select(fields.join(' '));
-
-    query.exec((err, results) => {
+    Tag.from_url(req.params.url, (err, results) => {
       if (results.length > 0) {
         // If the tag exists.
         const options = {

@@ -10,12 +10,7 @@ const Bcrypt = require('bcrypt');
 
 class UserC {
   list(req, res) {
-    // List the blog posts with pagination.
-    // https://stackoverflow.com/questions/42700884/select-all-the-fields-in-a-mongoose-schema
-    const fields = ['username', 'email', 'about', 'avatar', 'created_at', 'last_updated', '_id'];
-    const query = User.find({}).select(fields.join(' '));
-
-    query.exec((err, results) => {
+    User.list((err, results) => {
       // console.log(results);
       res.json(results);
     });
@@ -23,11 +18,7 @@ class UserC {
 
   posts(req, res) {
     const page = (req.params.page != null) ? req.params.page : 1;
-
-    const fields = ['username', 'email', 'about', 'created_at', 'avatar', '_id'];
-    const query = User.find({ _id: req.params.id }).select(fields.join(' '));
-
-    query.exec((err, results) => {
+    User.get(req.params.id, (err, results) => {
       if (results.length > 0) {
         // If the tag exists.
         const options = {

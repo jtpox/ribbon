@@ -74,10 +74,7 @@ class Index {
   }
 
   post(req, res) {
-    const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
-    const query = Post.find({ url: req.params.url }).select(fields.join(' '))
-      .populate('created_by', '-password').populate('tag image');
-    query.exec((err, result) => {
+    Post.from_url(req.params.url, (err, result) => {
       // console.log(result);
       if (result.length > 0) {
         res.render(`themes/${Config.theme}/post`, {

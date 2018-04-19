@@ -24,6 +24,16 @@ schema.virtual('html_content').get(function() {
   return converter.makeHtml(`${this.content}`);
 });
 
+/*
+ * Statics
+ */
+schema.statics.get = function (page_id, cb) {
+  const content_fields = ['title', 'content', 'content_column', '_id'];
+  const query = this.find({ page_id }).select(content_fields.join(' '));
+
+  return query.exec(cb);
+};
+
 const Content = Db.model('Content', schema);
 
 module.exports = Content;

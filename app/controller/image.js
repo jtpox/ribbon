@@ -11,13 +11,7 @@ const Fs = require('fs');
 
 class ImageC {
   list(req, res) {
-    // List the blog posts with pagination.
-    // https://stackoverflow.com/questions/42700884/select-all-the-fields-in-a-mongoose-schema
-    const fields = ['title', 'file_name', 'created_by', 'created_at', 'last_updated', '_id'];
-    const query = Image.find({}).select(fields.join(' '))
-      .populate('created_by');
-
-    query.exec((err, results) => {
+    Image.list((err, results) => {
       // console.log(results);
       res.json(results);
     });
