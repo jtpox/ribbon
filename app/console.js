@@ -47,7 +47,7 @@ class Console {
      */
   log(type, message) {
     // Constructing the start of the log.
-    let log = '[';
+    let log = '';
     switch (type[0].toLowerCase()) {
       case 'request':
         log += this.foreground.cyan + type[1].toUpperCase() + this.emphasis.reset;
@@ -62,7 +62,7 @@ class Console {
         break;
     }
 
-    console.log(`${log}]: ${message}`);
+    console.log(`[${log}]: ${message}`);
   }
 }
 
