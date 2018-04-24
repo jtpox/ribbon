@@ -1,4 +1,5 @@
 const Db = require('../database');
+/*eslint-disable*/
 const MongoosePaginate = require('mongoose-paginate');
 
 const Showdown = require('showdown');

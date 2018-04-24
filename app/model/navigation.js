@@ -1,3 +1,4 @@
+/*eslint-disable*/
 const Db = require('../database');
 
 const ObjectId = Db.Schema.ObjectId;
