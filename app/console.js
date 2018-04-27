@@ -1,5 +1,6 @@
 /*
  * Class to log onto the console.
+ * This is deprecated as of 2018.4.28
  */
 class Console {
   /*

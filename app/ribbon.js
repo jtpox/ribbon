@@ -86,18 +86,21 @@ class Ribbon {
        * Start secure server.
        */
       this.server = Https.createServer(options, this.app).listen(Config.secure_port, () => {
-        this.log.log(['etc'], `ribbon secure server started at port ${Config.secure_port}.`);
+        // this.log.log(['etc'], `ribbon secure server started at port ${Config.secure_port}.`);
+        this.log.info(`ribbon secure server started at port ${Config.secure_port}.`);
       });
 
       /*
        * Start normal server.
        */
       this.app.listen(Config.port, () => {
-        this.log.log(['etc'], `Redirecting all traffic to ${Config.secure_port}.`);
+        // this.log.log(['etc'], `Redirecting all traffic to ${Config.secure_port}.`);
+        this.log.info(`Redirecting all traffic to ${Config.secure_port}.`);
       });
     } else {
       this.app.listen(Config.port, () => {
-        this.log.log(['etc'], `ribbon server started at port ${Config.port}.`);
+        // this.log.log(['etc'], `ribbon server started at port ${Config.port}.`);
+        this.log.info(`ribbon server started at port ${Config.port}.`);
       });
     }
   }
