@@ -1,7 +1,7 @@
 /*eslint-disable*/
-const Db = require('../database');
+import Showdown from 'showdown';
 
-const Showdown = require('showdown');
+import Db from '../database';
 
 const ObjectId = Db.Schema.ObjectId;
 const schema = Db.Schema({
@@ -26,30 +26,32 @@ schema.virtual('html_description').get(function() {
   return converter.makeHtml(`${this.description}`);
 });
 
+let Page = Db.model('Page', schema);
+
 /*
  * Statics
  */
-schema.statics.list = function (hidden, cb) {
+Page.list = (hidden, cb) => {
   const find = (hidden) ? {} : { hidden: false };
   const fields = (hidden) ? ['title', 'url', 'description', 'hidden'] : ['title', 'url', 'description'];
-  const query = this.find(find).select(fields.join(' '));
+  const query = Page.find(find).select(fields.join(' '));
   return query.exec(cb);
 };
 
-schema.statics.get = function (id, cb) {
+Page.get = (id, cb) => {
   const fields = ['title', 'url', 'description', 'created_at', 'last_updated', '_id', 'created_by', 'image', 'hidden'];
-  const query = this.find({ _id: id }).select(fields.join(' '))
+  const query = Page.find({ _id: id }).select(fields.join(' '))
     .populate('created_by', '-password').populate('image');
   return query.exec(cb);
 };
 
-schema.statics.from_url = function (url, cb) {
+Page.from_url = (url, cb) => {
   const fields = ['title', 'url', 'description', 'created_at', 'last_updated', '_id', 'created_by', 'image'];
-  const query = this.find({ url }).select(fields.join(' '))
+  const query = Page.find({ url }).select(fields.join(' '))
     .populate('created_by', '-password').populate('image');
   return query.exec(cb);
 };
 
-const Page = Db.model('Page', schema);
 
-module.exports = Page;
+
+export default Page;

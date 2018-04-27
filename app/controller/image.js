@@ -1,13 +1,15 @@
 /*
  * Controller for Blog.
  */
-const Image = require('../model/image');
+import Crypto from 'crypto';
 
-const Db = require('../database');// Soley used for the ObjectId type.
+import Path from 'path';
 
-const Crypto = require('crypto');
-const Path = require('path');
-const Fs = require('fs');
+import Fs from 'fs';
+
+import Image from '../model/image';
+
+import Db from '../database';// Soley used for the ObjectId type.
 
 class ImageC {
   list(req, res) {
@@ -72,4 +74,4 @@ class ImageC {
   }
 }
 
-module.exports = ImageC;
+export default ImageC;

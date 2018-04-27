@@ -1,23 +1,28 @@
 /*
  * Controller for Index.
  */
-const User = require('../model/user');
-const Session = require('../model/session');
 
-const Config = require('../../config/server');
+import Bcrypt from 'bcrypt';
 
-const Bcrypt = require('bcrypt');
-const Crypto = require('crypto');
-const Path = require('path');
-const Fs = require('fs');
+import Crypto from 'crypto';
 
-const Db = require('../database');// Soley used for the ObjectId type.
+import Path from 'path';
 
-class Index {
+import Fs from 'fs';
+
+import User from '../model/user';
+
+import Session from '../model/session';
+
+import Config from '../../config/server.json';
+
+import Db from '../database';// Soley used for the ObjectId type.
+
+class Authenticate {
   signin(req, res) {
     if (req.body.email && req.body.password) {
       // If the email and password fields are not empty, proceed with check.
-      User.findByEmail(req.body.email, (err, results) => {
+      User.find_by_email(req.body.email, (err, results) => {
         // console.log(results);
 
         if (results.length > 0) {
@@ -82,7 +87,7 @@ class Index {
      */
   check(req, res) {
     if (req.body.session_id && req.body.session_token) {
-      Session.findBySessionId(req.body.session_id, (err, results) => {
+      Session.find_by_id(req.body.session_id, (err, results) => {
         if (results.length > 0) {
           // Check if the token is valid.
           Bcrypt.compare(req.body.session_token, results[0].token, (compare_err, check) => {
@@ -180,4 +185,4 @@ class Index {
   }
 }
 
-module.exports = Index;
+export default Authenticate;

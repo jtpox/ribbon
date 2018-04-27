@@ -1,5 +1,5 @@
 /*eslint-disable*/
-const Db = require('../database');
+import Db from '../database';
 
 const ObjectId = Db.Schema.ObjectId;
 const schema = Db.Schema({
@@ -9,10 +9,10 @@ const schema = Db.Schema({
   last_updated: { type: Date, default: Date.now },
 });
 
-schema.statics.findBySessionId = function (session_id, cb) {
-  return this.find({ _id: session_id }, cb);
+let Session = Db.model('Session', schema);
+
+Session.find_by_id = (session_id, cb) => {
+  return Session.find({ _id: session_id }, cb);
 };
 
-const Session = Db.model('Session', schema);
-
-module.exports = Session;
+export default Session;

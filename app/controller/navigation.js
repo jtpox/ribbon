@@ -1,7 +1,7 @@
 /*
  * Controller for navigation.
  */
-const Navigation = require('../model/navigation');
+import Navigation from '../model/navigation';
 
 class NavigationC {
   list(req, res) {
@@ -41,4 +41,4 @@ class NavigationC {
   }
 }
 
-module.exports = NavigationC;
+export default NavigationC;

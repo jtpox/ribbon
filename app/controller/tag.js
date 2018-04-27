@@ -1,10 +1,11 @@
 /*
  * Controller for Blog.
  */
-const Post = require('../model/post');
-const Tag = require('../model/tag');
+import Slugify from 'slugify';
 
-const Slugify = require('slugify');
+import Post from '../model/post';
+
+import Tag from '../model/tag';
 
 class TagC {
   list(req, res) {
@@ -111,4 +112,4 @@ class TagC {
   }
 }
 
-module.exports = TagC;
+export default TagC;

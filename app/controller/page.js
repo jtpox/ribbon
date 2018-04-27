@@ -1,13 +1,13 @@
 /*
  * Controller for Blog.
  */
-const Page = require('../model/page');
-const Content = require('../model/content');
+import Slugify from 'slugify';
 
+import Page from '../model/page';
 
-const Db = require('../database');// Soley used for the ObjectId type.
+import Content from '../model/content';
 
-const Slugify = require('slugify');
+import Db from '../database';// Soley used for the ObjectId type.
 
 class PageC {
   list(req, res) {
@@ -164,4 +164,4 @@ class PageC {
   }
 }
 
-module.exports = PageC;
+export default PageC;

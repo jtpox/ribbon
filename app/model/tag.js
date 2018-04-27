@@ -1,5 +1,5 @@
 /*eslint-disable*/
-const Db = require('../database');
+import Db from '../database';
 
 const ObjectId = Db.Schema.ObjectId;
 const schema = Db.Schema({
@@ -11,18 +11,20 @@ const schema = Db.Schema({
   posts: [{ type: ObjectId, ref: 'Post' }],
 });
 
+let Tag = Db.model('Tag', schema);
+
 /*
  * statics
  */
-schema.statics.list = function (cb) {
+Tag.list = (cb) => {
   const fields = ['title', 'url', 'content', 'created_at', 'last_updated', '_id'];
-  const query = this.find({}).select(fields.join(' '));
+  const query = Tag.find({}).select(fields.join(' '));
   return query.exec(cb);
 };
 
-schema.statics.get = function (id, cb) {
+Tag.get = (id, cb) => {
   const fields = ['title', 'url', 'content', 'created_at', 'last_updated', '_id', 'posts'];
-  const query = this.find({ _id: id }).select(fields.join(' '))
+  const query = Tag.find({ _id: id }).select(fields.join(' '))
     .populate({
       path: 'posts',
       match: {
@@ -36,13 +38,11 @@ schema.statics.get = function (id, cb) {
     return query.exec(cb);
 };
 
-schema.statics.from_url = function (url, cb) {
+Tag.from_url = (url, cb) => {
   const fields = ['title', 'url', 'content', 'created_at'];
-  const query = this.find({ url }).select(fields.join(' '));
+  const query = Tag.find({ url }).select(fields.join(' '));
 
   return query.exec(cb);
 };
 
-const Tag = Db.model('Tag', schema);
-
-module.exports = Tag;
+export default Tag;

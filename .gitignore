@@ -8,4 +8,5 @@ config/server.json
 config/analytics.js
 themes/
 admin/
+dist/
 package-lock.json

@@ -1,19 +1,23 @@
 /*
  * Controller for Index.
  */
-const Path = require('path');
-const Config = require('../../config/server');
+import Path from 'path';
 
-const Post = require('../model/post');
-const Page = require('../model/page');
-const Content = require('../model/content');
-const Tag = require('../model/tag');
-const User = require('../model/user');
+import Config from '../../config/server.json';
+
+import Post from '../model/post';
+
+import Page from '../model/page';
+
+import Content from '../model/content';
+
+import Tag from '../model/tag';
+
+import User from '../model/user';
 
 class Index {
   index(req, res) {
-    // res.sendFile(Path.join(__dirname, '..', '..', 'themes', Config.theme, 'index.html'));
-    const page = (req.params.page != null) ? req.params.page : 1;
+    const page = (req.params.page != null) ? req.params.page : 1
     const options = {
       select: 'title url content image created_by tag created_at last_updated _id',
       sort: { created_at: 'descending' },
@@ -177,4 +181,4 @@ class Index {
   }
 }
 
-module.exports = Index;
+export default Index;

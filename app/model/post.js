@@ -1,8 +1,7 @@
-const Db = require('../database');
 /*eslint-disable*/
-const MongoosePaginate = require('mongoose-paginate');
+import Db from '../database';
 
-const Showdown = require('showdown');
+import Showdown from 'showdown';
 
 const ObjectId = Db.Schema.ObjectId;
 const schema = Db.Schema({
@@ -44,37 +43,32 @@ schema.virtual('shorten_html_content').get(function () {
   return converter.makeHtml(content);
 });
 
-/*
- * Plugins
- */
-schema.plugin(MongoosePaginate);
+let Post = Db.model('Post', schema);
 
 /*
  * Statics
  * Forced to break airnbn here as well.
  */
-schema.statics.list = function (cb) {
+Post.list = (cb) => {
   const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', '_id', 'hidden'];
-  const query = this.find({}).select(fields.join(' ')).sort({ created_at: 'descending' })
+  const query = Post.find({}).select(fields.join(' ')).sort({ created_at: 'descending' })
     .populate('created_by', '-password')
     .populate('tag image');
   return query.exec(cb);
 };
 
-schema.statics.view = function (id, cb) {
+Post.view = (id, cb) => {
   const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
-  const query = this.find({ _id: id }).select(fields.join(' '))
+  const query = Post.find({ _id: id }).select(fields.join(' '))
     .populate('created_by', '-password').populate('tag image');
   return query.exec(cb);
 };
 
-schema.statics.from_url = function (url, cb) {
+Post.from_url = (url, cb) => {
   const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
-  const query = this.find({ url: url }).select(fields.join(' '))
+  const query = Post.find({ url: url }).select(fields.join(' '))
     .populate('created_by', '-password').populate('tag image');
   return query.exec(cb);
 };
 
-const Post = Db.model('Post', schema);
-
-module.exports = Post;
+export default Post;

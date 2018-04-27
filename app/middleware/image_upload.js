@@ -1,8 +1,9 @@
 /*
  * Image upload middleware for avatar and image management.
  */
-const Crypto = require('crypto');
-const Path = require('path');
+import Crypto from 'crypto';
+
+import Path from 'path';
 
 function filterExtension(file) {
   const extension_extract = /(?:\.([^.]+))?$/;
@@ -87,4 +88,4 @@ function library(req, res, next) {
   }
 }
 
-module.exports = { avatar, library };
+export { avatar, library };

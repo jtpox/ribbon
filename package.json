@@ -1,13 +1,14 @@
 {
   "name": "ribbon",
-  "version": "2018.4.24",
+  "version": "2018.4.26",
   "description": "A personal management system by jtPox",
   "main": "ribbon.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "./node_modules/.bin/eslint app/*",
     "eslint_fix": "./node_modules/.bin/eslint app/* --fix",
-    "setup": "npm install && node install.js"
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./npm-debug.log --copy-files",
+    "setup": "node dist/install.js"
   },
   "repository": {
     "type": "git",
@@ -30,12 +31,14 @@
     "prompt": "^1.0.0",
     "pug": "^2.0.3",
     "showdown": "^1.8.6",
-    "slugify": "^1.2.9"
+    "slugify": "^1.2.9",
+    "winston": "^3.0.0-rc5"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-airbnb": "^2.4.0",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.11.0"
+    "eslint-plugin-import": "^2.11.0",
+    "rimraf": "^2.6.2"
   }
 }

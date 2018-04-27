@@ -1,12 +1,13 @@
 /*
  * Controller for Blog.
  */
-const Post = require('../model/post');
-const User = require('../model/user');
+import Bcrypt from 'bcrypt';
 
-const Config = require('../../config/server');
+import Post from '../model/post';
 
-const Bcrypt = require('bcrypt');
+import User from '../model/user';
+
+import Config from '../../config/server.json';
 
 class UserC {
   list(req, res) {
@@ -136,4 +137,4 @@ class UserC {
   }
 }
 
-module.exports = UserC;
+export default UserC;

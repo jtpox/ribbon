@@ -66,4 +66,4 @@ class Console {
   }
 }
 
-module.exports = Console;
+export { Console as default };

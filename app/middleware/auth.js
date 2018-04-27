@@ -1,11 +1,11 @@
-const Bcrypt = require('bcrypt');
+import Bcrypt from 'bcrypt';
 
-const Session = require('../model/session.js');
+import Session from '../model/session';
 
 function isLogged(req, res, next) {
   // console.log(req.headers);
   if (req.headers.session_id && req.headers.session_token) {
-    Session.findBySessionId(req.headers.session_id, (err, results) => {
+    Session.find_by_id(req.headers.session_id, (err, results) => {
       if (results.length > 0) {
         // Check if the token is valid.
         Bcrypt.compare(req.headers.session_token, results[0].token, (bcryptErr, check) => {
@@ -48,4 +48,4 @@ function notLogged(req, res, next) {
   }
 }
 
-module.exports = { isLogged, notLogged };
+export { isLogged, notLogged };

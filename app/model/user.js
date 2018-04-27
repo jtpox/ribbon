@@ -1,5 +1,5 @@
 /*eslint-disable*/
-const Db = require('../database');
+import Db from '../database';
 
 const ObjectId = Db.Schema.ObjectId;
 const schema = Db.Schema({
@@ -13,24 +13,24 @@ const schema = Db.Schema({
   posts: [{ type: ObjectId, ref: 'Post' }],
 });
 
-schema.statics.findByEmail = function (email, cb) {
-  return this.find({ email }, cb);
+let User = Db.model('User', schema);
+
+User.find_by_email = (email, cb) => {
+  return User.find({ email }, cb);
 };
 
-schema.statics.list = function (cb) {
+User.list = (cb) => {
   const fields = ['username', 'email', 'about', 'avatar', 'created_at', 'last_updated', '_id'];
-  const query = this.find({}).select(fields.join(' '));
+  const query = User.find({}).select(fields.join(' '));
 
   return query.exec(cb);
 };
 
-schema.statics.get = function (id, cb) {
+User.get = (id, cb) => {
   const fields = ['username', 'email', 'about', 'created_at', 'avatar', '_id'];
-  const query = this.find({ _id: id }).select(fields.join(' '));
+  const query = User.find({ _id: id }).select(fields.join(' '));
 
   return query.exec(cb);
 };
 
-const User = Db.model('User', schema);
-
-module.exports = User;
+export default User;

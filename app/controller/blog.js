@@ -1,15 +1,17 @@
 /*
  * Controller for Blog.
  */
-const Post = require('../model/post');
+import Slugify from 'slugify';
 
-const Config = require('../../config/server');
-const Package = require('../../package');
-const Analytic = require('../../config/analytics');
+import Post from '../model/post';
 
-const Slugify = require('slugify');
+import Config from '../../config/server.json';
 
-const Db = require('../database');// Soley used for the ObjectId type.
+import Package from '../../package.json';
+
+import Analytic from '../../config/analytics.json';
+
+import Db from '../database';// Soley used for the ObjectId type.
 
 class Blog {
   site(req, res) {
@@ -142,4 +144,4 @@ class Blog {
   }
 }
 
-module.exports = Blog;
+export default Blog;

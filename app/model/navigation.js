@@ -1,5 +1,5 @@
 /*eslint-disable*/
-const Db = require('../database');
+import Db from '../database';
 
 const ObjectId = Db.Schema.ObjectId;
 const schema = Db.Schema({
@@ -13,7 +13,9 @@ const schema = Db.Schema({
   last_updated: { type: Date, default: Date.now },
 });
 
-schema.statics.list = function(cb) {
+let Navigation = Db.model('Navigation', schema);
+
+Navigation.list = (cb) => {
   const fields = ['title', 'page', 'post', 'link', 'tag', 'use', 'created_at', 'last_updated', '_id'];
   const query = Navigation.find({}).select(fields.join(' '))
     .populate('page').populate('post')
@@ -22,6 +24,4 @@ schema.statics.list = function(cb) {
   return query.exec(cb);
 };
 
-const Navigation = Db.model('Navigation', schema);
-
-module.exports = Navigation;
+export default Navigation;

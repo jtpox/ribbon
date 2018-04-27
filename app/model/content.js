@@ -1,7 +1,7 @@
 /*eslint-disable*/
-const Db = require('../database');
+import Showdown from 'showdown';
 
-const Showdown = require('showdown');
+import Db from '../database';
 
 const ObjectId = Db.Schema.ObjectId;
 const schema = Db.Schema({
@@ -25,16 +25,16 @@ schema.virtual('html_content').get(function() {
   return converter.makeHtml(`${this.content}`);
 });
 
+let Content = Db.model('Content', schema);
+
 /*
  * Statics
  */
-schema.statics.get = function (page_id, cb) {
+Content.get = (page_id, cb) => {
   const content_fields = ['title', 'content', 'content_column', '_id'];
-  const query = this.find({ page_id }).select(content_fields.join(' '));
+  const query = Content.find({ page_id }).select(content_fields.join(' '));
 
   return query.exec(cb);
 };
 
-const Content = Db.model('Content', schema);
-
-module.exports = Content;
+export default Content;

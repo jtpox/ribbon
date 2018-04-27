@@ -1,5 +1,8 @@
-const Mongoose = require('mongoose');
-const DbConfig = require('../config/database.json');
+import MongoosePaginate from 'mongoose-paginate';
+
+import Mongoose from 'mongoose';
+
+import DbConfig from '../config/database.json';
 
 Mongoose.connect(`mongodb://${DbConfig.host}/${DbConfig.auth_database}`, {
   user: DbConfig.username,
@@ -7,4 +10,9 @@ Mongoose.connect(`mongodb://${DbConfig.host}/${DbConfig.auth_database}`, {
   dbName: DbConfig.database,
 });
 
-module.exports = Mongoose;
+/*
+ * Include required plugins for Mongoose.
+ */
+Mongoose.plugin(MongoosePaginate);
+
+export { Mongoose as default };

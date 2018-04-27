@@ -1,19 +1,26 @@
 /*
  * Instantiating the entire system.
  */
-const Config = require('../config/server');
-const Analytics = require('../config/analytics');
-const Navigation = require('./model/navigation');
-
-const Fs = require('fs');
+import Fs from 'fs';
 // const Http = require('http');
-const Https = require('https');
-const BodyParser = require('body-parser');
-const FileUpload = require('express-fileupload');
-const Pug = require('pug').__express;
-const Moment = require('moment');
+import Https from 'https';
 
-const Routes = require('./route');
+import BodyParser from 'body-parser';
+
+import FileUpload from 'express-fileupload';
+
+import Pug from 'pug';
+// const Pug = require('pug').__express;
+
+import Moment from 'moment';
+
+import Routes from './route';
+
+import Config from '../config/server.json';
+
+import Analytics from '../config/analytics.json';
+
+import Navigation from './model/navigation';
 
 class Ribbon {
   constructor(express, app, log) {
@@ -31,7 +38,7 @@ class Ribbon {
     // Set the template engine. Mustache is used.
     app.set('views', './'); // Set to root as we choosing a directory would be more dynamic.
     app.set('view engine', 'html');// Use the same old HTML extension.
-    app.engine('html', Pug);
+    app.engine('html', Pug.__express);
 
     // Redirect the route to the theme directory.
     this.app.use('/theme', this.express.static(`themes/${Config.theme}`));
@@ -40,7 +47,8 @@ class Ribbon {
 
     this.set_locals();
     this.set_headers();
-    this.routes = Routes.routes(this.app);
+    // this.routes = Routes.routes(this.app);
+    this.routes = Routes(this.app);
     this.start();
   }
 
@@ -121,4 +129,4 @@ class Ribbon {
   }
 }
 
-module.exports = Ribbon;
+export { Ribbon as default };
