@@ -40,6 +40,12 @@ class Ribbon {
     app.set('view engine', 'html');// Use the same old HTML extension.
     app.engine('html', Pug.__express);
 
+    this.app.use((req, res, next) => {
+      // req.env = env;
+      req.log = this.log;
+      next();
+    });
+
     // Redirect the route to the theme directory.
     this.app.use('/theme', this.express.static(`themes/${Config.theme}`));
     this.app.use('/ribbon', this.express.static(`admin/${Config.admin}`));
@@ -129,4 +135,4 @@ class Ribbon {
   }
 }
 
-export { Ribbon as default };
+export default Ribbon;

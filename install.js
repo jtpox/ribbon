@@ -1,15 +1,22 @@
-const Post = require('./app/model/post');
-const User = require('./app/model/user');
-const Tag = require('./app/model/tag');
-const Image = require('./app/model/image');
-const Content = require('./app/model/content');
-const Page = require('./app/model/page');
+import Bcrypt from 'bcrypt';
 
-const Config = require('./config/server');
+import Prompt from 'prompt';
 
-const Db = require('./app/database');
-const Bcrypt = require('bcrypt');
-const Prompt = require('prompt');
+import Post from './app/model/post';
+
+import User from './app/model/user';
+
+import Tag from './app/model/tag';
+
+import Image from './app/model/image';
+
+import Content from './app/model/content';
+
+import Page from './app/model/page';
+
+import Config from './config/server.json';
+
+import Db from './app/database';
 
 /*
  * Check if a user exists in the database.
