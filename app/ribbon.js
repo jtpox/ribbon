@@ -16,9 +16,9 @@ import Moment from 'moment';
 
 import Routes from './route';
 
-import Config from '../config/server.json';
+import Config from '../../config/server.json';
 
-import Analytics from '../config/analytics.json';
+import Analytics from '../../config/analytics.json';
 
 import Navigation from './model/navigation';
 

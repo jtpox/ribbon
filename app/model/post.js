@@ -49,26 +49,29 @@ let Post = Db.model('Post', schema);
  * Statics
  * Forced to break airnbn here as well.
  */
-Post.list = (cb) => {
+Post.list = (/*cb*/) => {
   const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', '_id', 'hidden'];
   const query = Post.find({}).select(fields.join(' ')).sort({ created_at: 'descending' })
     .populate('created_by', '-password')
     .populate('tag image');
-  return query.exec(cb);
+  return query;  
+  // return query.exec(cb);
 };
 
-Post.view = (id, cb) => {
+Post.view = (id, /*cb*/) => {
   const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
   const query = Post.find({ _id: id }).select(fields.join(' '))
     .populate('created_by', '-password').populate('tag image');
-  return query.exec(cb);
+  
+  return query;
+  // return query.exec(cb);
 };
 
-Post.from_url = (url, cb) => {
+Post.from_url = (url, /*cb*/) => {
   const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
   const query = Post.find({ url: url }).select(fields.join(' '))
     .populate('created_by', '-password').populate('tag image');
-  return query.exec(cb);
+  return query;
 };
 
 export default Post;

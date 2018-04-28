@@ -31,25 +31,28 @@ let Page = Db.model('Page', schema);
 /*
  * Statics
  */
-Page.list = (hidden, cb) => {
+Page.list = (hidden, /*cb*/) => {
   const find = (hidden) ? {} : { hidden: false };
   const fields = (hidden) ? ['title', 'url', 'description', 'hidden'] : ['title', 'url', 'description'];
   const query = Page.find(find).select(fields.join(' '));
-  return query.exec(cb);
+  return query;
+  // return query.exec(cb);
 };
 
-Page.get = (id, cb) => {
+Page.get = (id, /*cb*/) => {
   const fields = ['title', 'url', 'description', 'created_at', 'last_updated', '_id', 'created_by', 'image', 'hidden'];
   const query = Page.find({ _id: id }).select(fields.join(' '))
     .populate('created_by', '-password').populate('image');
-  return query.exec(cb);
+  return query;
+  // return query.exec(cb);
 };
 
-Page.from_url = (url, cb) => {
+Page.from_url = (url, /*cb*/) => {
   const fields = ['title', 'url', 'description', 'created_at', 'last_updated', '_id', 'created_by', 'image'];
   const query = Page.find({ url }).select(fields.join(' '))
     .populate('created_by', '-password').populate('image');
-  return query.exec(cb);
+  return query;
+  // return query.exec(cb);
 };
 
 

@@ -30,11 +30,12 @@ let Content = Db.model('Content', schema);
 /*
  * Statics
  */
-Content.get = (page_id, cb) => {
+Content.get = (page_id, /*cb*/) => {
   const content_fields = ['title', 'content', 'content_column', '_id'];
   const query = Content.find({ page_id }).select(content_fields.join(' '));
 
-  return query.exec(cb);
+  return query;
+  // return query.exec(cb);
 };
 
 export default Content;

@@ -12,11 +12,16 @@ import Image from '../model/image';
 import Db from '../database';// Soley used for the ObjectId type.
 
 class ImageC {
-  list(req, res) {
-    Image.list((err, results) => {
-      // console.log(results);
-      res.json(results);
-    });
+  async list(req, res) {
+    try {
+      const images = await Image.list();
+      res.json(images);
+    } catch (err) {
+      req.log.error(err);
+      res.json({
+        error: 1,
+      });
+    }
   }
 
   insert(req, res) {
@@ -42,11 +47,6 @@ class ImageC {
   }
 
   delete(req, res) {
-    // Delete an image.
-    /* Tag.find({ _id: req.params.id }).remove().exec();
-        res.json({
-            error: 0
-        }); */
     const image = Image.find({ _id: req.params.id });
 
     image.exec((err, results) => {

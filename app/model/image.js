@@ -12,11 +12,12 @@ const schema = Db.Schema({
 
 const Image = Db.model('Image', schema);
 
-Image.list = (cb) => {
+Image.list = (/*cb*/) => {
   const fields = ['title', 'file_name', 'created_by', 'created_at', 'last_updated', '_id'];
   const query = Image.find({}).select(fields.join(' '))
     .populate('created_by');
-  return query.exec(cb);
+  return query;
+  // return query.exec(cb);
 };
 
 export default Image;

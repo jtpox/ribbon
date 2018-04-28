@@ -2,35 +2,30 @@ import Bcrypt from 'bcrypt';
 
 import Session from '../model/session';
 
-function isLogged(req, res, next) {
+async function isLogged(req, res, next) {
   // console.log(req.headers);
   if (req.headers.session_id && req.headers.session_token) {
-    Session.find_by_id(req.headers.session_id, (err, results) => {
-      if (results.length > 0) {
-        // Check if the token is valid.
-        Bcrypt.compare(req.headers.session_token, results[0].token, (bcryptErr, check) => {
-          if (check) {
-            req.currentUser = results[0].user;
-            /*
-                         * Token checks out and session exists.
-                         * Tells the client that the auth is valid and can be used.
-                         */
-            next();
-          } else {
-            // console.log('Here');
-            res.json({
-              error: 1,
-            });
-          }
-        });
+    try {
+      const find_by_id = await Session.find_by_id(req.headers.session_id);
+      if (find_by_id.length > 0) {
+        const token_compare = await Bcrypt.compare(req.headers.session_token, find_by_id[0].token);
+
+        if (token_compare) {
+          req.currentUser = find_by_id[0].user;
+          next();
+        } else {
+          throw new Error('Session token does not match.');
+        }
       } else {
-        res.json({
-          error: 1,
-        });
+        throw new Error('Session ID does not exist.');
       }
-    });
+    } catch (err) {
+      req.log.error(err);
+      res.json({
+        error: 1,
+      });
+    }
   } else {
-    // console.log('There');
     res.json({
       error: 1,
     });

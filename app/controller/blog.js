@@ -5,11 +5,11 @@ import Slugify from 'slugify';
 
 import Post from '../model/post';
 
-import Config from '../../config/server.json';
+import Config from '../../../config/server.json';
 
-import Package from '../../package.json';
+import Package from '../../../package.json';
 
-import Analytic from '../../config/analytics.json';
+import Analytic from '../../../config/analytics.json';
 
 import Db from '../database';// Soley used for the ObjectId type.
 
@@ -21,7 +21,7 @@ class Blog {
     res.json(Config.site);
   }
 
-  paginate(req, res) {
+  async paginate(req, res) {
     const page = (req.params.page != null) ? req.params.page : 1;
     // List the blog posts with pagination.
     // https://stackoverflow.com/questions/42700884/select-all-the-fields-in-a-mongoose-schema
@@ -44,37 +44,53 @@ class Blog {
       limit: 10,
       page,
     };
-    Post.paginate({
-      hidden: false,
-      created_at: {
-        $lte: new Date(),
-      },
-    }, options).then((result) => {
-      // console.log(result);
-      res.json(result);
-    });
+    try {
+      res.json(await Post.paginate({
+        hidden: false,
+        created_at: {
+          $lte: new Date(),
+        },
+      }, options));
+    } catch (err) {
+      req.log.error(err);
+      res.json({
+        error: 1,
+      });
+    }
   }
 
-  list(req, res) {
-    Post.list((err, results) => {
-      // console.log(results);
-      res.json(results);
-    });
+  async list(req, res) {
+    try {
+      res.json(await Post.list());
+    } catch (err) {
+      req.log.error(err);
+      res.json({
+        error: 1,
+      });
+    }
   }
 
-  view(req, res) {
+  async view(req, res) {
     // View post by id.
-    Post.view(req.params.id, (err, result) => {
-      // console.log(result);
-      res.json(result);
-    });
+    try {
+      res.json(await Post.view(req.params.id));
+    } catch (err) {
+      req.log.error(err);
+      res.json({
+        error: 1,
+      });
+    }
   }
 
-  from_url(req, res) {
-    Post.from_url(req.params.url, (err, result) => {
-      // console.log(result);
-      res.json(result);
-    });
+  async from_url(req, res) {
+    try {
+      res.json(await Post.from_url(req.params.url));
+    } catch (err) {
+      req.log.error(err);
+      res.json({
+        error: 1,
+      });
+    }
   }
 
   insert(req, res) {

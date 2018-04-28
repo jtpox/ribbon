@@ -16,13 +16,14 @@ let Tag = Db.model('Tag', schema);
 /*
  * statics
  */
-Tag.list = (cb) => {
+Tag.list = (/*cb*/) => {
   const fields = ['title', 'url', 'content', 'created_at', 'last_updated', '_id'];
   const query = Tag.find({}).select(fields.join(' '));
-  return query.exec(cb);
+  return query;
+  // return query.exec(cb);
 };
 
-Tag.get = (id, cb) => {
+Tag.get = (id, /*cb*/) => {
   const fields = ['title', 'url', 'content', 'created_at', 'last_updated', '_id', 'posts'];
   const query = Tag.find({ _id: id }).select(fields.join(' '))
     .populate({
@@ -35,14 +36,16 @@ Tag.get = (id, cb) => {
       },
     });
   
-    return query.exec(cb);
+  return query;
+  //return query.exec(cb);
 };
 
-Tag.from_url = (url, cb) => {
+Tag.from_url = (url, /*cb*/) => {
   const fields = ['title', 'url', 'content', 'created_at'];
   const query = Tag.find({ url }).select(fields.join(' '));
 
-  return query.exec(cb);
+  return query;
+  //return query.exec(cb);
 };
 
 export default Tag;

@@ -2,7 +2,7 @@ import MongoosePaginate from 'mongoose-paginate';
 
 import Mongoose from 'mongoose';
 
-import DbConfig from '../config/database.json';
+import DbConfig from '../../config/database.json';
 
 Mongoose.connect(`mongodb://${DbConfig.host}/${DbConfig.auth_database}`, {
   user: DbConfig.username,

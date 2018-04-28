@@ -3,7 +3,7 @@
  */
 import Path from 'path';
 
-import Config from '../../config/server.json';
+import Config from '../../../config/server.json';
 
 import Post from '../model/post';
 
@@ -16,8 +16,8 @@ import Tag from '../model/tag';
 import User from '../model/user';
 
 class Index {
-  index(req, res) {
-    const page = (req.params.page != null) ? req.params.page : 1
+  async index(req, res) {
+    const page = (req.params.page != null) ? req.params.page : 1;
     const options = {
       select: 'title url content image created_by tag created_at last_updated _id',
       sort: { created_at: 'descending' },
@@ -37,68 +37,71 @@ class Index {
       limit: 10,
       page,
     };
-    Post.paginate({
-      hidden: false,
-      created_at: {
-        $lte: new Date(),
-      },
-    }, options).then((result) => {
+    try {
+      const posts = await Post.paginate({
+        hidden: false,
+        created_at: {
+          $lte: new Date(),
+        },
+      }, options);
+
       res.render(`themes/${Config.theme}/index`, {
         route: 'index',
-        posts: result,
+        posts,
       });
-    });
+    } catch (err) {
+      req.log.error(err);
+    }
   }
 
-  page(req, res) {
+  async page(req, res) {
     // Get page details.
-    const fields = ['title', 'url', 'description', 'created_at', 'last_updated', '_id', 'created_by', 'image'];
-    const query = Page.find({ url: req.params.url }).select(fields.join(' '))
-      .populate('created_by', '-password').populate('image');
+    try {
+      const fields = ['title', 'url', 'description', 'created_at', 'last_updated', '_id', 'created_by', 'image'];
+      const query = await Page.find({ url: req.params.url }).select(fields.join(' '))
+        .populate('created_by', '-password').populate('image');
 
-    query.exec((err, results) => {
-      // res.json(results);
-
-      if (results.length > 0) {
+      if (query.length > 0) {
         const content_fields = ['title', 'content', 'content_column', '_id'];
-        const content_query = Content.find({ page_id: results[0]._id }).select(content_fields.join(' '));
+        const content_query = await Content.find({ page_id: query[0]._id }).select(content_fields.join(' '));
 
-        content_query.exec((content_query_err, content_results) => {
-          // results[0].boxes = content_results;
-          res.render(`themes/${Config.theme}/page`, {
-            route: `page:${results[0]._id}`,
-            page: results[0],
-            boxes: content_results,
-          });
+        res.render(`themes/${Config.theme}/page`, {
+          route: `page:${query[0]._id}`,
+          page: query[0],
+          boxes: content_query,
         });
       } else {
         res.redirect('/');
       }
-    });
+    } catch (err) {
+      req.log.error(err);
+    }
   }
 
-  post(req, res) {
-    Post.from_url(req.params.url, (err, result) => {
-      // console.log(result);
-      if (result.length > 0) {
+  async post(req, res) {
+    try {
+      const post = await Post.from_url(req.params.url);
+      if (post.length > 0) {
         res.render(`themes/${Config.theme}/post`, {
-          route: `post:${result[0]._id}`,
-          post: result[0],
+          route: `post:${post[0]._id}`,
+          post: post[0],
         });
       } else {
         res.redirect('/');
       }
-    });
+    } catch (err) {
+      req.log.error(err);
+    }
   }
 
-  tag(req, res) {
+  async tag(req, res) {
     const page = (req.params.page != null) ? req.params.page : 1;
 
-    const fields = ['title', 'url', 'content', 'created_at'];
-    const query = Tag.find({ url: req.params.url }).select(fields.join(' '));
+    try {
+      const fields = ['title', 'url', 'content', 'created_at'];
+      const query = await Tag.find({ url: req.params.url }).select(fields.join(' '));
 
-    query.exec((err, results) => {
-      if (results.length > 0) {
+      if (query.length > 0) {
         // If the tag exists.
         const options = {
           select: 'title url content image created_by tag created_at last_updated _id',
@@ -119,29 +122,27 @@ class Index {
           limit: 10,
           page,
         };
-        Post.paginate({ tag: results[0]._id, hidden: false, created_at: { $lte: new Date() } }, options).then((post_results) => {
-          // console.log(result);
-          res.render(`themes/${Config.theme}/tag`, {
-            route: `tag:${results[0]._id}`,
-            tag: results[0],
-            posts: post_results,
-          });
+
+        res.render(`themes/${Config.theme}/tag`, {
+          route: `tag:${query[0]._id}`,
+          tag: query[0],
+          posts: await Post.paginate({ tag: query[0]._id, hidden: false, created_at: { $lte: new Date() } }, options),
         });
       } else {
         res.redirect('/');
       }
-    });
+    } catch (err) {
+      req.log.error(err);
+    }
   }
 
-  user(req, res) {
+  async user(req, res) {
     const page = (req.params.page != null) ? req.params.page : 1;
+    try {
+      const fields = ['username', 'email', 'about', 'created_at', 'avatar', '_id'];
+      const query = await User.find({ _id: req.params.id }).select(fields.join(' '));
 
-    const fields = ['username', 'email', 'about', 'created_at', 'avatar', '_id'];
-    const query = User.find({ _id: req.params.id }).select(fields.join(' '));
-
-    query.exec((err, results) => {
-      if (results.length > 0) {
-        // If the tag exists.
+      if (query.length > 0) {
         const options = {
           select: 'title url content image created_by tag created_at last_updated _id',
           sort: { created_at: 'descending' },
@@ -161,18 +162,18 @@ class Index {
           limit: 10,
           page,
         };
-        Post.paginate({ created_by: results[0]._id, hidden: false, created_at: { $lte: new Date() } }, options).then((post_results) => {
-          // console.log(result);
-          res.render(`themes/${Config.theme}/user`, {
-            route: `user:${results[0]._id}`,
-            user: results[0],
-            posts: post_results,
-          });
+
+        res.render(`themes/${Config.theme}/user`, {
+          route: `user:${query[0]._id}`,
+          user: query[0],
+          posts: await Post.paginate({ created_by: query[0]._id, hidden: false, created_at: { $lte: new Date() } }, options),
         });
       } else {
         res.redirect('/');
       }
-    });
+    } catch (err) {
+      req.log.error(err);
+    }
   }
 
   admin(req, res) {

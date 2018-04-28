@@ -15,22 +15,25 @@ const schema = Db.Schema({
 
 let User = Db.model('User', schema);
 
-User.find_by_email = (email, cb) => {
-  return User.find({ email }, cb);
+User.find_by_email = (email, /*cb*/) => {
+  return User.find({ email });
+  // return User.find({ email }, cb);
 };
 
-User.list = (cb) => {
+User.list = (/*cb*/) => {
   const fields = ['username', 'email', 'about', 'avatar', 'created_at', 'last_updated', '_id'];
   const query = User.find({}).select(fields.join(' '));
 
-  return query.exec(cb);
+  return query;
+  //return query.exec(cb);
 };
 
-User.get = (id, cb) => {
+User.get = (id, /*cb*/) => {
   const fields = ['username', 'email', 'about', 'created_at', 'avatar', '_id'];
   const query = User.find({ _id: id }).select(fields.join(' '));
 
-  return query.exec(cb);
+  return query;
+  //return query.exec(cb);
 };
 
 export default User;

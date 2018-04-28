@@ -7,7 +7,7 @@ import Post from '../model/post';
 
 import User from '../model/user';
 
-import Config from '../../config/server.json';
+import Config from '../../../config/server.json';
 
 class UserC {
   list(req, res) {
