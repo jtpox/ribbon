@@ -25,7 +25,7 @@ console.log('\x1b[47m\x1b[35m', 'ribbon Setup', '\x1b[0m');
  */
 const query = User.find({});
 
-query.exec(async (fidn_err, find_results) => {
+query.exec(async (find_err, find_results) => {
   if (find_results.length > 0) {
     console.log('\x1b[47m\x1b[31m', 'ribbon is already installed.', '\x1b[0m');
     process.exit();
