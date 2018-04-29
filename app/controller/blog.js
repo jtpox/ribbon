@@ -93,7 +93,7 @@ class Blog {
     }
   }
 
-  insert(req, res) {
+  async insert(req, res) {
     // console.log(req.currentUser);
     // Add a blog post.
     if (req.body.title && req.body.content && req.body.tag && req.body.schedule) {
@@ -108,13 +108,18 @@ class Blog {
         created_at: new Date(req.body.schedule),
         hidden: (req.body.hidden) ? req.body.hidden : false,
       });
-
-      post.save((err, new_post) => {
+      try {
+        const save = await post.save();
         res.json({
           error: 0,
-          post_id: new_post._id,
+          post_id: save._id,
         });
-      });
+      } catch (err) {
+        req.log.error(err);
+        res.json({
+          error: 1,
+        });
+      }
     } else {
       res.json({
         error: 1,
@@ -130,28 +135,28 @@ class Blog {
     });
   }
 
-  update(req, res) {
+  async update(req, res) {
     // Update a blog post.
     if (req.body.title && req.body.content && req.body.tag && req.body.schedule) {
-      Post.update({ _id: req.params.id }, {
-        title: req.body.title,
-        url: (req.body.url) ? Slugify(req.body.url) : Slugify(req.body.title),
-        content: req.body.content,
-        tag: Db.Types.ObjectId(req.body.tag),
-        image: (req.body.image !== null) ? Db.Types.ObjectId(req.body.image) : null,
-        created_at: new Date(req.body.schedule),
-        hidden: (req.body.hidden) ? req.body.hidden : false,
-      }, (err) => {
-        if (err) {
-          res.json({
-            error: 1,
-          });
-        } else {
-          res.json({
-            error: 0,
-          });
-        }
-      });
+      try {
+        const update = await Post.update({ _id: req.params.id }, {
+          title: req.body.title,
+          url: (req.body.url) ? Slugify(req.body.url) : Slugify(req.body.title),
+          content: req.body.content,
+          tag: Db.Types.ObjectId(req.body.tag),
+          image: (req.body.image !== null) ? Db.Types.ObjectId(req.body.image) : null,
+          created_at: new Date(req.body.schedule),
+          hidden: (req.body.hidden) ? req.body.hidden : false,
+        });
+        res.json({
+          error: 0,
+        });
+      } catch (err) {
+        req.log.error(err);
+        res.json({
+          error: 1,
+        });
+      }
     } else {
       res.json({
         error: 1,

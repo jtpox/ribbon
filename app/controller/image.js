@@ -24,26 +24,25 @@ class ImageC {
     }
   }
 
-  insert(req, res) {
+  async insert(req, res) {
     // Add an image.
     const image = new Image({
       title: req.files.file.name,
       file_name: req.upload,
       created_by: Db.Types.ObjectId(req.currentUser),
     });
-
-    image.save((save_err, new_image) => {
-      if (save_err) {
-        res.json({
-          error: 1,
-        });
-      } else {
-        res.json({
-          error: 0,
-          image: new_image,
-        });
-      }
-    });
+    try {
+      const save = await image.save();
+      res.json({
+        error: 0,
+        image: save,
+      });
+    } catch (err) {
+      req.log.error(err);
+      res.json({
+        error: 1,
+      });
+    }
   }
 
   delete(req, res) {
@@ -51,7 +50,7 @@ class ImageC {
 
     image.exec((err, results) => {
       if (results.length > 0) {
-        const directory = Path.join(__dirname, '..', '..', 'public', 'uploads', 'images', results[0].file_name);
+        const directory = Path.join(__dirname, '..', '..', '..', 'public', 'uploads', 'images', results[0].file_name);
 
         Fs.unlink(directory, (unlink_err) => {
           if (unlink_err) {

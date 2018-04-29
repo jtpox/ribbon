@@ -8,23 +8,34 @@ import Post from '../model/post';
 import Tag from '../model/tag';
 
 class TagC {
-  list(req, res) {
-    Tag.list((err, results) => {
-      // console.log(results);
-      res.json(results);
-    });
+  async list(req, res) {
+    try {
+      res.json(await Tag.list());
+    } catch (err) {
+      req.log.error(err);
+      res.json({
+        error: 1,
+      });
+    }
   }
 
-  get(req, res) {
-    Tag.get(req.params.id, (err, results) => {
-      res.json(results);
-    });
+  async get(req, res) {
+    try {
+      res.json(await Tag.get(req.params.id));
+    } catch (err) {
+      req.log.error(err);
+      res.json({
+        error: 1,
+      });
+    }
   }
 
-  posts(req, res) {
+  async posts(req, res) {
     const page = (req.params.page != null) ? req.params.page : 1;
-    Tag.from_url(req.params.url, (err, results) => {
-      if (results.length > 0) {
+    try {
+      const from_url = await Tag.from_url(req.params.url);
+
+      if (from_url.length > 0) {
         // If the tag exists.
         const options = {
           select: 'title url content image created_by tag created_at last_updated _id',
@@ -45,22 +56,24 @@ class TagC {
           limit: 10,
           page,
         };
-        Post.paginate({ tag: results[0]._id, hidden: false, created_at: { $lte: new Date() } }, options).then((post_results) => {
-          // console.log(result);
-          res.json({
-            tag: results[0],
-            posts: post_results,
-          });
+
+        const paginate = await Post.paginate({ tag: from_url[0]._id, hidden: false, created_at: { $lte: new Date() } }, options);
+        res.json({
+          tag: from_url[0],
+          posts: paginate,
         });
       } else {
-        res.json({
-          error: 1,
-        });
+        throw new Error('Tag does not exist.');
       }
-    });
+    } catch (err) {
+      req.log.error(err);
+      res.json({
+        error: 1,
+      });
+    }
   }
 
-  insert(req, res) {
+  async insert(req, res) {
     // Add a tag.
     if (req.body.title && req.body.content) {
       const tag = new Tag({
@@ -69,12 +82,18 @@ class TagC {
         content: req.body.content,
       });
 
-      tag.save((err, new_tag) => {
+      try {
+        const save = await tag.save();
         res.json({
           error: 0,
-          tag: new_tag,
+          tag: save,
         });
-      });
+      } catch (err) {
+        req.log.error(err);
+        res.json({
+          error: 1,
+        });
+      }
     } else {
       res.json({
         error: 1,

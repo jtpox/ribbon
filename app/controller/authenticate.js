@@ -108,13 +108,16 @@ class Authenticate {
   /*
    * Get user details.
    */
-  details(req, res) {
+  async details(req, res) {
     const fields = ['username', 'email', 'about', 'avatar', 'created_at', 'last_updated'];
-    const user = User.find({ _id: req.currentUser }).select(fields.join(' '));
-
-    user.exec((err, results) => {
-      res.json(results);
-    });
+    try {
+      res.json(await User.find({ _id: req.currentUser }).select(fields.join(' ')));
+    } catch (err) {
+      req.log.error(err);
+      res.json({
+        error: 1,
+      });
+    }
   }
 
   /*

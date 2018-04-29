@@ -1,6 +1,6 @@
 {
   "name": "ribbon",
-  "version": "2018.4.28",
+  "version": "2018.4.29",
   "description": "A personal management system by jtPox",
   "main": "ribbon.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "eslint": "./node_modules/.bin/eslint app/*",
     "eslint_fix": "./node_modules/.bin/eslint app/* --fix",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./npm-debug.log,./config,./public,./themes,./admin --copy-files",
-    "setup": "node dist/install.js"
+    "setup": "npm install && npm run build && node dist/install.js"
   },
   "repository": {
     "type": "git",

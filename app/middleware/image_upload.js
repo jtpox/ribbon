@@ -37,7 +37,7 @@ function avatar(req, res, next) {
     if (filter.output) {
       // Generate a random string to be used as a file name.
       const file_name = Crypto.randomBytes(12).toString('hex');
-      const directory = Path.join(__dirname, '..', '..', 'public', 'uploads', 'profile', `${file_name}.${filter.extension}`);
+      const directory = Path.join(__dirname, '..', '..', '..', 'public', 'uploads', 'profile', `${file_name}.${filter.extension}`);
       req.files.file.mv(directory, (mv_err) => {
         if (mv_err) {
           res.json({
@@ -65,7 +65,7 @@ function library(req, res, next) {
     const filter = filterExtension(req.files.file); // Check the file extension.
     if (filter.output) {
       const file_name = Crypto.randomBytes(12).toString('hex');
-      const directory = Path.join(__dirname, '..', '..', 'public', 'uploads', 'images', `${file_name}.${filter.extension}`);
+      const directory = Path.join(__dirname, '..', '..', '..', 'public', 'uploads', 'images', `${file_name}.${filter.extension}`);
       req.files.file.mv(directory, (mv_err) => {
         if (mv_err) {
           res.json({

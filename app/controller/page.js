@@ -10,63 +10,74 @@ import Content from '../model/content';
 import Db from '../database';// Soley used for the ObjectId type.
 
 class PageC {
-  list(req, res) {
-    Page.list(false, (err, results) => {
-      // console.log(results);
-      res.json(results);
-    });
-  }
-
-  admin_list(req, res) {
-    Page.list(true, (err, results) => {
-      // console.log(results);
-      res.json(results);
-    });
-  }
-
-  get(req, res) {
-    // Get page details.
-    Page.get(req.params.id, (err, results) => {
-      // res.json(results);
-
-      const content_fields = ['title', 'content', 'content_column', '_id'];
-      const content_query = Content.find({ page_id: req.params.id }).select(content_fields.join(' '));
-
-      content_query.exec((content_query_err, content_results) => {
-        // results[0].boxes = content_results;
-
-        res.json({
-          details: results[0],
-          boxes: content_results,
-        });
+  async list(req, res) {
+    try {
+      res.json(await Page.list(false));
+    } catch (err) {
+      req.log.error(err);
+      res.json({
+        error: 1,
       });
-    });
+    }
   }
 
-  from_url(req, res) {
+  async admin_list(req, res) {
+    try {
+      res.json(await Page.list(true));
+    } catch (err) {
+      req.log.error(err);
+      res.json({
+        error: 1,
+      });
+    }
+  }
+
+  async get(req, res) {
     // Get page details.
-    Page.from_url(req.params.url, (err, results) => {
-      // res.json(results);
-
-      if (results.length > 0) {
-        Content.get(results[0]._id, (content_query_err, content_results) => {
-          // results[0].boxes = content_results;
-
-          res.json({
-            error: 0,
-            details: results[0],
-            boxes: content_results,
-          });
+    try {
+      const page = await Page.get(req.params.id);
+      if (page.length > 0) {
+        const content_fields = ['title', 'content', 'content_column', '_id'];
+        const content_query = await Content.find({ page_id: req.params.id }).select(content_fields.join(' '));
+        res.json({
+          details: page[0],
+          boxes: content_query,
         });
       } else {
-        res.json({
-          error: 1,
-        });
+        throw new Error('Page does not exist.');
       }
-    });
+    } catch (err) {
+      req.log.error(err);
+      res.json({
+        error: 1,
+      });
+    }
   }
 
-  insert(req, res) {
+  async from_url(req, res) {
+    // Get page details.
+    try {
+      const page = await Page.from_url(req.params.url);
+      if (page.length > 0) {
+        const content_fields = ['title', 'content', 'content_column', '_id'];
+        const content_query = await Content.find({ page_id: page[0]._id }).select(content_fields.join(' '));
+        res.json({
+          error: 0,
+          details: page[0],
+          boxes: content_query,
+        });
+      } else {
+        throw new Error('Page does not exist.');
+      }
+    } catch (err) {
+      req.log.error(err);
+      res.json({
+        error: 1,
+      });
+    }
+  }
+
+  async insert(req, res) {
     // console.log(req.body);
     if (req.body.title && req.body.content && req.body.boxes) {
       const page = new Page({
@@ -77,11 +88,11 @@ class PageC {
         image: (req.body.image !== null) ? Db.Types.ObjectId(req.body.image) : null,
         hidden: (req.body.hidden) ? req.body.hidden : false,
       });
+      try {
+        const new_page = await page.save();
 
-      page.save((err, new_page) => {
         const boxes = [];
         const contents = JSON.parse(req.body.boxes);
-        // console.log(contents);
         for (let i = 0; i < contents.length; i++) {
           boxes.push({
             title: contents[i].title,
@@ -92,13 +103,17 @@ class PageC {
           });
         }
 
-        Content.collection.insert(boxes, (insert_err, docs) => {
-          res.json({
-            error: 0,
-            page_id: new_page._id,
-          });
+        const save_boxes = await Content.collection.insert(boxes);
+        res.json({
+          error: 0,
+          page_id: new_page._id,
         });
-      });
+      } catch (err) {
+        req.log.error(err);
+        res.json({
+          error: 1,
+        });
+      }
     } else {
       res.json({
         error: 1,
@@ -106,47 +121,46 @@ class PageC {
     }
   }
 
-  update(req, res) {
+  async update(req, res) {
     // Update a page.
     // console.log(req.body);
     if (req.body.title && req.body.content && req.body.boxes) {
-      // console.log(image);
+      try {
+        const update = await Page.update({ _id: req.params.id }, {
+          title: req.body.title,
+          url: (req.body.url) ? Slugify(req.body.url) : Slugify(req.body.title),
+          description: req.body.content,
+          image: (req.body.image !== null) ? Db.Types.ObjectId(req.body.image) : null,
+          hidden: (req.body.hidden) ? req.body.hidden : false,
+        });
 
-      Page.update({ _id: req.params.id }, {
-        title: req.body.title,
-        url: (req.body.url) ? Slugify(req.body.url) : Slugify(req.body.title),
-        description: req.body.content,
-        image: (req.body.image !== null) ? Db.Types.ObjectId(req.body.image) : null,
-        hidden: (req.body.hidden) ? req.body.hidden : false,
-      }, (err) => {
-        if (err) {
-          res.json({
-            error: 1,
-          });
-        } else {
-          // Delete all content box from the DB.
-          Content.remove({ page_id: req.params.id }, (remove_err, result) => {
-            const boxes = [];
-            const contents = JSON.parse(req.body.boxes);
-            // console.log(contents);
-            for (let i = 0; i < contents.length; i++) {
-              boxes.push({
-                title: contents[i].title,
-                page_id: Db.Types.ObjectId(req.params.id),
-                content: contents[i].content,
-                content_column: contents[i].content_column,
-                created_by: Db.Types.ObjectId(req.currentUser),
-              });
-            }
+        // Remove all content boxes.
+        const remove = await Content.remove({ page_id: req.params.id });
 
-            Content.collection.insertMany(boxes, (insert_err, docs) => {
-              res.json({
-                error: 0,
-              });
-            });
+        // Adding new boxes.
+        const boxes = [];
+        const contents = JSON.parse(req.body.boxes);
+        // console.log(contents);
+        for (let i = 0; i < contents.length; i++) {
+          boxes.push({
+            title: contents[i].title,
+            page_id: Db.Types.ObjectId(req.params.id),
+            content: contents[i].content,
+            content_column: contents[i].content_column,
+            created_by: Db.Types.ObjectId(req.currentUser),
           });
         }
-      });
+        const insert_boxes = await Content.collection.insertMany(boxes);
+
+        res.json({
+          error: 0,
+        });
+      } catch (err) {
+        req.log.error(err);
+        res.json({
+          error: 1,
+        });
+      }
     } else {
       res.json({
         error: 1,
