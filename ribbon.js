@@ -12,7 +12,7 @@ const {
   printf,
 } = format;
 
-const new_format = printf((info) => {
+const newFormat = printf((info) => {
   const moment = Moment(info.timestamp).format('YYYY-MM-DD HH:mm');
   return `[${moment}] ${info.level}: ${info.message}`;
 });
@@ -23,7 +23,7 @@ const ribbon = new Ribbon(
   createLogger({
     format: combine(
       timestamp(),
-      new_format,
+      newFormat,
     ),
     transports: [
       new transports.Console(),
