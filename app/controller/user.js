@@ -65,11 +65,11 @@ class UserC {
     // Add a user.
     if (req.body.username && req.body.password && req.body.email) {
       try {
-        const email_check = await User.find({ email: req.body.email });
-        const username_check = await User.find({ username: req.body.username });
+        const emailCheck = await User.find({ email: req.body.email });
+        const usernameCheck = await User.find({ username: req.body.username });
 
-        if (username_check.length < 1 && email_check.length < 1) {
-          const new_user = new User({
+        if (usernameCheck.length < 1 && emailCheck.length < 1) {
+          const newUser = new User({
             username: req.body.username,
             password: await Bcrypt.hash(req.body.password, Config.hash.salt_rounds),
             email: req.body.email,
@@ -77,7 +77,7 @@ class UserC {
 
           res.json({
             error: 0,
-            user: await new_user.save(),
+            user: await newUser.save(),
           });
         } else {
           throw new Error('Username or Email is already taken.');

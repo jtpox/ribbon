@@ -33,9 +33,9 @@ class TagC {
   async posts(req, res) {
     const page = (req.params.page != null) ? req.params.page : 1;
     try {
-      const from_url = await Tag.from_url(req.params.url);
+      const fromUrl = await Tag.fromUrl(req.params.url);
 
-      if (from_url.length > 0) {
+      if (fromUrl.length > 0) {
         // If the tag exists.
         const options = {
           select: 'title url content image created_by tag created_at last_updated _id',
@@ -57,9 +57,9 @@ class TagC {
           page,
         };
 
-        const paginate = await Post.paginate({ tag: from_url[0]._id, hidden: false, created_at: { $lte: new Date() } }, options);
+        const paginate = await Post.paginate({ tag: fromUrl[0]._id, hidden: false, created_at: { $lte: new Date() } }, options);
         res.json({
-          tag: from_url[0],
+          tag: fromUrl[0],
           posts: paginate,
         });
       } else {

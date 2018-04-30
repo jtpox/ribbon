@@ -6,12 +6,12 @@ async function isLogged(req, res, next) {
   // console.log(req.headers);
   if (req.headers.session_id && req.headers.session_token) {
     try {
-      const find_by_id = await Session.find_by_id(req.headers.session_id);
-      if (find_by_id.length > 0) {
-        const token_compare = await Bcrypt.compare(req.headers.session_token, find_by_id[0].token);
+      const findById = await Session.findById(req.headers.session_id);
+      if (findById.length > 0) {
+        const tokenCompare = await Bcrypt.compare(req.headers.session_token, findById[0].token);
 
-        if (token_compare) {
-          req.currentUser = find_by_id[0].user;
+        if (tokenCompare) {
+          req.currentUser = findById[0].user;
           next();
         } else {
           throw new Error('Session token does not match.');

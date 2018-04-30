@@ -30,9 +30,9 @@ let Content = Db.model('Content', schema);
 /*
  * Statics
  */
-Content.get = (page_id, /*cb*/) => {
+Content.get = (pageId, /*cb*/) => {
   const content_fields = ['title', 'content', 'content_column', '_id'];
-  const query = Content.find({ page_id }).select(content_fields.join(' '));
+  const query = Content.find({ pageId }).select(content_fields.join(' '));
 
   return query;
   // return query.exec(cb);

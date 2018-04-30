@@ -62,13 +62,13 @@ class Index {
         .populate('created_by', '-password').populate('image');
 
       if (query.length > 0) {
-        const content_fields = ['title', 'content', 'content_column', '_id'];
-        const content_query = await Content.find({ page_id: query[0]._id }).select(content_fields.join(' '));
+        const contentFields = ['title', 'content', 'content_column', '_id'];
+        const contentQuery = await Content.find({ page_id: query[0]._id }).select(contentFields.join(' '));
 
         res.render(`themes/${Config.theme}/page`, {
           route: `page:${query[0]._id}`,
           page: query[0],
-          boxes: content_query,
+          boxes: contentQuery,
         });
       } else {
         res.redirect('/');

@@ -22,25 +22,25 @@ class Authenticate {
   async signin(req, res) {
     if (req.body.email && req.body.password) {
       try {
-        const find_by_email = await User.find_by_email(req.body.email);
-        if (find_by_email.length > 0) {
-          const password_compare = await Bcrypt.compare(req.body.password, find_by_email[0].password);
+        const findByEmail = await User.findByEmail(req.body.email);
+        if (findByEmail.length > 0) {
+          const password_compare = await Bcrypt.compare(req.body.password, findByEmail[0].password);
           if (password_compare) {
-            const session_token = await Crypto.randomBytes(48).toString('hex');
-            const session_hash = await Bcrypt.hash(session_token, Config.hash.salt_rounds);
+            const sessionToken = await Crypto.randomBytes(48).toString('hex');
+            const sessionHash = await Bcrypt.hash(sessionToken, Config.hash.salt_rounds);
 
             const session = new Session({
-              token: session_hash,
-              user: Db.Types.ObjectId(find_by_email[0]._id),
+              token: sessionHash,
+              user: Db.Types.ObjectId(findByEmail[0]._id),
             });
-            const new_session = await session.save();
+            const newSession = await session.save();
 
             res.json({
               error: 0,
-              session_id: new_session._id,
-              session_token,
-              username: find_by_email[0].username,
-              user_id: find_by_email[0]._id,
+              session_id: newSession._id,
+              session_token: sessionToken,
+              username: findByEmail[0].username,
+              user_id: findByEmail[0]._id,
             });
           } else {
             throw new Error('Invalid Authentication Details');
@@ -77,10 +77,10 @@ class Authenticate {
   async check(req, res) {
     if (req.body.session_id && req.body.session_token) {
       try {
-        const find_by_id = await Session.find_by_id(req.body.session_id);
+        const findById = await Session.findById(req.body.session_id);
 
-        if (find_by_id.length > 0) {
-          const token_compare = Bcrypt.compare(req.body.session_token, find_by_id[0].token);
+        if (findById.length > 0) {
+          const token_compare = Bcrypt.compare(req.body.session_token, findById[0].token);
 
           if (token_compare) {
             res.json({
@@ -123,7 +123,7 @@ class Authenticate {
   /*
    * Updating user details.
    */
-  async update_about(req, res) {
+  async updateAbout(req, res) {
     if (req.body.about) {
       try {
         const update = await User.update({ _id: req.currentUser }, { about: req.body.about });
@@ -148,7 +148,7 @@ class Authenticate {
    * Image upload has been done via middleware.
    * File name is sent to req.upload.
    */
-  async update_avatar(req, res) {
+  async updateAvatar(req, res) {
     // Get current user to check if the avatar is default.
     try {
       const fields = ['username', 'email', 'about', 'avatar', 'created_at', 'last_updated'];

@@ -82,9 +82,9 @@ class Blog {
     }
   }
 
-  async from_url(req, res) {
+  async fromUrl(req, res) {
     try {
-      res.json(await Post.from_url(req.params.url));
+      res.json(await Post.fromUrl(req.params.url));
     } catch (err) {
       req.log.error(err);
       res.json({

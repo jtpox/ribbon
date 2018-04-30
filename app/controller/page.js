@@ -21,7 +21,7 @@ class PageC {
     }
   }
 
-  async admin_list(req, res) {
+  async adminList(req, res) {
     try {
       res.json(await Page.list(true));
     } catch (err) {
@@ -37,11 +37,11 @@ class PageC {
     try {
       const page = await Page.get(req.params.id);
       if (page.length > 0) {
-        const content_fields = ['title', 'content', 'content_column', '_id'];
-        const content_query = await Content.find({ page_id: req.params.id }).select(content_fields.join(' '));
+        const contentFields = ['title', 'content', 'content_column', '_id'];
+        const contentQuery = await Content.find({ page_id: req.params.id }).select(contentFields.join(' '));
         res.json({
           details: page[0],
-          boxes: content_query,
+          boxes: contentQuery,
         });
       } else {
         throw new Error('Page does not exist.');
@@ -54,17 +54,17 @@ class PageC {
     }
   }
 
-  async from_url(req, res) {
+  async fromUrl(req, res) {
     // Get page details.
     try {
-      const page = await Page.from_url(req.params.url);
+      const page = await Page.fromUrl(req.params.url);
       if (page.length > 0) {
-        const content_fields = ['title', 'content', 'content_column', '_id'];
-        const content_query = await Content.find({ page_id: page[0]._id }).select(content_fields.join(' '));
+        const contentFields = ['title', 'content', 'content_column', '_id'];
+        const contentQuery = await Content.find({ page_id: page[0]._id }).select(contentFields.join(' '));
         res.json({
           error: 0,
           details: page[0],
-          boxes: content_query,
+          boxes: contentQuery,
         });
       } else {
         throw new Error('Page does not exist.');
@@ -89,7 +89,7 @@ class PageC {
         hidden: (req.body.hidden) ? req.body.hidden : false,
       });
       try {
-        const new_page = await page.save();
+        const newPage = await page.save();
 
         const boxes = [];
         const contents = JSON.parse(req.body.boxes);
@@ -99,14 +99,14 @@ class PageC {
             content: contents[i].content,
             content_column: contents[i].content_column,
             created_by: Db.Types.ObjectId(req.currentUser),
-            page_id: Db.Types.ObjectId(new_page._id),
+            page_id: Db.Types.ObjectId(newPage._id),
           });
         }
 
-        const save_boxes = await Content.collection.insert(boxes);
+        const saveBoxes = await Content.collection.insert(boxes);
         res.json({
           error: 0,
-          page_id: new_page._id,
+          page_id: saveBoxes._id,
         });
       } catch (err) {
         req.log.error(err);
@@ -150,7 +150,7 @@ class PageC {
             created_by: Db.Types.ObjectId(req.currentUser),
           });
         }
-        const insert_boxes = await Content.collection.insertMany(boxes);
+        const insertBoxes = await Content.collection.insertMany(boxes);
 
         res.json({
           error: 0,

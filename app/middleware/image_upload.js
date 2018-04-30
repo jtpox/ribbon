@@ -6,11 +6,11 @@ import Crypto from 'crypto';
 import Path from 'path';
 
 function filterExtension(file) {
-  const extension_extract = /(?:\.([^.]+))?$/;
-  const extension = extension_extract.exec(file.name);
+  const extensionExtract = /(?:\.([^.]+))?$/;
+  const extension = extensionExtract.exec(file.name);
   // console.log(extension[1]);
 
-  const allowed_extensions = [
+  const allowedExtensions = [
     'png',
     'gif',
     'jpg',
@@ -18,7 +18,7 @@ function filterExtension(file) {
     'bmp',
   ];
 
-  if (allowed_extensions.indexOf(extension[1]) === -1) {
+  if (allowedExtensions.indexOf(extension[1]) === -1) {
     return {
       extension: extension[1],
       output: false,
@@ -36,15 +36,15 @@ function avatar(req, res, next) {
     const filter = filterExtension(req.files.file); // Check the file extension.
     if (filter.output) {
       // Generate a random string to be used as a file name.
-      const file_name = Crypto.randomBytes(12).toString('hex');
-      const directory = Path.join(__dirname, '..', '..', '..', 'public', 'uploads', 'profile', `${file_name}.${filter.extension}`);
+      const fileName = Crypto.randomBytes(12).toString('hex');
+      const directory = Path.join(__dirname, '..', '..', '..', 'public', 'uploads', 'profile', `${fileName}.${filter.extension}`);
       req.files.file.mv(directory, (mv_err) => {
         if (mv_err) {
           res.json({
             error: 1,
           });
         } else {
-          req.upload = `${file_name}.${filter.extension}`;
+          req.upload = `${fileName}.${filter.extension}`;
           next();
         }
       });

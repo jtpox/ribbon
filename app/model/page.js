@@ -47,7 +47,7 @@ Page.get = (id, /*cb*/) => {
   // return query.exec(cb);
 };
 
-Page.from_url = (url, /*cb*/) => {
+Page.fromUrl = (url, /*cb*/) => {
   const fields = ['title', 'url', 'description', 'created_at', 'last_updated', '_id', 'created_by', 'image'];
   const query = Page.find({ url }).select(fields.join(' '))
     .populate('created_by', '-password').populate('image');

@@ -15,7 +15,7 @@ const schema = Db.Schema({
 
 let User = Db.model('User', schema);
 
-User.find_by_email = (email, /*cb*/) => {
+User.findByEmail = (email, /*cb*/) => {
   return User.find({ email });
   // return User.find({ email }, cb);
 };

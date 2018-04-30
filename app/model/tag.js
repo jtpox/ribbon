@@ -40,7 +40,7 @@ Tag.get = (id, /*cb*/) => {
   //return query.exec(cb);
 };
 
-Tag.from_url = (url, /*cb*/) => {
+Tag.fromUrl = (url, /*cb*/) => {
   const fields = ['title', 'url', 'content', 'created_at'];
   const query = Tag.find({ url }).select(fields.join(' '));
 

@@ -67,7 +67,7 @@ Post.view = (id, /*cb*/) => {
   // return query.exec(cb);
 };
 
-Post.from_url = (url, /*cb*/) => {
+Post.fromUrl = (url, /*cb*/) => {
   const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
   const query = Post.find({ url: url }).select(fields.join(' '))
     .populate('created_by', '-password').populate('tag image');

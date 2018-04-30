@@ -51,8 +51,8 @@ function routes(app) {
   app.post('/api/auth/check', auth.check);
   app.post('/api/auth/logout', isLogged, auth.logout);
 
-  app.post('/api/auth/update/about', isLogged, auth.update_about);
-  app.post('/api/auth/update/avatar', [isLogged, avatar], auth.update_avatar);
+  app.post('/api/auth/update/about', isLogged, auth.updateAbout);
+  app.post('/api/auth/update/avatar', [isLogged, avatar], auth.updateAvatar);
   app.post('/api/auth/details', isLogged, auth.details);
 
   app.get('/api', blog.site);
@@ -66,7 +66,7 @@ function routes(app) {
   app.get('/api/blog/page/:page', blog.paginate);
 
   app.get('/api/blog/:id', blog.view);
-  app.get('/api/blog/url/:url', blog.from_url);
+  app.get('/api/blog/url/:url', blog.fromUrl);
   app.delete('/api/blog/:id', isLogged, blog.delete);// Deleting a blog post. For some reason, it is not working with Angular. But it works with Postman.
   // https://stackoverflow.com/questions/37796227/body-is-empty-when-parsing-delete-request-with-express-and-body-parser
   app.post('/api/blog/delete/:id', isLogged, blog.delete);// Deleting a blog post. Non RESTFUL method.
@@ -90,11 +90,11 @@ function routes(app) {
   app.post('/api/users/delete/:id', isLogged, user.delete);
 
   app.get('/api/pages', page.list);
-  app.get('/api/pages/admin', isLogged, page.admin_list);
+  app.get('/api/pages/admin', isLogged, page.adminList);
   app.post('/api/pages', isLogged, page.insert);
 
   app.get('/api/pages/:id', isLogged, page.get);// Only viewable by admin.
-  app.get('/api/pages/url/:url', page.from_url);
+  app.get('/api/pages/url/:url', page.fromUrl);
   app.put('/api/pages/:id', isLogged, page.update);
   app.delete('/api/pages/:id', isLogged, page.delete);
   app.post('/api/pages/delete/:id', isLogged, page.delete);
