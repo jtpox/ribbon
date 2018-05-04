@@ -27,28 +27,9 @@ class UserC {
       const user = await User.get(req.params.id);
 
       if (user.length > 0) {
-        const options = {
-          select: 'title url content image created_by tag created_at last_updated _id',
-          sort: { created_at: 'descending' },
-          populate: [
-            {
-              path: 'created_by',
-              select: '-password',
-            },
-            {
-              path: 'tag',
-            },
-            {
-              path: 'image',
-            },
-          ],
-          lean: false,
-          limit: 10,
-          page,
-        };
         res.json({
           user: user[0],
-          posts: await Post.paginate({ created_by: user[0]._id, hidden: false, created_at: { $lte: new Date() } }, options),
+          posts: await Post.page(page, { created_by: user[0]._id, hidden: false, created_at: { $lte: new Date() } }),
         });
       } else {
         throw new Error('User does not exist.');

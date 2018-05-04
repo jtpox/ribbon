@@ -56,5 +56,28 @@ Page.fromUrl = (url, /*cb*/) => {
 };
 
 
+Page.page = (page, query) => {
+  const options = {
+    select: 'title url content image created_by tag created_at last_updated _id',
+    sort: { created_at: 'descending' },
+    populate: [
+      {
+        path: 'created_by',
+        select: '-password',
+      },
+      {
+        path: 'tag',
+      },
+      {
+        path: 'image',
+      },
+    ],
+    lean: false,
+    limit: 10,
+    page,
+  };
+  return Page.paginate(query, options);
+};
+
 
 export default Page;

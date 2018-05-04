@@ -18,32 +18,16 @@ import User from '../model/user';
 class Index {
   async index(req, res) {
     const page = (req.params.page != null) ? req.params.page : 1;
-    const options = {
-      select: 'title url content image created_by tag created_at last_updated _id',
-      sort: { created_at: 'descending' },
-      populate: [
-        {
-          path: 'created_by',
-          select: '-password',
-        },
-        {
-          path: 'tag',
-        },
-        {
-          path: 'image',
-        },
-      ],
-      lean: false,
-      limit: 10,
-      page,
-    };
     try {
-      const posts = await Post.paginate({
-        hidden: false,
-        created_at: {
-          $lte: new Date(),
+      const posts = await Post.page(
+        page,
+        {
+          hidden: false,
+          created_at: {
+            $lte: new Date(),
+          },
         },
-      }, options);
+      );
 
       res.render(`themes/${Config.theme}/index`, {
         route: 'index',
@@ -80,7 +64,7 @@ class Index {
 
   async post(req, res) {
     try {
-      const post = await Post.from_url(req.params.url);
+      const post = await Post.fromUrl(req.params.url);
       if (post.length > 0) {
         res.render(`themes/${Config.theme}/post`, {
           route: `post:${post[0]._id}`,
@@ -103,30 +87,10 @@ class Index {
 
       if (query.length > 0) {
         // If the tag exists.
-        const options = {
-          select: 'title url content image created_by tag created_at last_updated _id',
-          sort: { created_at: 'descending' },
-          populate: [
-            {
-              path: 'created_by',
-              select: '-password',
-            },
-            {
-              path: 'tag',
-            },
-            {
-              path: 'image',
-            },
-          ],
-          lean: false,
-          limit: 10,
-          page,
-        };
-
         res.render(`themes/${Config.theme}/tag`, {
           route: `tag:${query[0]._id}`,
           tag: query[0],
-          posts: await Post.paginate({ tag: query[0]._id, hidden: false, created_at: { $lte: new Date() } }, options),
+          posts: await Post.page(page, { tag: query[0]._id, hidden: false, created_at: { $lte: new Date() } }),
         });
       } else {
         res.redirect('/');
@@ -143,30 +107,10 @@ class Index {
       const query = await User.find({ _id: req.params.id }).select(fields.join(' '));
 
       if (query.length > 0) {
-        const options = {
-          select: 'title url content image created_by tag created_at last_updated _id',
-          sort: { created_at: 'descending' },
-          populate: [
-            {
-              path: 'created_by',
-              select: '-password',
-            },
-            {
-              path: 'tag',
-            },
-            {
-              path: 'image',
-            },
-          ],
-          lean: false,
-          limit: 10,
-          page,
-        };
-
         res.render(`themes/${Config.theme}/user`, {
           route: `user:${query[0]._id}`,
           user: query[0],
-          posts: await Post.paginate({ created_by: query[0]._id, hidden: false, created_at: { $lte: new Date() } }, options),
+          posts: await Post.page(page, { created_by: query[0]._id, hidden: false, created_at: { $lte: new Date() } }),
         });
       } else {
         res.redirect('/');

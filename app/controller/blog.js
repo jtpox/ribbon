@@ -25,32 +25,13 @@ class Blog {
     const page = (req.params.page != null) ? req.params.page : 1;
     // List the blog posts with pagination.
     // https://stackoverflow.com/questions/42700884/select-all-the-fields-in-a-mongoose-schema
-    const options = {
-      select: 'title url content image created_by tag created_at last_updated _id converted_content',
-      sort: { created_at: 'descending' },
-      populate: [
-        {
-          path: 'created_by',
-          select: '-password',
-        },
-        {
-          path: 'tag',
-        },
-        {
-          path: 'image',
-        },
-      ],
-      lean: false,
-      limit: 10,
-      page,
-    };
     try {
-      res.json(await Post.paginate({
+      res.json(await Post.page(page, {
         hidden: false,
         created_at: {
           $lte: new Date(),
         },
-      }, options));
+      }));
     } catch (err) {
       req.log.error(err);
       res.json({

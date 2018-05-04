@@ -37,27 +37,14 @@ class TagC {
 
       if (fromUrl.length > 0) {
         // If the tag exists.
-        const options = {
-          select: 'title url content image created_by tag created_at last_updated _id',
-          sort: { created_at: 'descending' },
-          populate: [
-            {
-              path: 'created_by',
-              select: '-password',
-            },
-            {
-              path: 'tag',
-            },
-            {
-              path: 'image',
-            },
-          ],
-          lean: false,
-          limit: 10,
+        const paginate = await Post.page(
           page,
-        };
-
-        const paginate = await Post.paginate({ tag: fromUrl[0]._id, hidden: false, created_at: { $lte: new Date() } }, options);
+          {
+            tag: fromUrl[0]._id,
+            hidden: false,
+            created_at: { $lte: new Date() },
+          },
+        );
         res.json({
           tag: fromUrl[0],
           posts: paginate,
