@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,UAAW;EACP,MAAM,EAAE,IAAI;;AAGhB,SAAU;EACN,gBAAgB,EAAE,MAAM",
-"sources": ["../scss/ribbon.scss"],
-"names": [],
-"file": "ribbon.css"
-}
