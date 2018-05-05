@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "./node_modules/.bin/eslint app/*",
     "eslint_fix": "./node_modules/.bin/eslint app/* --fix",
-    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./npm-debug.log,./config,./public,./themes,./admin --copy-files",
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./npm-debug.log,./config,./public,./themes,./admin,./combined.log --copy-files",
     "setup": "npm install && npm run build && node dist/install.js"
   },
   "repository": {
