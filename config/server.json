@@ -10,7 +10,7 @@
     "theme": "flac",
 
     "_admin": "Admin theme. Name of the theme folder, located in /admin",
-    "admin": "arabesque",
+    "admin": "arabesque/dist",
 
     "hash": {
         "salt_rounds": 10
