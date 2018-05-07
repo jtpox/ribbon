@@ -104,7 +104,9 @@ query.exec(async (find_err, find_results) => {
         tag: Db.Types.ObjectId(new_tag._id),
       }).save();
 
-      console.log('\x1b[42m\x1b[30m', `You can access the administrators panel by visiting '<website_url>/ribbon' and logging in using the email '${prompt.email}'.`, '\x1b[0m');
+      console.log('\x1b[42m\x1b[30m', 'Installation successful.', '\x1b[0m');
+      console.log('\x1b[42m\x1b[30m', 'You need to get the arabesque administrator panel by visiting https://github.com/jtpox/arabesque', '\x1b[0m');
+      console.log('\x1b[42m\x1b[30m', `Access the administrators panel by visiting '<website_url>/ribbon' and logging in using the email '${prompt.email}'.`, '\x1b[0m');
       process.exit();
     });
   }
