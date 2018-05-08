@@ -10,6 +10,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 @import url("fontawesome-all.min.css");
+@import url("https://fonts.googleapis.com/css?family=Quicksand:300,400");
 :root {
   --blue: #778beb;
   --indigo: #786fa6;
@@ -6737,9 +6738,33 @@ a.text-dark:hover, a.text-dark:focus {
   .table-bordered th,
   .table-bordered td {
     border: 1px solid #dee2e6 !important; } }
-body {
+.intro {
+  background-color: #786fa6;
+  /* Font */
+  color: #fff;
   /* Margin & Padding */
   padding-top: 30px; }
+
+.install {
+  background-color: #e9ecef;
+  /* Margin & Padding */
+  padding: 30px 0 30px 0; }
+
+.arabesque {
+  background-color: #fff;
+  /* Margin & Padding */
+  padding: 30px 0 30px 0; }
+
+.dependencies {
+  background-color: #f8f9fa;
+  /* Margin & Padding */
+  padding: 30px 0 30px 0; }
+
+footer {
+  /* Font */
+  font-family: 'Quicksand', sans-serif;
+  /* Margin & Padding */
+  padding: 30px 0 30px 0; }
 
 /*
  * Text
@@ -6754,5 +6779,65 @@ body {
   src: url("../webfonts/diavlo/Diavlo_BOOK_II_37.otf"); }
 .diavlo {
   font-family: Diavlo, sans-serif; }
+
+.quicksand {
+  font-family: 'Quicksand', sans-serif; }
+
+/*
+ * Screens
+ */
+.tablet {
+  background-color: #212529;
+  height: 200px;
+  /* Font */
+  color: #000;
+  /* Margin & Padding */
+  padding: 30px 30px 0 30px;
+  /* Border */
+  border-top: 3px solid #adb5bd;
+  border-left: 3px solid #adb5bd;
+  border-right: 3px solid #adb5bd;
+  /* Border Radius */
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px; }
+
+.tablet > .screen {
+  background-color: #fff;
+  background-image: url("../img/cap.png");
+  background-size: cover;
+  height: 100%; }
+
+.monitor {
+  background-color: #ced4da;
+  /* Border Radius */
+  border-radius: 20px;
+  /* Margin & Padding */
+  padding-bottom: 60px; }
+
+.monitor > .screen {
+  background-color: #212529;
+  /* Margin & Padding */
+  padding: 30px;
+  /* Border Radius */
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px; }
+
+.monitor > .screen > .cap {
+  background-image: url("https://raw.githubusercontent.com/jtpox/arabesque/master/src/assets/screencap.png");
+  background-size: cover; }
+
+.sixteen-nine {
+  position: relative; }
+  .sixteen-nine:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: 56.25%; }
+  .sixteen-nine > .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; }
 
 /*# sourceMappingURL=ribbon.css.map */

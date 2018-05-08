@@ -22,59 +22,136 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="jumbotron text-center">
-            <h1 class="display-4 diavlo text-purple">ribbon</h1>
-            <p class="lead">
-                A platform to share your stories!
+    <div class="intro">
+        <div class="container text-center">
+            <h1 class="display-4 diavlo">ribbon</h1>
+            <p>
+                A platform to share your stories.
             </p>
-            <hr class="my-4" />
-            <a class="btn btn-link btn-lg"><small>Stable</small> <span id="version"></span></a>
-            <a href="https://github.com/jtpox/ribbon" class="btn btn-outline-dark btn-lg" data-toggle="tooltip" title="GitHub Repository">
-                <i class="fab fa-github-alt"></i> GitHub
-            </a>
+            <p>
+                <a class="btn btn-lg btn-link"><small>Stable</small> <span id="version"></span></a>
+                <a href="#" class="btn btn-lg btn-outline-light"><i class="fab fa-github-alt"></i> GitHub</a>
+            </p>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="tablet">
+                        <div class="screen"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="container">
-        <div class="row text-center">
-            <div class="col-md-4">
-                <h3>1. Get ribbon</h3>
-                <p>
-                    Clone the stable branch.
-                </p>
-                <p>
-                    <code>git clone -b stable https://github.com/jtpox/ribbon.git</code>
-                </p>
-            </div>
-
-            <div class="col-md-4">
-                <h3>2. Update Configuration</h3>
-                <p>
-                    Update database details in
-                </p>
-                <p>
-                    <code>config/database.json</code>
-                </p>
-            </div>
-
-            <div class="col-md-4">
-                <h3>3. Install & Start</h3>
-                <p>
-                    Install dependencies.
-                </p>
-                <p>
-                    <code>npm run setup</code>
-                </p>
-                <p>
-                    Start ribbon.
-                </p>
-                <p>
-                    <code>node dist/ribbon.js</code>
-                </p>
+    <div class="install">
+        <div class="container">
+            <h1 class="text-center display-5 quicksand">Get ribbon</h1>
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <h3>Step 1</h3>
+                    <p>
+                        Clone the stable branch.
+                    </p>
+                    <p>
+                        <code>git clone -b stable https://github.com/jtpox/ribbon.git</code>
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <h3>Step 2</h3>
+                    <p>
+                        Update database details.
+                    </p>
+                    <p>
+                        <code>config/database.json</code>
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <h3>Step 3</h3>
+                    <p>
+                        Install and start.
+                    </p>
+                    <p>
+                        <code>npm run setup</code>
+                    </p>
+                    <p>
+                        <code>node dist/ribbon.js</code>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="arabesque">
+        <div class="container">
+            <h1 class="text-center display-5 quicksand">Install arabesque</h1>
+            <p class="text-center">
+                A back end interface for ribbon.
+            </p>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>
+                        Go to the admin folder.
+                    </p>
+                    <p>
+                        <code>cd admin</code>
+                    </p>
+                    <p>
+                        Clone arabesque.
+                    </p>
+                    <p>
+                        <code>git clone https://github.com/jtpox/arabesque.git</code>
+                    </p>
+                    <p>
+                        Install dependencies.
+                    </p>
+                    <p>
+                        <code>npm install</code>
+                    </p>
+                    <p>
+                        Build for production.
+                    </p>
+                    <p>
+                        <code>npm run build</code>
+                    </p>
+                </div>
+                <div class="col-md-8">
+                    <div class="monitor">
+                        <div class="screen">
+                            <div class="cap sixteen-nine"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dependencies">
+        <div class="container">
+            <h1 class="text-center display-5 quicksand">Prerequisites</h1>
+            <p class="text-center">
+                What makes ribbon tick.
+            </p>
+            <div class="row text-center">
+                <div class="col-md-3 offset-md-3">
+                    <a href="https://nodejs.org/" target="_blank"><img src="img/nodejs.png" class="img-fluid" /></a>
+                    <p>
+                        NodeJS 8 or newer.
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <a href="https://www.mongodb.com/" target="_blank"><img src="img/mongodb.png" class="img-fluid" /></a>
+                    <p>
+                        MongoDB 3.6.3 or newer.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center">
+        ribbon is made with <i class="fas fa-heart"></i> and care by <a href="https://jtpox.com/">Jian Ting</a>
+    </footer>
 
     <script src="js/jquery.min.js"></script>
     <script src="js/popper.min.js"></script>
