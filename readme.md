@@ -1,6 +1,6 @@
 ![ribbon logo](https://raw.githubusercontent.com/jtpox/ribbon/master/public/assets/img/ribbon_logo.png)
 
-A personal content management system project that uses **Express** and **MongoDB**.
+A platform to share your stories.
   
 ## Dependencies
 -  [ExpressJS](https://expressjs.com/)
