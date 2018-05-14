@@ -1,6 +1,6 @@
 {
   "name": "ribbon",
-  "version": "2018.5.10",
+  "version": "2018.5.15",
   "description": "A platform to share your stories.",
   "main": "ribbon.js",
   "scripts": {

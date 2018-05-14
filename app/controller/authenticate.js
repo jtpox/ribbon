@@ -24,8 +24,8 @@ class Authenticate {
       try {
         const findByEmail = await User.findByEmail(req.body.email);
         if (findByEmail.length > 0) {
-          const password_compare = await Bcrypt.compare(req.body.password, findByEmail[0].password);
-          if (password_compare) {
+          const passwordCompare = await Bcrypt.compare(req.body.password, findByEmail[0].password);
+          if (passwordCompare) {
             const sessionToken = await Crypto.randomBytes(48).toString('hex');
             const sessionHash = await Bcrypt.hash(sessionToken, Config.hash.salt_rounds);
 
@@ -166,6 +166,35 @@ class Authenticate {
         error: 0,
         image: req.upload,
       });
+    } catch (err) {
+      req.log.error(err);
+      res.json({
+        error: 1,
+      });
+    }
+  }
+
+  /*
+   * Update user password.
+   */
+  async updatePassword(req, res) {
+    try {
+      if (req.body.old && req.body.new) {
+        const user = await User.find({ _id: req.currentUser }).select('username email password');
+        const passwordCompare = await Bcrypt.compare(req.body.old, user[0].password);
+        if (passwordCompare) {
+          const newPassword = await Bcrypt.hash(req.body.new, Config.hash.salt_rounds);
+          const update = await User.update({ _id: req.currentUser }, { password: newPassword });
+
+          res.json({
+            error: 0,
+          });
+        } else {
+          throw new Error('Invalid password.');
+        }
+      } else {
+        throw new Error('Invalid form inputs.');
+      }
     } catch (err) {
       req.log.error(err);
       res.json({

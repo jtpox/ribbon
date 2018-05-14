@@ -53,6 +53,7 @@ function routes(app) {
 
   app.post('/api/auth/update/about', isLogged, auth.updateAbout);
   app.post('/api/auth/update/avatar', [isLogged, avatar], auth.updateAvatar);
+  app.post('/api/auth/update/password', isLogged, auth.updatePassword);
   app.post('/api/auth/details', isLogged, auth.details);
 
   app.get('/api', blog.site);
