@@ -3,6 +3,8 @@
  */
 import Slugify from 'slugify';
 
+import Moment from 'moment';
+
 import Post from '../model/post';
 
 import Config from '../../../config/server.json';
@@ -65,6 +67,30 @@ class Blog {
 
   async fromUrl(req, res) {
     try {
+      const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
+
+      const post = await Post.fromUrl(req.params.url);
+      const date = new Date(post[0].created_at);
+      console.log(date);
+
+      // Get previous post.
+      post.previous = await Post.find({
+        created_at: {
+          '&lt': date,
+        },
+      }).limit(1).select(fields.join(' '))
+        .populate('created_by', '-password')
+        .populate('tag image');
+
+      // Get next post.
+      post.next = await Post.find({
+        created_at: {
+          '&gt': date,
+        },
+      }).limit(1).select(fields.join(' '))
+        .populate('created_by', '-password')
+        .populate('tag image');
+
       res.json(await Post.fromUrl(req.params.url));
     } catch (err) {
       req.log.error(err);
