@@ -3,13 +3,9 @@ public/uploads/
 public/assets/.sass-cache/
 themes/flac/.sass-cache/
 themes/chev/.sass-cache/
-config/database.json
-config/server.json
-config/analytics.js
 themes/
 admin/
 dist/
 package-lock.json
 combined.log
 package-lock.json
-.env
