@@ -8,4 +8,3 @@ admin/
 dist/
 combined.log
 package-lock.json
-.env
