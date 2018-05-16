@@ -3,6 +3,8 @@ import Db from '../database';
 
 import Showdown from 'showdown';
 
+import Moment from 'moment';
+
 const ObjectId = Db.Schema.ObjectId;
 const schema = Db.Schema({
   title: String,
@@ -72,6 +74,40 @@ Post.fromUrl = (url, /*cb*/) => {
   const query = Post.find({ url: url }).select(fields.join(' '))
     .populate('created_by', '-password').populate('tag image');
   return query;
+};
+
+Post.findNext = (date) => {
+  date = new Date(date);
+
+  const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
+  const query = Post.find({
+    created_at: {
+      '&gt': date,
+    },
+  })
+    .limit(1)
+    .select(fields.join(' '))
+    .populate('created_by', '-password')
+    .populate('tag image');
+  
+    return query;
+};
+
+Post.findPrevious = (date) => {
+  date = new Date(date);
+
+  const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
+  const query = Post.find({
+    created_at: {
+      '&lt': date,
+    },
+  })
+    .limit(1)
+    .select(fields.join(' '))
+    .populate('created_by', '-password')
+    .populate('tag image');
+  
+    return query;
 };
 
 Post.page = (page, query) => {

@@ -7,8 +7,6 @@ import Post from '../model/post';
 
 import User from '../model/user';
 
-import Config from '../../../config/server.json';
-
 class UserC {
   async list(req, res) {
     try {
@@ -52,7 +50,7 @@ class UserC {
         if (usernameCheck.length < 1 && emailCheck.length < 1) {
           const newUser = new User({
             username: req.body.username,
-            password: await Bcrypt.hash(req.body.password, Config.hash.salt_rounds),
+            password: await Bcrypt.hash(req.body.password, parseInt(process.env.HASH_SALT_ROUNDS, 10)),
             email: req.body.email,
           });
 
@@ -88,7 +86,7 @@ class UserC {
             {
               username: req.body.username,
               email: req.body.email,
-              password: await Bcrypt.hash(req.body.password, Config.hash.salt_rounds),
+              password: await Bcrypt.hash(req.body.password, process.env.HASH_SALT_ROUNDS),
             },
           );
           res.json({

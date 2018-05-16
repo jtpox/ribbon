@@ -1,6 +1,6 @@
 {
   "name": "ribbon",
-  "version": "2018.5.15",
+  "version": "2018.5.16",
   "description": "A platform to share your stories.",
   "main": "ribbon.js",
   "scripts": {
@@ -8,6 +8,7 @@
     "eslint": "./node_modules/.bin/eslint app/*",
     "eslint_fix": "./node_modules/.bin/eslint app/* --fix",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./npm-debug.log,./config,./public,./themes,./admin,./combined.log --copy-files",
+    "dev": "nodemon ribbon.js --exec babel-node",
     "setup": "npm install && npm run build && node dist/install.js"
   },
   "repository": {
@@ -17,7 +18,7 @@
   "author": "Jian Ting",
   "license": "MIT",
   "dependencies": {
-    "bcrypt": "^2.0.0",
+    "bcrypt": "^2.0.1",
     "body-parser": "^1.18.2",
     "dotenv": "^5.0.1",
     "eslint": "^4.19.1",
@@ -40,6 +41,7 @@
     "babel-preset-airbnb": "^2.4.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.11.0",
+    "nodemon": "^1.17.4",
     "rimraf": "^2.6.2"
   }
 }

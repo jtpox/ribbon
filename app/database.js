@@ -2,12 +2,15 @@ import MongoosePaginate from 'mongoose-paginate';
 
 import Mongoose from 'mongoose';
 
-import DbConfig from '../../config/database.json';
+import DotEnv from 'dotenv';
 
-Mongoose.connect(`mongodb://${DbConfig.host}/${DbConfig.auth_database}`, {
-  user: DbConfig.username,
-  pass: DbConfig.password,
-  dbName: DbConfig.database,
+// Call on dotenv
+DotEnv.config();
+
+Mongoose.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_AUTH}`, {
+  user: process.env.DB_USER,
+  pass: process.env.DB_PASSWORD,
+  dbName: process.env.DB_NAME,
 });
 
 /*

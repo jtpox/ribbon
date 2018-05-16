@@ -14,8 +14,6 @@ import User from '../model/user';
 
 import Session from '../model/session';
 
-import Config from '../../../config/server.json';
-
 import Db from '../database';// Soley used for the ObjectId type.
 
 class Authenticate {
@@ -27,7 +25,7 @@ class Authenticate {
           const passwordCompare = await Bcrypt.compare(req.body.password, findByEmail[0].password);
           if (passwordCompare) {
             const sessionToken = await Crypto.randomBytes(48).toString('hex');
-            const sessionHash = await Bcrypt.hash(sessionToken, Config.hash.salt_rounds);
+            const sessionHash = await Bcrypt.hash(sessionToken, parseInt(process.env.HASH_SALT_ROUNDS, 10));
 
             const session = new Session({
               token: sessionHash,
@@ -183,7 +181,7 @@ class Authenticate {
         const user = await User.find({ _id: req.currentUser }).select('username email password');
         const passwordCompare = await Bcrypt.compare(req.body.old, user[0].password);
         if (passwordCompare) {
-          const newPassword = await Bcrypt.hash(req.body.new, Config.hash.salt_rounds);
+          const newPassword = await Bcrypt.hash(req.body.new, process.env.HASH_SALT_ROUNDS);
           const update = await User.update({ _id: req.currentUser }, { password: newPassword });
 
           res.json({

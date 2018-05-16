@@ -7,20 +7,31 @@ import Moment from 'moment';
 
 import Post from '../model/post';
 
-import Config from '../../../config/server.json';
-
-import Package from '../../../package.json';
-
-import Analytic from '../../../config/analytics.json';
+import Package from '../../package.json';
 
 import Db from '../database';// Soley used for the ObjectId type.
 
 class Blog {
   site(req, res) {
-    Config.site.ribbon_version = Package.version;
-    Config.site.url = `${req.protocol}://${req.get('host')}`;
-    Config.site.analytics = Analytic;
-    res.json(Config.site);
+    // Config.site.ribbon_version = Package.version;
+    // Config.site.url = `${req.protocol}://${req.get('host')}`;
+    // Config.site.analytics = Analytic;
+    // res.json(Config.site);
+    res.json({
+      name: process.env.SITE_NAME,
+      ribbon_version: Package.version,
+      analytics: {
+        site: {
+          domain: process.env.SITE_DOMAIN,
+        },
+        google: {
+          tracking_id: process.env.GOOGLE_TRACKING_ID,
+        },
+        twitter: {
+          username: process.env.TWITTER_USERNAME,
+        },
+      },
+    });
   }
 
   async paginate(req, res) {
@@ -70,28 +81,14 @@ class Blog {
       const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
 
       const post = await Post.fromUrl(req.params.url);
-      const date = new Date(post[0].created_at);
-      console.log(date);
 
       // Get previous post.
-      post.previous = await Post.find({
-        created_at: {
-          '&lt': date,
-        },
-      }).limit(1).select(fields.join(' '))
-        .populate('created_by', '-password')
-        .populate('tag image');
+      // post.previous = await Post.findPrevious(post[0].created_at);
 
       // Get next post.
-      post.next = await Post.find({
-        created_at: {
-          '&gt': date,
-        },
-      }).limit(1).select(fields.join(' '))
-        .populate('created_by', '-password')
-        .populate('tag image');
+      // post.next = await Post.findNext(post[0].created_at);
 
-      res.json(await Post.fromUrl(req.params.url));
+      res.json(post);
     } catch (err) {
       req.log.error(err);
       res.json({

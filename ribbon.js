@@ -2,9 +2,13 @@ import Express from 'express';
 
 import Moment from 'moment';
 
+import DotEnv from 'dotenv';
+
 import { createLogger, format, transports } from 'winston';
 
 import Ribbon from './app/ribbon';
+
+DotEnv.config();
 
 const {
   combine,

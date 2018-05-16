@@ -3,8 +3,6 @@
  */
 import Path from 'path';
 
-import Config from '../../../config/server.json';
-
 import Post from '../model/post';
 
 import Page from '../model/page';
@@ -17,6 +15,7 @@ import User from '../model/user';
 
 class Index {
   async index(req, res) {
+    // console.log(process.env);
     const page = (req.params.page != null) ? req.params.page : 1;
     try {
       const posts = await Post.page(
@@ -29,7 +28,7 @@ class Index {
         },
       );
 
-      res.render(`themes/${Config.theme}/index`, {
+      res.render(`themes/${process.env.SITE_THEME}/index`, {
         route: 'index',
         posts,
       });
@@ -49,7 +48,7 @@ class Index {
         const contentFields = ['title', 'content', 'content_column', '_id'];
         const contentQuery = await Content.find({ page_id: query[0]._id }).select(contentFields.join(' '));
 
-        res.render(`themes/${Config.theme}/page`, {
+        res.render(`themes/${process.env.SITE_THEME}/page`, {
           route: `page:${query[0]._id}`,
           page: query[0],
           boxes: contentQuery,
@@ -66,7 +65,14 @@ class Index {
     try {
       const post = await Post.fromUrl(req.params.url);
       if (post.length > 0) {
-        res.render(`themes/${Config.theme}/post`, {
+        // Get previous post.
+        // post.previous = await Post.findPrevious(post[0].created_at);
+
+        // Get next post.
+        // post.next = await Post.findNext(post[0].created_at);
+      
+
+        res.render(`themes/${process.env.SITE_THEME}/post`, {
           route: `post:${post[0]._id}`,
           post: post[0],
         });
@@ -87,7 +93,7 @@ class Index {
 
       if (query.length > 0) {
         // If the tag exists.
-        res.render(`themes/${Config.theme}/tag`, {
+        res.render(`themes/${process.env.SITE_THEME}/tag`, {
           route: `tag:${query[0]._id}`,
           tag: query[0],
           posts: await Post.page(page, { tag: query[0]._id, hidden: false, created_at: { $lte: new Date() } }),
@@ -107,7 +113,7 @@ class Index {
       const query = await User.find({ _id: req.params.id }).select(fields.join(' '));
 
       if (query.length > 0) {
-        res.render(`themes/${Config.theme}/user`, {
+        res.render(`themes/${process.env.SITE_THEME}/user`, {
           route: `user:${query[0]._id}`,
           user: query[0],
           posts: await Post.page(page, { created_by: query[0]._id, hidden: false, created_at: { $lte: new Date() } }),
@@ -122,7 +128,7 @@ class Index {
 
   admin(req, res) {
     // res.sendFile(Path.join(__dirname, '..', '..', 'public', 'admin.html'));
-    res.sendFile(Path.join(__dirname, '..', '..', 'admin', Config.admin, 'index.html'));
+    res.sendFile(Path.join(__dirname, '..', '..', 'admin', process.env.ADMIN_THEME, 'index.html'));
   }
 }
 

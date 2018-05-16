@@ -2,6 +2,8 @@ import Bcrypt from 'bcrypt';
 
 import Prompt from 'prompt';
 
+import DotEnv from 'dotenv';
+
 import Post from './app/model/post';
 
 import User from './app/model/user';
@@ -14,9 +16,9 @@ import Content from './app/model/content';
 
 import Page from './app/model/page';
 
-import Config from '../config/server.json';
-
 import Db from './app/database';
+
+DotEnv.config();
 
 console.log('\x1b[47m\x1b[35m', 'ribbon Setup', '\x1b[0m');
 
@@ -58,7 +60,7 @@ query.exec(async (find_err, find_results) => {
       // Add admin authentication details.
       const new_user = await new User({
         username: prompt.username,
-        password: await Bcrypt.hash(prompt.password, Config.hash.salt_rounds),
+        password: await Bcrypt.hash(prompt.password, parseInt(process.env.HASH_SALT_ROUNDS, 10)),
         email: prompt.email,
       }).save();
 
