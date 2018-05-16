@@ -1,0 +1,35 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+
+    block meta
+    
+    link(href="/theme/css/chev.css" rel="stylesheet")
+    title Chev
+  body
+    .container
+      .header
+        h1.display-3=site.name
+        ul.nav.nav-pills.justify-content-center
+          li.nav-item
+            a.nav-link(href="/" class=(route === 'index' ? 'active':'')) Home
+          each nav in navigation
+            li.nav-item
+                if nav.page
+                    a.nav-link(href="/page/"+nav.page.url class=(route === 'page:'+nav.page._id ? 'active':''))=nav.title
+                else if nav.link
+                    a.nav-link(href=nav.link)=nav.title
+    
+    block content
+
+    .container
+      .more-posts
+        block more_posts
+      footer.footer.text-center
+        | powered by 
+        a(href="https://github.com/jtpox/ribbon") ribbon
+
+    script(src="/theme/js/jquery.js")
+    script(src="/theme/js/bootstrap.min.js")

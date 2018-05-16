@@ -1,0 +1,34 @@
+<div class="container-fluid page-content">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 post-title">
+            <h1>{{ post[0].title }}</h1>
+            <p>
+                on
+                <span class="date">{{ post[0].created_at | format_date }}</span> in
+                <a ui-sref="tag({ tag: post[0].tag.url })">{{ post[0].tag.title }}</a>
+            </p>
+        </div>
+
+        <div class="col-md-8 offset-md-2 text-center" ng-show="post[0].image !== null">
+            <img class="img-fluid rounded" ng-src="{{ 'uploads/images/' + post[0].image.file_name }}" />
+        </div>
+
+        <div ng-class="{ 'col-md-6 offset-md-3': post[0].image !== null, 'col-md-8 offset-md-2': post[0].image == null }">
+            <div class="card" ng-class="{ 'post-single': post[0].image !== null, 'post-no-image': post[0].image == null }">
+                <div class="card-body">
+                    <p class="card-text" ng-bind-html="post[0].content | markdown"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8 offset-md-2 about-author">
+            <div class="media">
+                <img class="mr-3 rounded" ng-src="{{ '/uploads/profile/' + post[0].created_by.avatar }}" height="64" width="64" />
+                <div class="media-body">
+                    <h5 class="mt-0"><a ui-sref="author({ author: post[0].created_by._id })">{{ post[0].created_by.username }}</a></h5>
+                    {{ post[0].created_by.about }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
