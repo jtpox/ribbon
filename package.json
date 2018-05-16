@@ -2,7 +2,7 @@
   "name": "ribbon",
   "version": "2018.5.16",
   "description": "A platform to share your stories.",
-  "main": "ribbon.js",
+  "main": "dist/ribbon.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "./node_modules/.bin/eslint app/*",
