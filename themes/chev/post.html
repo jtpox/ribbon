@@ -23,6 +23,23 @@ block content
                 h5.mt-0
                     a(href="/user/"+post.created_by._id)=post.created_by.username
                 p=post.created_by.about
+    
+    .container.post-history
+        .row
+            .col-md-6
+                if previous.length > 0
+                  h4
+                    a(href="/post/"+previous[0].url)
+                        i.fas.fa-angle-left
+                        | 
+                        span=previous[0].title
+            .col-md-6.text-right
+                if next.length > 0
+                  h4
+                    a(href="/post/"+next[0].url)
+                        span=next[0].title
+                        | 
+                        i.fas.fa-angle-right
 
 block meta
     meta(name="description" content=post.content)

@@ -6,6 +6,7 @@
  */
 /* $component-active-bg !default; */
 @import url("https://fonts.googleapis.com/css?family=Comfortaa:300,400|Lora");
+@import url("fontawesome-all.min.css");
 :root {
   --blue: #54a0ff;
   --indigo: #5f27cd;
@@ -6829,6 +6830,10 @@ h1, h2, h3, h4, h5 {
   font-size: 18px;
   text-align: justify;
   text-justify: inter-word; }
+
+.post-history {
+  /* Margin & Padding */
+  margin-top: 50px; }
 
 /*
  * Page

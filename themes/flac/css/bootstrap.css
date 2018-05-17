@@ -6526,6 +6526,10 @@ span.date {
   /* Font */
   color: #da4453; }
 
+.post-history {
+  /* Margin & Padding */
+  margin-top: 50px; }
+
 .page-image {
   /* Margin & Padding */
   margin-top: -20px; }

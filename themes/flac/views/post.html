@@ -31,4 +31,18 @@
             </div>
         </div>
     </div>
+
+    <div class="row post-history">
+        <div class="col-md-4 offset-md-2">
+            <div ng-if="previous.length > 0">
+                <h4><a ui-sref="post({ post: previous[0].url })"><i class="fas fa-angle-left"></i> {{ previous[0].title }}</a></h4>
+            </div>
+        </div>
+
+        <div class="col-md-4 text-right">
+            <div ng-if="next.length > 0">
+                <h4><a ui-sref="post({ post: next[0].url })">{{ next[0].title }} <i class="fas fa-angle-right"></i></a></h4>
+            </div>
+        </div>
+    </div>
 </div>

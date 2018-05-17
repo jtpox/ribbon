@@ -63,6 +63,9 @@
                 $rootScope.meta_description = res.data.post[0].title + ' by ' + res.data.post[0].created_by.username + ' on ' + format_date(res.data.post[0].created_at);
                 // console.log(res.data[0].image);
                 $rootScope.meta_image       = (res.data.post[0].image)? '/uploads/images/' + res.data.post[0].image.file_name : '/assets/img/represent.png';
+
+                $scope.previous             = res.data.previous;
+                $scope.next                 = res.data.next;
             }
             else
             {
