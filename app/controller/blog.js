@@ -78,17 +78,13 @@ class Blog {
 
   async fromUrl(req, res) {
     try {
-      const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
-
       const post = await Post.fromUrl(req.params.url);
-
-      // Get previous post.
-      // post.previous = await Post.findPrevious(post[0].created_at);
-
-      // Get next post.
-      // post.next = await Post.findNext(post[0].created_at);
-
-      res.json(post);
+      
+      res.json({
+        post,
+        previous: await Post.findPrevious(post[0].created_at),
+        next: await Post.findNext(post[0].created_at),
+      });
     } catch (err) {
       req.log.error(err);
       res.json({

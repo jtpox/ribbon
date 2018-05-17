@@ -77,12 +77,10 @@ Post.fromUrl = (url, /*cb*/) => {
 };
 
 Post.findNext = (date) => {
-  date = new Date(date);
-
   const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
   const query = Post.find({
     created_at: {
-      '&gt': date,
+      '$gt': date,
     },
   })
     .limit(1)
@@ -94,12 +92,10 @@ Post.findNext = (date) => {
 };
 
 Post.findPrevious = (date) => {
-  date = new Date(date);
-
   const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
   const query = Post.find({
     created_at: {
-      '&lt': date,
+      '$lt': date,
     },
   })
     .limit(1)

@@ -56,17 +56,17 @@
          * Get blog post by ID.
          */
         $http.get($rootScope.api + '/blog/url/' + $state.params.post).then(function(res) {
-            if( res.data.length > 0 )
+            if( res.data.post.length > 0 )
             {
-                $rootScope.page_title       = res.data[0].title;
-                $scope.post                 = res.data;
-                $rootScope.meta_description = res.data[0].title + ' by ' + res.data[0].created_by.username + ' on ' + format_date(res.data[0].created_at);
+                $rootScope.page_title       = res.data.post[0].title;
+                $scope.post                 = res.data.post;
+                $rootScope.meta_description = res.data.post[0].title + ' by ' + res.data.post[0].created_by.username + ' on ' + format_date(res.data.post[0].created_at);
                 // console.log(res.data[0].image);
-                $rootScope.meta_image       = (res.data[0].image)? '/uploads/images/' + res.data[0].image.file_name : '/assets/img/represent.png';
+                $rootScope.meta_image       = (res.data.post[0].image)? '/uploads/images/' + res.data.post[0].image.file_name : '/assets/img/represent.png';
             }
             else
             {
-                state.go('home');
+                $state.go('home');
             }
            //console.log(res.data); 
         });

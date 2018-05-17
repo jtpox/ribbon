@@ -65,16 +65,11 @@ class Index {
     try {
       const post = await Post.fromUrl(req.params.url);
       if (post.length > 0) {
-        // Get previous post.
-        // post.previous = await Post.findPrevious(post[0].created_at);
-
-        // Get next post.
-        // post.next = await Post.findNext(post[0].created_at);
-      
-
         res.render(`themes/${process.env.SITE_THEME}/post`, {
           route: `post:${post[0]._id}`,
           post: post[0],
+          previous: await Post.findPrevious(post[0].created_at),
+          next: await Post.findNext(post[0].created_at),
         });
       } else {
         res.redirect('/');
