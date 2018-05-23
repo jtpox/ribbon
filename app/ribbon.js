@@ -90,7 +90,7 @@ class Ribbon {
       /*
        * Start normal server.
        */
-      this.app.listen(process.env.POST, () => {
+      this.app.listen(process.env.PORT, () => {
         // this.log.log(['etc'], `Redirecting all traffic to ${Config.secure_port}.`);
         this.log.info(`Redirecting all traffic to ${process.env.PORT}.`);
       });
