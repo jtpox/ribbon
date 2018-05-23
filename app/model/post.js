@@ -98,6 +98,7 @@ Post.findPrevious = (date) => {
       '$lt': date,
     },
   })
+    .sort({ created_at: -1 })
     .limit(1)
     .select(fields.join(' '))
     .populate('created_by', '-password')
