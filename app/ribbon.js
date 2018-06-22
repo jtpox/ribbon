@@ -151,13 +151,17 @@ class Ribbon {
    */
   load_plugins() {
     const plugins = this.get_plugin_directories();
-    plugins.forEach((file) => {
-      /* eslint-disable */
-      require(`./plugin/${file}`)(this.app, this.log); // eslint-disable-line global-require
+    const enabled = process.env.plugins.split(',');
 
-      //Retrieve package.json.
+    plugins.forEach((file) => {
+      // Retrieve package.json.
+      /* eslint-disable */
       const plugin_info = require(`./plugin/${file}/package.json`);
-      this.log.info(`Plugin - ${plugin_info.name} (${plugin_info.version})`);
+      if (enabled.indexOf(plugin_info.name) !== -1) {
+        require(`./plugin/${file}`)(this.app, this.log); // eslint-disable-line global-require
+
+        this.log.plugin(`${plugin_info.name} (${plugin_info.version})`);
+      }
       /* eslint-enable */
     });
   }
