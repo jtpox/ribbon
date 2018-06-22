@@ -6,6 +6,7 @@ themes/chev/.sass-cache/
 themes/
 admin/
 dist/
+app/plugin/
 combined.log
 package-lock.json
 .env

@@ -20,7 +20,6 @@ import Navigation from './model/navigation';
 
 class Ribbon {
   constructor(express, app, log) {
-
     this.express = express;
     this.server = null;
     this.app = app;
@@ -52,6 +51,7 @@ class Ribbon {
     this.set_headers();
     // this.routes = Routes.routes(this.app);
     this.routes = Routes(this.app);
+    this.load_plugins();
     this.start();
   }
 
@@ -144,6 +144,26 @@ class Ribbon {
     nav.exec((err, results) => {
       this.app.locals.navigation = results;
     });
+  }
+
+  /*
+   * If there is a better way to do it, please do a request.
+   */
+  load_plugins() {
+    const plugins = this.get_plugin_directories();
+    plugins.forEach((file) => {
+      /* eslint-disable */
+      require(`./plugin/${file}`)(this.app, this.log); // eslint-disable-line global-require
+
+      //Retrieve package.json.
+      const plugin_info = require(`./plugin/${file}/package.json`);
+      this.log.info(`Plugin - ${plugin_info.name} (${plugin_info.version})`);
+      /* eslint-enable */
+    });
+  }
+
+  get_plugin_directories() {
+    return Fs.readdirSync('./app/plugin').filter(file => Fs.statSync(`./app/plugin/${file}`).isDirectory());
   }
 }
 
