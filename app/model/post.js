@@ -81,7 +81,9 @@ Post.findNext = (date) => {
   const query = Post.find({
     created_at: {
       '$gt': date,
+      '$lt': new Date(),
     },
+    hidden: false,
   })
     .limit(1)
     .select(fields.join(' '))
@@ -97,6 +99,7 @@ Post.findPrevious = (date) => {
     created_at: {
       '$lt': date,
     },
+    hidden: false,
   })
     .sort({ created_at: -1 })
     .limit(1)
