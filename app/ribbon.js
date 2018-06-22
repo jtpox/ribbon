@@ -151,7 +151,7 @@ class Ribbon {
    */
   load_plugins() {
     const plugins = this.get_plugin_directories();
-    const enabled = process.env.plugins.split(',');
+    const enabled = process.env.PLUGINS.split(',');
 
     plugins.forEach((file) => {
       // Retrieve package.json.
