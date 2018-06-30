@@ -106,7 +106,7 @@ class PageC {
         const saveBoxes = await Content.collection.insert(boxes);
         res.json({
           error: 0,
-          page_id: saveBoxes._id,
+          page_id: newPage._id,
         });
       } catch (err) {
         req.log.error(err);
