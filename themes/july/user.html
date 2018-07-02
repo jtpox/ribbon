@@ -1,0 +1,50 @@
+extends templates/layout.html
+
+block content
+    .row
+        .col-md-8.offset-md-2
+            .media
+                img.mr-3.rounded-circle.border(src="/uploads/profile/"+user.avatar height="64" width="64")
+                .media-body.text-center
+                    h5.mt-0=user.username
+                    p=user.about
+
+        .col-md-8.offset-md-2
+            each post in posts.docs
+                .card.post
+                    if post.image
+                        a(href="/post/"+post.url)
+                            img.img-fluid(src="/uploads/images/" + post.image.file_name)
+                    .card-body
+                        small
+                            a(href="/tag/"+post.tag.url)=post.tag.title
+                        h5.card-title
+                            a(href="/post/"+post.url)=post.title
+                        .card-text.post-content!=post.shorten_html_content
+                        p.card-text
+                            small
+                                a(href="/user/"+post.created_by._id)=post.created_by.username
+                                |  on  
+                                span=functions.moment(post.created_at).format("MM")
+                                |  
+                                span=functions.moment(post.created_at).format("MMM")
+                                |  
+                                span=functions.moment(post.created_at).format("YYYY")
+
+block more_posts
+    if (posts.page < posts.pages && posts.pages > 1)
+        a.btn.btn-outline-info(href="/user/"+user._id+"/"+(parseInt(posts.page)+1)) Older Posts
+    else if (posts.page >= posts.pages && posts.pages > 1)
+        a.btn.btn-outline-info(href="/user/"+user._id+"/"+(parseInt(posts.page)-1)) Newer Posts
+
+block meta
+    meta(name="description" content=user.about)
+    meta(property="og:title" content=user.username)
+    meta(property="og:description" content=user.about)
+    meta(property="og:url" content=analytics.site.domain)
+    meta(property="og:type" content="website")
+    meta(property="og:image" content=analytics.site.domain+"/uploads/profile/"+user.avatar)
+    meta(name="twitter:image" content=analytics.site.domain+"/uploads/profile/"+user.avatar)
+    meta(name="twitter:title" content=user.username)
+    meta(name="twitter:description" content=user.about)
+    meta(name="twitter:card" content="summary")

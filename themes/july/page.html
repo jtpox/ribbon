@@ -1,0 +1,44 @@
+extends templates/layout.html
+
+block content
+    .row
+        if page.image
+            .col-md-12
+                img.img-fluid(src="/uploads/images/" + page.image.file_name)
+            .col-md-10.offset-md-1
+                .card.feature
+                    .card-body
+                        h3.card-title.text-center=page.title
+                        .card-text.post-content
+                            :markdown-it!=page.html_description
+        else
+            .col-md-12
+                .card.feature
+                    .card-body
+                        h3.card-title=page.title
+                        .card-text.post-content
+                            :markdown-it!=page.html_description
+    
+    .row
+        each box in boxes
+            div(class="col-md-"+box.content_column)
+                .card
+                    .card-body
+                        h5.card-title=box.title
+                        .card-text!=box.html_content
+
+block meta
+    meta(name="description" content=page.no_tags_short)
+    meta(property="og:title" content=page.title)
+    meta(property="og:description" content=page.no_tags_short)
+    meta(property="og:url" content=analytics.site.domain)
+    meta(property="og:type" content="website")
+    meta(name="twitter:title" content=page.title)
+    meta(name="twitter:description" content=page.no_tags_short)
+    meta(name="twitter:card" content="summary")
+    if page.image
+        meta(property="og:image" content=analytics.site.domain+"/uploads/images/" + page.image.file_name)
+        meta(name="twitter:image" content=analytics.site.domain+"/uploads/images/" + page.image.file_name)
+    else
+        meta(property="og:image" content=analytics.site.domain+"/assets/img/represent.png")
+        meta(name="twitter:image" content=analytics.site.domain+"/assets/img/represent.png")

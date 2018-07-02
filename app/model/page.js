@@ -26,6 +26,10 @@ schema.virtual('html_description').get(function() {
   return converter.makeHtml(`${this.description}`);
 });
 
+schema.virtual('no_tags_short').get(function() {
+  return this.description.split(' ').splice(0, 50).join(' ');
+});
+
 let Page = Db.model('Page', schema);
 
 /*

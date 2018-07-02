@@ -1,0 +1,41 @@
+doctype html
+html(lang="en")
+  head
+    // Required meta tags
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    block meta
+    // July ribbon theme.
+    link(rel="stylesheet" href="/theme/css/karen.css")
+    title=site.name
+  body
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+      .container
+        a.navbar-brand(href="/")=site.name
+        button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation")
+          span.navbar-toggler-icon
+        #navbarSupportedContent.collapse.navbar-collapse
+          ul.navbar-nav.mr-auto
+            li(class=(route == 'index' ? 'nav-item active':'nav-item'))
+              a.nav-link(href="/") Home
+            each nav in navigation
+                if nav.page
+                    li(class=(route == 'page:'+nav.page._id ? 'nav-item active':'nav-item'))
+                        a.nav-link(href="/page/"+nav.page.url)=nav.title
+                else if nav.link
+                    li.nav-item
+                        a.nav-link(href=nav.link)=nav.title
+
+    .container.blog
+        block content
+        .col-md-8.offset-md-2.text-center.buttons
+            block more_posts
+
+    .container
+      footer.footer.text-center
+        | powered by 
+        a(href="https://ribbon.jtpox.com/" target="_blank") ribbon
+    // Optional JavaScript
+    // jQuery first, then Popper.js, then Bootstrap JS
+    script(src="/theme/js/jquery.js")
+    script(src="/theme/js/bootstrap.min.js")

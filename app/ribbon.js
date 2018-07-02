@@ -55,7 +55,7 @@ class Ribbon {
     this.start();
   }
 
-  start() {
+  async start() {
     // Declaring static files in the public folder.
     // The path is from the Root directory as Express was instantiated there.
     this.app.use(this.express.static('public'));
@@ -102,7 +102,7 @@ class Ribbon {
     }
   }
 
-  set_headers() {
+  async set_headers() {
     this.app.use((req, res, next) => {
       // Enable CORS
       res.header('Access-Control-Allow-Origin', '*');
@@ -115,7 +115,7 @@ class Ribbon {
     });
   }
 
-  set_locals() {
+  async set_locals() {
     this.app.locals = {
       site: {
         name: process.env.SITE_NAME,
@@ -139,17 +139,13 @@ class Ribbon {
 
     // Get Navigation.
     const fields = ['title', 'post', 'page', 'tag', 'user', 'link', 'created_at', '_id'];
-    const nav = Navigation.find({}).select(fields.join(' '))
-      .populate('page post tag').populate('user', '-password');
-    nav.exec((err, results) => {
-      this.app.locals.navigation = results;
-    });
+    this.app.locals.navigation = await Navigation.find({}).select(fields.join(' ')).populate('page post tag').populate('user', '-password');
   }
 
   /*
    * If there is a better way to do it, please do a request.
    */
-  load_plugins() {
+  async load_plugins() {
     const plugins = this.get_plugin_directories();
     const enabled = process.env.PLUGINS.split(',');
 

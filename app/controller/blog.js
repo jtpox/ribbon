@@ -79,7 +79,6 @@ class Blog {
   async fromUrl(req, res) {
     try {
       const post = await Post.fromUrl(req.params.url);
-      
       res.json({
         post,
         previous: await Post.findPrevious(post[0].created_at),

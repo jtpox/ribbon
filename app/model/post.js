@@ -45,6 +45,10 @@ schema.virtual('shorten_html_content').get(function () {
   return converter.makeHtml(content);
 });
 
+schema.virtual('no_tags_short').get(function() {
+  return this.content.split(' ').splice(0, 50).join(' ');
+});
+
 let Post = Db.model('Post', schema);
 
 /*
