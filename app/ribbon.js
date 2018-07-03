@@ -45,11 +45,11 @@ class Ribbon {
     this.app.use('/ribbon', this.express.static(`admin/${process.env.ADMIN_THEME}`));
     this.app.use('/', this.express.static('public'));
 
-    this.set_locals();
-    this.set_headers();
+    this.setLocals();
+    this.setHeaders();
     // this.routes = Routes.routes(this.app);
     this.routes = Routes(this.app);
-    this.load_plugins();
+    this.loadPlugins();
     this.start();
   }
 
@@ -64,7 +64,7 @@ class Ribbon {
     });
   }
 
-  async set_headers() {
+  async setHeaders() {
     this.app.use((req, res, next) => {
       // Enable CORS
       res.header('Access-Control-Allow-Origin', '*');
@@ -77,7 +77,7 @@ class Ribbon {
     });
   }
 
-  async set_locals() {
+  async setLocals() {
     this.app.locals = {
       site: {
         name: process.env.SITE_NAME,
@@ -103,8 +103,8 @@ class Ribbon {
   /*
    * If there is a better way to do it, please do a request.
    */
-  async load_plugins() {
-    const plugins = this.get_plugin_directories();
+  async loadPlugins() {
+    const plugins = this.getPluginDirectories();
     const enabled = process.env.PLUGINS.split(',');
 
     plugins.forEach((file) => {
@@ -120,7 +120,7 @@ class Ribbon {
     });
   }
 
-  get_plugin_directories() {
+  getPluginDirectories() {
     return Fs.readdirSync('./app/plugin').filter(file => Fs.statSync(`./app/plugin/${file}`).isDirectory());
   }
 }
