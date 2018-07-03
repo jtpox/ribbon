@@ -30,6 +30,7 @@ class Index {
 
       res.render(`themes/${process.env.SITE_THEME}/index`, {
         route: 'index',
+        title: 'Home',
         posts,
       });
     } catch (err) {
@@ -50,6 +51,7 @@ class Index {
 
         res.render(`themes/${process.env.SITE_THEME}/page`, {
           route: `page:${query[0]._id}`,
+          title: query[0].title,
           page: query[0],
           boxes: contentQuery,
         });
@@ -67,6 +69,7 @@ class Index {
       if (post.length > 0) {
         res.render(`themes/${process.env.SITE_THEME}/post`, {
           route: `post:${post[0]._id}`,
+          title: post[0].title,
           post: post[0],
           previous: await Post.findPrevious(post[0].created_at),
           next: await Post.findNext(post[0].created_at),
@@ -90,6 +93,7 @@ class Index {
         // If the tag exists.
         res.render(`themes/${process.env.SITE_THEME}/tag`, {
           route: `tag:${query[0]._id}`,
+          title: query[0].title,
           tag: query[0],
           posts: await Post.page(page, { tag: query[0]._id, hidden: false, created_at: { $lte: new Date() } }),
         });
@@ -110,6 +114,7 @@ class Index {
       if (query.length > 0) {
         res.render(`themes/${process.env.SITE_THEME}/user`, {
           route: `user:${query[0]._id}`,
+          title: query[0].username,
           user: query[0],
           posts: await Post.page(page, { created_by: query[0]._id, hidden: false, created_at: { $lte: new Date() } }),
         });

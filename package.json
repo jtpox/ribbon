@@ -9,7 +9,8 @@
     "eslint_fix": "./node_modules/.bin/eslint app/* --fix",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./npm-debug.log,./config,./public,./themes,./admin,./combined.log --copy-files",
     "dev": "nodemon ribbon.js --exec babel-node",
-    "setup": "npm install && npm run build && node dist/install.js"
+    "setup": "npm install && npm run build && node dist/install.js",
+    "upgrade": "npm install && npm run build && node dist/update.js"
   },
   "repository": {
     "type": "git",

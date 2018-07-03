@@ -9,7 +9,7 @@ block content
             each post in posts.docs
                 .card.post
                     if post.image
-                        a(href="/post/"+post.url)
+                        a.card-img(href="/post/"+post.url)
                             img.img-fluid(src="/uploads/images/" + post.image.file_name)
                     .card-body
                         small
@@ -29,6 +29,9 @@ block content
 
 block more_posts
     if (posts.page < posts.pages && posts.pages > 1)
+        if(posts.page > 1)
+            a.btn.btn-outline-info(href="/tag/"+tag.url+"/"+(parseInt(posts.page)-1)) Newer Posts
+        |  
         a.btn.btn-outline-info(href="/tag/"+tag.url+"/"+(parseInt(posts.page)+1)) Older Posts
     else if (posts.page >= posts.pages && posts.pages > 1)
         a.btn.btn-outline-info(href="/tag/"+tag.url+"/"+(parseInt(posts.page)-1)) Newer Posts
