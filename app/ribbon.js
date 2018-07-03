@@ -2,8 +2,6 @@
  * Instantiating the entire system.
  */
 import Fs from 'fs';
-// const Http = require('http');
-import Https from 'https';
 
 import BodyParser from 'body-parser';
 
