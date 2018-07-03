@@ -16,8 +16,6 @@ import Moment from 'moment';
 
 import Routes from './route';
 
-import Navigation from './model/navigation';
-
 class Ribbon {
   constructor(express, app, log) {
     this.express = express;
@@ -136,10 +134,6 @@ class Ribbon {
         moment: Moment,
       },
     };
-
-    // Get Navigation.
-    const fields = ['title', 'post', 'page', 'tag', 'user', 'link', 'created_at', '_id'];
-    this.app.locals.navigation = await Navigation.find({}).select(fields.join(' ')).populate('page post tag').populate('user', '-password');
   }
 
   /*

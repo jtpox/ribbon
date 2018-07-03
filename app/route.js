@@ -5,6 +5,8 @@ import { isLogged, notLogged } from './middleware/auth';
 
 import { avatar, library } from './middleware/image_upload';
 
+import navigationMiddleware from './middleware/navigation';
+
 /*
  * Instantiating all controller classes.
  */
@@ -33,6 +35,8 @@ function routes(app) {
   const page = new Page();
   const image = new Image();
   const navigation = new Navigation();
+
+  app.use(navigationMiddleware);
 
   app.get('/', index.index);
   app.get('/p/:page', index.index);// Pagination for the blog posts.
