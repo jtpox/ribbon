@@ -58,46 +58,10 @@ class Ribbon {
     // The path is from the Root directory as Express was instantiated there.
     this.app.use(this.express.static('public'));
 
-    if (process.env.SECURE_PRIVATE_KEY && process.env.SECURE_PRIVATE_CERT) {
-      const options = {
-        key: Fs.readFileSync(process.env.SECURE_PRIVATE_KEY),
-        cert: Fs.readFileSync(process.env.SECURE_PRIVATE_CERT),
-      };
-
-      /*
-       * Force HTTPS on all routes.
-       */
-      this.app.use('*', (req, res, next) => {
-        if (!req.secure) {
-          const secure_url = `https://${req.headers.host}${req.url}`;
-          res.writeHead(301, { Location: secure_url });
-          res.end();
-        }
-
-        next();
-      });
-
-      /*
-       * Start secure server.
-       */
-      this.server = Https.createServer(options, this.app).listen(process.env.SECURE_PORT, () => {
-        // this.log.log(['etc'], `ribbon secure server started at port ${Config.secure_port}.`);
-        this.log.info(`ribbon secure server started at port ${process.env.SECURE_POST}.`);
-      });
-
-      /*
-       * Start normal server.
-       */
-      this.app.listen(process.env.PORT, () => {
-        // this.log.log(['etc'], `Redirecting all traffic to ${Config.secure_port}.`);
-        this.log.info(`Redirecting all traffic to ${process.env.PORT}.`);
-      });
-    } else {
-      this.app.listen(process.env.PORT, () => {
-        // this.log.log(['etc'], `ribbon server started at port ${Config.port}.`);
-        this.log.info(`ribbon server started at port ${process.env.PORT}.`);
-      });
-    }
+    this.app.listen(process.env.PORT, () => {
+      // this.log.log(['etc'], `ribbon server started at port ${Config.port}.`);
+      this.log.info(`ribbon server started at port ${process.env.PORT}.`);
+    });
   }
 
   async set_headers() {
