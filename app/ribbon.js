@@ -110,9 +110,9 @@ class Ribbon {
       /* eslint-disable */
       const plugin_info = require(`./plugin/${file}/package.json`);
       if (enabled.indexOf(plugin_info.name) !== -1) {
-        require(`./plugin/${file}`)(this.app, this.log); // eslint-disable-line global-require
-
         this.log.plugin(`${plugin_info.name} (${plugin_info.version})`);
+        
+        require(`./plugin/${file}/${plugin_info.main}`)(this.app, this.log); // eslint-disable-line global-require
       }
       /* eslint-enable */
     });
