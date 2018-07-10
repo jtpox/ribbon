@@ -21,7 +21,7 @@ block content
                             small
                                 a(href="/user/"+post.created_by._id)=post.created_by.username
                                 |  on  
-                                span=functions.moment(post.created_at).format("MM")
+                                span=functions.moment(post.created_at).format("D")
                                 |  
                                 span=functions.moment(post.created_at).format("MMM")
                                 |  

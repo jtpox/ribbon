@@ -4,7 +4,7 @@ block content
     .blog-header.text-center
         h2=post.title
         p.lead
-            span.text-info=functions.moment(post.created_at).format("MM")
+            span.text-info=functions.moment(post.created_at).format("D")
             | 
             span.text-info=functions.moment(post.created_at).format("MMM") 
             | 
