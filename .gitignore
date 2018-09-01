@@ -2,6 +2,7 @@ node_modules/
 public/uploads/
 public/assets/.sass-cache/
 themes/flac/.sass-cache/
+themes/flac/scss/
 themes/
 admin/
 dist/
