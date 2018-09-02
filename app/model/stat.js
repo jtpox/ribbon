@@ -47,8 +47,9 @@ Stat.page = (id, populate = false) => {
   return query;
 };
 
-Stat.record = (type = 'post', id, ip, useragent) => {
+Stat.record = (type = 'post', id, req, useragent) => {
   if (process.env.RECORD_STAT.toLowerCase() == 'true') { // This way because dotenv stores as strings instead of boolean.
+    console.log(req.ip);
     /*
      * Check if IP has access the page or post more than 24 hours ago.
      */
@@ -57,14 +58,14 @@ Stat.record = (type = 'post', id, ip, useragent) => {
 
     const find = (type == 'post') ? {
       post: id,
-      address: ip,
+      address: req.ip,
       created_at: {
         '$lt': new Date(),
         '$gte': cutOff,
       }
     } : {
         page: id,
-        address: ip,
+        address: req.ip,
         created_at: {
           '$lt': new Date(),
           '$gte': cutOff,

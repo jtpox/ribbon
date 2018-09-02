@@ -54,7 +54,7 @@ class Index {
         /*
          * Add to statistics.
          */
-        Stat.record('page', query[0]._id, req.headers['x-forwarded-for'] || req.connection.remoteAddress, req.useragent);
+        Stat.record('page', query[0]._id, req, req.useragent);
 
         res.render(`themes/${process.env.SITE_THEME}/page`, {
           route: `page:${query[0]._id}`,
@@ -78,7 +78,7 @@ class Index {
         /*
          * Add to statistics.
          */
-        Stat.record('post', post[0]._id, req.headers['x-forwarded-for'] || req.connection.remoteAddress, req.useragent);
+        Stat.record('post', post[0]._id, req, req.useragent);
 
         res.render(`themes/${process.env.SITE_THEME}/post`, {
           route: `post:${post[0]._id}`,
