@@ -26,6 +26,8 @@ import Image from './controller/image';
 
 import Navigation from './controller/navigation';
 
+import Stat from './controller/stat';
+
 function routes(app) {
   const index = new Index();
   const blog = new Blog();
@@ -35,6 +37,7 @@ function routes(app) {
   const page = new Page();
   const image = new Image();
   const navigation = new Navigation();
+  const stat = new Stat();
 
   app.use(navigationMiddleware);
 
@@ -71,6 +74,8 @@ function routes(app) {
   app.get('/api/blog/page/:page', blog.paginate);
 
   app.get('/api/blog/:id', blog.view);
+  app.get('/api/blog/:id/stat', isLogged, stat.post);
+  app.get('/api/blog/:id/stat/:days', isLogged, stat.post);
   app.get('/api/blog/url/:url', blog.fromUrl);
   app.delete('/api/blog/:id', isLogged, blog.delete);// Deleting a blog post. For some reason, it is not working with Angular. But it works with Postman.
   // https://stackoverflow.com/questions/37796227/body-is-empty-when-parsing-delete-request-with-express-and-body-parser
@@ -99,6 +104,11 @@ function routes(app) {
   app.post('/api/pages', isLogged, page.insert);
 
   app.get('/api/pages/:id', isLogged, page.get);// Only viewable by admin.
+  app.get('/api/pages/:id/stat', isLogged, stat.page);
+  app.get('/api/pages/:id/stat/:days', isLogged, stat.page);
+  app.get('/api/pages/:id/stat/:days/number', isLogged, stat.pageArray);
+  app.get('/api/pages/:id/stat/:days/browser', isLogged, stat.pageBrowser);
+  app.get('/api/pages/:id/stat/:days/os', isLogged, stat.pageOs);
   app.get('/api/pages/url/:url', page.fromUrl);
   app.put('/api/pages/:id', isLogged, page.update);
   app.delete('/api/pages/:id', isLogged, page.delete);

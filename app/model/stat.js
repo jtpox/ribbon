@@ -30,19 +30,46 @@ let Stat = Db.model('Stat', schema);
  * Statics
  * Forced to break airnbn here as well.
  */
-Stat.post = (id, populate = false) => {
-  const fields = ['post', 'address', 'created_at', 'last_updated'];
-  const query = (populate) ? Stat.find({ post: id }).select(fields.join(' '))
-    .populate('post') : Stat.find({ post: id }).select(fields.join(' '));
+Stat.post = (id, days = 7, populate = false) => {
+  const cutOff = new Date();
+  cutOff.setDate(cutOff.getDate() - days);
+
+  const fields = ['post', 'address', 'platform', 'browser', 'os', 'created_at', 'last_updated'];
+  const query = (populate) ? Stat.find({
+    post: id,
+    created_at: {
+      '$gte': cutOff
+    },
+  }).select(fields.join(' '))
+    .populate('post') : Stat.find({
+      post: id,
+      created_at: {
+        '$gte': cutOff
+      },
+    }).select(fields.join(' '));
 
   return query;
   // return query.exec(cb);
 };
 
-Stat.page = (id, populate = false) => {
-  const fields = ['page', 'address', 'created_at', 'last_updated'];
-  const query = (populate) ? Stat.find({ page: id }).select(fields.join(' '))
-    .populate('page') : Stat.find({ page: id }).select(fields.join(' '));
+Stat.page = (id, days = 7, populate = false) => {
+  const cutOff = new Date();
+  cutOff.setDate(cutOff.getDate() - days);
+  // console.log(id);
+
+  const fields = ['page', 'address', 'platform', 'browser', 'os', 'created_at', 'last_updated'];
+  const query = (populate) ? Stat.find({
+    page: id,
+    created_at: {
+      '$gte': cutOff
+    },
+  }).select(fields.join(' '))
+    .populate('page') : Stat.find({
+      page: id,
+      created_at: {
+        '$gte': cutOff
+      },
+    }).select(fields.join(' '));
 
   return query;
 };
