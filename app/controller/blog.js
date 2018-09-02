@@ -7,6 +7,8 @@ import Moment from 'moment';
 
 import Post from '../model/post';
 
+import Stat from '../model/stat';
+
 import Package from '../../package.json';
 
 import Db from '../database';// Soley used for the ObjectId type.
@@ -79,6 +81,12 @@ class Blog {
   async fromUrl(req, res) {
     try {
       const post = await Post.fromUrl(req.params.url);
+
+      /*
+       * Add to statistics.
+       */
+      Stat.record('post', post[0]._id, req.ip, req.useragent);
+
       res.json({
         post,
         previous: await Post.findPrevious(post[0].created_at),

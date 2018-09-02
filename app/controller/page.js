@@ -7,6 +7,8 @@ import Page from '../model/page';
 
 import Content from '../model/content';
 
+import Stat from '../model/stat';
+
 import Db from '../database';// Soley used for the ObjectId type.
 
 class PageC {
@@ -61,6 +63,12 @@ class PageC {
       if (page.length > 0) {
         const contentFields = ['title', 'content', 'content_column', '_id'];
         const contentQuery = await Content.find({ page_id: page[0]._id }).select(contentFields.join(' '));
+
+        /*
+         * Add to statistics.
+         */
+        Stat.record('page', page[0]._id, req.ip, req.useragent);
+
         res.json({
           error: 0,
           details: page[0],

@@ -7,6 +7,8 @@ import BodyParser from 'body-parser';
 
 import FileUpload from 'express-fileupload';
 
+import UserAgent from 'express-useragent';
+
 import Pug from 'pug';
 // const Pug = require('pug').__express;
 
@@ -23,9 +25,11 @@ class Ribbon {
     this.routes = null;
 
     // Start the Express server.
+    this.app.enable('trust proxy');
     this.app.use(BodyParser.urlencoded({ extended: true }));
     this.app.use(BodyParser.json());
     this.app.use(FileUpload());
+    this.app.use(UserAgent.express());
 
     // Set the template engine. Mustache is used.
     app.set('views', './'); // Set to root as we choosing a directory would be more dynamic.

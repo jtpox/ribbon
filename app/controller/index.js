@@ -13,6 +13,8 @@ import Tag from '../model/tag';
 
 import User from '../model/user';
 
+import Stat from '../model/stat';
+
 class Index {
   async index(req, res) {
     // console.log(process.env);
@@ -49,6 +51,11 @@ class Index {
         const contentFields = ['title', 'content', 'content_column', '_id'];
         const contentQuery = await Content.find({ page_id: query[0]._id }).select(contentFields.join(' '));
 
+        /*
+         * Add to statistics.
+         */
+        Stat.record('page', query[0]._id, req.ip, req.useragent);
+
         res.render(`themes/${process.env.SITE_THEME}/page`, {
           route: `page:${query[0]._id}`,
           title: query[0].title,
@@ -67,6 +74,12 @@ class Index {
     try {
       const post = await Post.fromUrl(req.params.url);
       if (post.length > 0) {
+
+        /*
+         * Add to statistics.
+         */
+        Stat.record('post', post[0]._id, req.ip, req.useragent);
+
         res.render(`themes/${process.env.SITE_THEME}/post`, {
           route: `post:${post[0]._id}`,
           title: post[0].title,
