@@ -67,7 +67,7 @@ class PageC {
         /*
          * Add to statistics.
          */
-        Stat.record('page', page[0]._id, req.ip, req.useragent);
+        Stat.record('page', page[0]._id, req.headers['x-forwarded-for'] || req.connection.remoteAddress, req.useragent);
 
         res.json({
           error: 0,

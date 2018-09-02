@@ -85,7 +85,7 @@ class Blog {
       /*
        * Add to statistics.
        */
-      Stat.record('post', post[0]._id, req.ip, req.useragent);
+      Stat.record('post', post[0]._id, req.headers['x-forwarded-for'] || req.connection.remoteAddress, req.useragent);
 
       res.json({
         post,

@@ -25,7 +25,6 @@ class Ribbon {
     this.routes = null;
 
     // Start the Express server.
-    this.app.enable('trust proxy');
     this.app.use(BodyParser.urlencoded({ extended: true }));
     this.app.use(BodyParser.json());
     this.app.use(FileUpload());
