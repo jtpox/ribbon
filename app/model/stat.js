@@ -77,7 +77,7 @@ Stat.record = (type = 'post', id, req, useragent) => {
         const newRecord = new Stat({
           post: (type == 'post') ? id : null,
           page: (type == 'page') ? id : null,
-          address: ip,
+          address: req.ip,
           platform: useragent.platform,
           browser: useragent.browser,
           os: useragent.os,
