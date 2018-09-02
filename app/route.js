@@ -76,6 +76,9 @@ function routes(app) {
   app.get('/api/blog/:id', blog.view);
   app.get('/api/blog/:id/stat', isLogged, stat.post);
   app.get('/api/blog/:id/stat/:days', isLogged, stat.post);
+  app.get('/api/blog/:id/stat/:days/number', isLogged, stat.postArray);
+  app.get('/api/blog/:id/stat/:days/browser', isLogged, stat.postBrowser);
+  app.get('/api/blog/:id/stat/:days/os', isLogged, stat.postOs);
   app.get('/api/blog/url/:url', blog.fromUrl);
   app.delete('/api/blog/:id', isLogged, blog.delete);// Deleting a blog post. For some reason, it is not working with Angular. But it works with Postman.
   // https://stackoverflow.com/questions/37796227/body-is-empty-when-parsing-delete-request-with-express-and-body-parser
