@@ -96,6 +96,37 @@ class StatC {
     res.json(osStats);
   }
 
+  async postPlatform(req, res) {
+    const days = (req.params.days != null) ? req.param.days : 7;
+    const stats = await Stat.post(req.params.id, days);
+    // console.log(stats);
+
+    /*
+     *  Sort browsers.
+     */
+    const platform = [];
+    const platformStats = [];
+    stats.forEach((item, index) => {
+      if (platform.indexOf(item.platform) === -1) {
+        platform.push(item.platform);
+        platformStats.push([
+          item.platform,
+          0,
+        ]);
+      }
+    });
+    // console.log(os);
+
+    stats.forEach((item, index) => {
+      platformStats.forEach((platformItem, platformIndex) => {
+        if (platformItem[0] === item.platform) {
+          platformStats[platformIndex][1] += 1;
+        }
+      });
+    });
+    res.json(platformStats);
+  }
+
   async post(req, res) {
     const days = (req.params.days != null) ? req.param.days : 7;
     try {
@@ -197,6 +228,36 @@ class StatC {
       });
     });
     res.json(osStats);
+  }
+
+  async pagePlatform(req, res) {
+    const days = (req.params.days != null) ? req.param.days : 7;
+    const stats = await Stat.page(req.params.id, days);
+    // console.log(stats);
+
+    /*
+     *  Sort browsers.
+     */
+    const platform = [];
+    const platformStats = [];
+    stats.forEach((item, index) => {
+      if (platform.indexOf(item.platform) === -1) {
+        platform.push(item.platform);
+        platformStats.push([
+          item.platform,
+          0,
+        ]);
+      }
+    });
+
+    stats.forEach((item, index) => {
+      platformStats.forEach((platformItem, platformIndex) => {
+        if (platformItem[0] === item.platform) {
+          platformStats[platformIndex][1] += 1;
+        }
+      });
+    });
+    res.json(platformStats);
   }
 
   async page(req, res) {
