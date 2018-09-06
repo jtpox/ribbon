@@ -19,8 +19,12 @@ const Schema = {
 
 console.log('\x1b[47m\x1b[35m', 'ribbon Update', '\x1b[0m');
 
+/*
+ * Script for future use.
+ */
+
 Prompt.get(Schema, async (prompt_err, prompt) => {
-  Https.get('https://ribbon.jtpox.com/info.json', (res) => {
+  /* Https.get('https://ribbon.jtpox.com/info.json', (res) => {
     let data = '';
 
     res.on('data', (chunk) => {
@@ -32,7 +36,7 @@ Prompt.get(Schema, async (prompt_err, prompt) => {
     });
   }).on('error', (err) => {
     console.log(`Error: ${err}`);
-  });
+  }); */
 
   /* switch (prompt.version) {
     case '2018.6.30':
