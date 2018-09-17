@@ -86,7 +86,7 @@ class UserC {
             {
               username: req.body.username,
               email: req.body.email,
-              password: await Bcrypt.hash(req.body.password, process.env.HASH_SALT_ROUNDS),
+              password: await Bcrypt.hash(req.body.password, parseInt(process.env.HASH_SALT_ROUNDS, 10)),
             },
           );
           res.json({

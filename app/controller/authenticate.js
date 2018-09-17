@@ -181,7 +181,7 @@ class Authenticate {
         const user = await User.find({ _id: req.currentUser }).select('username email password');
         const passwordCompare = await Bcrypt.compare(req.body.old, user[0].password);
         if (passwordCompare) {
-          const newPassword = await Bcrypt.hash(req.body.new, process.env.HASH_SALT_ROUNDS);
+          const newPassword = await Bcrypt.hash(req.body.new, parseInt(process.env.HASH_SALT_ROUNDS, 10));
           const update = await User.update({ _id: req.currentUser }, { password: newPassword });
 
           res.json({
