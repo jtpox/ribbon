@@ -68,7 +68,7 @@ function routes(app) {
   app.get('/api', blog.site);
 
   app.get('/api/nav', navigation.list);
-  app.post('/api/nav', isLogged, navigation.update);
+  app.post('/api/nav', [isLogged, isAdmin], navigation.update);
 
   app.get('/api/blog', [isLogged, isEditor], blog.list);// Only viewable by admin.
   app.post('/api/blog', [isLogged, isEditor], blog.insert);// Inserting a new blog post.
