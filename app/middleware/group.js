@@ -1,6 +1,6 @@
 function isAdmin(req, res, next) {
   try {
-    if (req.userDetails.group === '1') {
+    if (req.userDetails.group === 1) {
       next();
     } else {
       throw new Error(`User (${req.userDetails.username} - ${req.userDetails._id}}) is not admin.`);
