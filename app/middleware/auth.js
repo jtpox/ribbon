@@ -11,7 +11,8 @@ async function isLogged(req, res, next) {
         const tokenCompare = await Bcrypt.compare(req.headers.session_token, findById[0].token);
 
         if (tokenCompare) {
-          req.currentUser = findById[0].user;
+          req.currentUser = findById[0].user._id;
+          req.userDetails = findById[0].user;
           next();
         } else {
           throw new Error('Session token does not match.');

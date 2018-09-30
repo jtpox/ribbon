@@ -12,7 +12,8 @@ const schema = Db.Schema({
 let Session = Db.model('Session', schema);
 
 Session.findById = (session_id, /*cb*/) => {
-  return Session.find({ _id: session_id });
+  return Session.find({ _id: session_id })
+    .populate('user');
   // return Session.find({ _id: session_id }, cb);
 };
 

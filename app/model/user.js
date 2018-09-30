@@ -6,6 +6,7 @@ const schema = Db.Schema({
   username: String,
   password: String,
   email: String,
+  group: { type: Number, default: 2, }, // 1 for Administrator, 2 for Editor.
   about: { type: String, default: 'Sorry, nothing about me yet!' },
   avatar: { type: String, default: 'default.png' },
   created_at: { type: Date, default: Date.now },

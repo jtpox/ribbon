@@ -39,6 +39,7 @@ class Authenticate {
               session_token: sessionToken,
               username: findByEmail[0].username,
               user_id: findByEmail[0]._id,
+              user_group: findByEmail[0].group,
             });
           } else {
             throw new Error('Invalid Authentication Details');

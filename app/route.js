@@ -3,6 +3,8 @@
     */
 import { isLogged, notLogged } from './middleware/auth';
 
+import { isAdmin, isEditor } from './middleware/group';
+
 import { avatar, library } from './middleware/image_upload';
 
 import navigationMiddleware from './middleware/navigation';
@@ -68,63 +70,63 @@ function routes(app) {
   app.get('/api/nav', navigation.list);
   app.post('/api/nav', isLogged, navigation.update);
 
-  app.get('/api/blog', isLogged, blog.list);// Only viewable by admin.
-  app.post('/api/blog', isLogged, blog.insert);// Inserting a new blog post.
+  app.get('/api/blog', [isLogged, isEditor], blog.list);// Only viewable by admin.
+  app.post('/api/blog', [isLogged, isEditor], blog.insert);// Inserting a new blog post.
 
   app.get('/api/blog/page/:page', blog.paginate);
 
   app.get('/api/blog/:id', blog.view);
-  app.get('/api/blog/:id/stat', isLogged, stat.post);
-  app.get('/api/blog/:id/stat/:days', isLogged, stat.post);
-  app.get('/api/blog/:id/stat/:days/number', isLogged, stat.postArray);
-  app.get('/api/blog/:id/stat/:days/browser', isLogged, stat.postBrowser);
-  app.get('/api/blog/:id/stat/:days/os', isLogged, stat.postOs);
-  app.get('/api/blog/:id/stat/:days/platform', isLogged, stat.postPlatform);
+  app.get('/api/blog/:id/stat', [isLogged, isEditor], stat.post);
+  app.get('/api/blog/:id/stat/:days', [isLogged, isEditor], stat.post);
+  app.get('/api/blog/:id/stat/:days/number', [isLogged, isEditor], stat.postArray);
+  app.get('/api/blog/:id/stat/:days/browser', [isLogged, isEditor], stat.postBrowser);
+  app.get('/api/blog/:id/stat/:days/os', [isLogged, isEditor], stat.postOs);
+  app.get('/api/blog/:id/stat/:days/platform', [isLogged, isEditor], stat.postPlatform);
   app.get('/api/blog/url/:url', blog.fromUrl);
-  app.delete('/api/blog/:id', isLogged, blog.delete);// Deleting a blog post. For some reason, it is not working with Angular. But it works with Postman.
+  app.delete('/api/blog/:id', [isLogged, isEditor], blog.delete);// Deleting a blog post. For some reason, it is not working with Angular. But it works with Postman.
   // https://stackoverflow.com/questions/37796227/body-is-empty-when-parsing-delete-request-with-express-and-body-parser
-  app.post('/api/blog/delete/:id', isLogged, blog.delete);// Deleting a blog post. Non RESTFUL method.
-  app.put('/api/blog/:id', isLogged, blog.update);// Updating a blog post.
+  app.post('/api/blog/delete/:id', [isLogged, isEditor], blog.delete);// Deleting a blog post. Non RESTFUL method.
+  app.put('/api/blog/:id', [isLogged, isEditor], blog.update);// Updating a blog post.
 
   app.get('/api/tags', tag.list);
-  app.post('/api/tags', isLogged, tag.insert);// Inserting a new tag.
+  app.post('/api/tags', [isLogged, isAdmin], tag.insert);// Inserting a new tag.
 
   app.get('/api/tags/:id', tag.get);
   app.get('/api/tags/:url/page/:page', tag.posts);// Get posts from tags.
-  app.put('/api/tags/:id', isLogged, tag.update);
-  app.delete('/api/tags/:id', isLogged, tag.delete);
-  app.post('/api/tags/delete/:id', isLogged, tag.delete);// Deleting a blog post. Non RESTFUL method.
+  app.put('/api/tags/:id', [isLogged, isAdmin], tag.update);
+  app.delete('/api/tags/:id', [isLogged, isAdmin], tag.delete);
+  app.post('/api/tags/delete/:id', [isLogged, isAdmin], tag.delete);// Deleting a blog post. Non RESTFUL method.
 
   app.get('/api/users', user.list);
-  app.post('/api/users', isLogged, user.insert);
+  app.post('/api/users', [isLogged, isAdmin], user.insert);
   app.get('/api/users/:id/page/:page', user.posts);// Get user info and posts.
 
-  app.put('/api/users/:id', isLogged, user.update);
-  app.delete('/api/users/:id', isLogged, user.delete);
-  app.post('/api/users/delete/:id', isLogged, user.delete);
+  app.put('/api/users/:id', [isLogged, isAdmin], user.update);
+  app.delete('/api/users/:id', [isLogged, isAdmin], user.delete);
+  app.post('/api/users/delete/:id', [isLogged, isAdmin], user.delete);
 
   app.get('/api/pages', page.list);
-  app.get('/api/pages/admin', isLogged, page.adminList);
-  app.post('/api/pages', isLogged, page.insert);
+  app.get('/api/pages/admin', [isLogged, isEditor], page.adminList);
+  app.post('/api/pages', [isLogged, isEditor], page.insert);
 
-  app.get('/api/pages/:id', isLogged, page.get);// Only viewable by admin.
-  app.get('/api/pages/:id/stat', isLogged, stat.page);
-  app.get('/api/pages/:id/stat/:days', isLogged, stat.page);
-  app.get('/api/pages/:id/stat/:days/number', isLogged, stat.pageArray);
-  app.get('/api/pages/:id/stat/:days/browser', isLogged, stat.pageBrowser);
-  app.get('/api/pages/:id/stat/:days/os', isLogged, stat.pageOs);
-  app.get('/api/pages/:id/stat/:days/platform', isLogged, stat.pagePlatform);
+  app.get('/api/pages/:id', [isLogged, isEditor], page.get);// Only viewable by admin.
+  app.get('/api/pages/:id/stat', [isLogged, isEditor], stat.page);
+  app.get('/api/pages/:id/stat/:days', [isLogged, isEditor], stat.page);
+  app.get('/api/pages/:id/stat/:days/number', [isLogged, isEditor], stat.pageArray);
+  app.get('/api/pages/:id/stat/:days/browser', [isLogged, isEditor], stat.pageBrowser);
+  app.get('/api/pages/:id/stat/:days/os', [isLogged, isEditor], stat.pageOs);
+  app.get('/api/pages/:id/stat/:days/platform', [isLogged, isEditor], stat.pagePlatform);
   app.get('/api/pages/url/:url', page.fromUrl);
-  app.put('/api/pages/:id', isLogged, page.update);
-  app.delete('/api/pages/:id', isLogged, page.delete);
-  app.post('/api/pages/delete/:id', isLogged, page.delete);
+  app.put('/api/pages/:id', [isLogged, isEditor], page.update);
+  app.delete('/api/pages/:id', [isLogged, isEditor], page.delete);
+  app.post('/api/pages/delete/:id', [isLogged, isEditor], page.delete);
 
   // app.put('/api/images', isLogged, image.list);// PUT as GET doesn't allow body.
-  app.get('/api/images', isLogged, image.list);
-  app.post('/api/images', [isLogged, library], image.insert);
+  app.get('/api/images', [isLogged, isAdmin], image.list);
+  app.post('/api/images', [isLogged, isAdmin, library], image.insert);
 
-  app.delete('/api/images/:id', isLogged, image.delete);
-  app.post('/api/images/delete/:id', isLogged, image.delete);
+  app.delete('/api/images/:id', [isLogged, isAdmin], image.delete);
+  app.post('/api/images/delete/:id', [isLogged, isAdmin], image.delete);
 }
 
 export { routes as default };
