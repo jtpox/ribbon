@@ -15,10 +15,12 @@ async function isLogged(req, res, next) {
           req.userDetails = findById[0].user;
           next();
         } else {
-          throw new Error('Session token does not match.');
+          // throw new Error('Session token does not match.');
+          throw new Error(`${req.originalUrl} - User (${findById[0].user.username} - ${findById[0].user._id}}) session token does not match.`);
         }
       } else {
-        throw new Error('Session ID does not exist.');
+        // throw new Error('Session ID does not exist.');
+        throw new Error(`${req.originalUrl} - Session ID does not exist.`);
       }
     } catch (err) {
       req.log.error(err);

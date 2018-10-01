@@ -97,7 +97,7 @@ function routes(app) {
   app.delete('/api/tags/:id', [isLogged, isAdmin], tag.delete);
   app.post('/api/tags/delete/:id', [isLogged, isAdmin], tag.delete);// Deleting a blog post. Non RESTFUL method.
 
-  app.get('/api/users', user.list);
+  app.get('/api/users', [isLogged, isAdmin], user.list);
   app.post('/api/users', [isLogged, isAdmin], user.insert);
   app.get('/api/users/:id/page/:page', user.posts);// Get user info and posts.
 
@@ -122,7 +122,7 @@ function routes(app) {
   app.post('/api/pages/delete/:id', [isLogged, isEditor], page.delete);
 
   // app.put('/api/images', isLogged, image.list);// PUT as GET doesn't allow body.
-  app.get('/api/images', [isLogged, isAdmin], image.list);
+  app.get('/api/images', [isLogged, isEditor], image.list);
   app.post('/api/images', [isLogged, isAdmin, library], image.insert);
 
   app.delete('/api/images/:id', [isLogged, isAdmin], image.delete);

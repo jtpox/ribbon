@@ -22,7 +22,7 @@ User.findByEmail = (email, /*cb*/) => {
 };
 
 User.list = (/*cb*/) => {
-  const fields = ['username', 'email', 'about', 'avatar', 'created_at', 'last_updated', '_id'];
+  const fields = ['username', 'email', 'group', 'about', 'avatar', 'created_at', 'last_updated', '_id'];
   const query = User.find({}).select(fields.join(' '));
 
   return query;
