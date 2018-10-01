@@ -4,6 +4,8 @@ import Prompt from 'prompt';
 
 import User from './app/model/user';
 
+import Session from './app/model/session';
+
 DotEnv.config();
 
 Prompt.start();
@@ -27,6 +29,11 @@ console.log('\x1b[47m\x1b[35m', 'Note that this upgrade script will only work on
 Prompt.get(Schema, async (prompt_err, prompt) => {
   if (prompt.continue.toLowerCase() === 'y') {
     await User.update({}, { group: 1 }, { multi: true });
+
+    /*
+     * Remove all existing sessions. With the change in usergroup, everyone has to log in again.
+     */
+    await Session.delete({});
 
     console.log('\x1b[42m\x1b[30m', 'Update successful.', '\x1b[0m');
     console.log('\x1b[42m\x1b[30m', 'Restart ribbon to implement changes.', '\x1b[0m');
