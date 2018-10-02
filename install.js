@@ -62,6 +62,7 @@ query.exec(async (find_err, find_results) => {
         username: prompt.username,
         password: await Bcrypt.hash(prompt.password, parseInt(process.env.HASH_SALT_ROUNDS, 10)),
         email: prompt.email,
+        group: 1,
       }).save();
 
       // Add first page.

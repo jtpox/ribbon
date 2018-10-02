@@ -20,7 +20,7 @@ const Schema = {
 };
 
 console.log('\x1b[47m\x1b[35m', 'ribbon Update', '\x1b[0m');
-console.log('\x1b[47m\x1b[35m', 'Note that this upgrade script will only work on ribbon 2018.9.17', '\x1b[0m');
+console.log('\x1b[47m\x1b[35m', 'Note that this upgrade script will only work on an existing ribbon 2018.9.17 installation.', '\x1b[0m');
 
 /*
  * Script for future use.
