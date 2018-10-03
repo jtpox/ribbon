@@ -28,7 +28,7 @@ console.log('\x1b[47m\x1b[35m', 'Note that this upgrade script will only work on
 
 Prompt.get(Schema, async (prompt_err, prompt) => {
   if (prompt.continue.toLowerCase() === 'y') {
-    await User.update({}, { group: 1 }, { multi: true });
+    await User.updateMany({}, { group: 1 }, { multi: true });
 
     /*
      * Remove all existing sessions. With the change in usergroup, everyone has to log in again.
