@@ -46,7 +46,7 @@ class ImageC {
   }
 
   delete(req, res) {
-    const image = Image.find({ _id: req.params.id });
+    const image = Image.findOne({ _id: req.params.id });
 
     image.exec((err, results) => {
       if (results.length > 0) {

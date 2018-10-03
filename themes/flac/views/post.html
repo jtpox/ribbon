@@ -1,32 +1,32 @@
 <div class="container-fluid page-content">
     <div class="row">
         <div class="col-md-8 offset-md-2 post-title">
-            <h1>{{ post[0].title }}</h1>
+            <h1>{{ post.title }}</h1>
             <p>
                 on
-                <span class="date">{{ post[0].created_at | format_date }}</span> in
-                <a ui-sref="tag({ tag: post[0].tag.url })">{{ post[0].tag.title }}</a>
+                <span class="date">{{ post.created_at | format_date }}</span> in
+                <a ui-sref="tag({ tag: post[0].tag.url })">{{ post.tag.title }}</a>
             </p>
         </div>
 
-        <div class="col-md-8 offset-md-2 text-center" ng-show="post[0].image !== null">
-            <img class="img-fluid rounded" ng-src="{{ 'uploads/images/' + post[0].image.file_name }}" />
+        <div class="col-md-8 offset-md-2 text-center" ng-show="post.image !== null">
+            <img class="img-fluid rounded" ng-src="{{ 'uploads/images/' + post.image.file_name }}" />
         </div>
 
-        <div ng-class="{ 'col-md-6 offset-md-3': post[0].image !== null, 'col-md-8 offset-md-2': post[0].image == null }">
-            <div class="card" ng-class="{ 'post-single': post[0].image !== null, 'post-no-image': post[0].image == null }">
+        <div ng-class="{ 'col-md-6 offset-md-3': post.image !== null, 'col-md-8 offset-md-2': post.image == null }">
+            <div class="card" ng-class="{ 'post-single': post.image !== null, 'post-no-image': post.image == null }">
                 <div class="card-body">
-                    <p class="card-text" ng-bind-html="post[0].content | markdown"></p>
+                    <p class="card-text" ng-bind-html="post.content | markdown"></p>
                 </div>
             </div>
         </div>
 
         <div class="col-md-8 offset-md-2 about-author">
             <div class="media">
-                <img class="mr-3 rounded" ng-src="{{ '/uploads/profile/' + post[0].created_by.avatar }}" height="64" width="64" />
+                <img class="mr-3 rounded" ng-src="{{ '/uploads/profile/' + post.created_by.avatar }}" height="64" width="64" />
                 <div class="media-body">
-                    <h5 class="mt-0"><a ui-sref="author({ author: post[0].created_by._id })">{{ post[0].created_by.username }}</a></h5>
-                    {{ post[0].created_by.about }}
+                    <h5 class="mt-0"><a ui-sref="author({ author: post.created_by._id })">{{ post.created_by.username }}</a></h5>
+                    {{ post.created_by.about }}
                 </div>
             </div>
         </div>
@@ -35,13 +35,13 @@
     <div class="row post-history">
         <div class="col-md-4 offset-md-2">
             <div ng-if="previous.length > 0">
-                <h4><a ui-sref="post({ post: previous[0].url })"><i class="fas fa-angle-left"></i> {{ previous[0].title }}</a></h4>
+                <h4><a ui-sref="post({ post: previous.url })"><i class="fas fa-angle-left"></i> {{ previous.title }}</a></h4>
             </div>
         </div>
 
         <div class="col-md-4 text-right">
             <div ng-if="next.length > 0">
-                <h4><a ui-sref="post({ post: next[0].url })">{{ next[0].title }} <i class="fas fa-angle-right"></i></a></h4>
+                <h4><a ui-sref="post({ post: next.url })">{{ next.title }} <i class="fas fa-angle-right"></i></a></h4>
             </div>
         </div>
     </div>

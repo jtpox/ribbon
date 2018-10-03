@@ -66,7 +66,7 @@ Post.list = (/*cb*/) => {
 
 Post.view = (id, /*cb*/) => {
   const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
-  const query = Post.find({ _id: id }).select(fields.join(' '))
+  const query = Post.findOne({ _id: id }).select(fields.join(' '))
     .populate('created_by', '-password').populate('tag image');
   
   return query;
@@ -75,14 +75,14 @@ Post.view = (id, /*cb*/) => {
 
 Post.fromUrl = (url, /*cb*/) => {
   const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
-  const query = Post.find({ url: url }).select(fields.join(' '))
+  const query = Post.findOne({ url: url }).select(fields.join(' '))
     .populate('created_by', '-password').populate('tag image');
   return query;
 };
 
 Post.findNext = (date) => {
   const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
-  const query = Post.find({
+  const query = Post.findOne({
     created_at: {
       '$gt': date,
       '$lt': new Date(),
@@ -99,7 +99,7 @@ Post.findNext = (date) => {
 
 Post.findPrevious = (date) => {
   const fields = ['title', 'url', 'content', 'image', 'created_by', 'tag', 'created_at', 'last_updated', 'hidden'];
-  const query = Post.find({
+  const query = Post.findOne({
     created_at: {
       '$lt': date,
     },

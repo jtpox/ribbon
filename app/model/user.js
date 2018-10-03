@@ -31,7 +31,7 @@ User.list = (/*cb*/) => {
 
 User.get = (id, /*cb*/) => {
   const fields = ['username', 'email', 'about', 'created_at', 'avatar', '_id'];
-  const query = User.find({ _id: id }).select(fields.join(' '));
+  const query = User.findOne({ _id: id }).select(fields.join(' '));
 
   return query;
   //return query.exec(cb);

@@ -45,7 +45,7 @@ Page.list = (hidden, /*cb*/) => {
 
 Page.get = (id, /*cb*/) => {
   const fields = ['title', 'url', 'description', 'created_at', 'last_updated', '_id', 'created_by', 'image', 'hidden'];
-  const query = Page.find({ _id: id }).select(fields.join(' '))
+  const query = Page.findOne({ _id: id }).select(fields.join(' '))
     .populate('created_by', '-password').populate('image');
   return query;
   // return query.exec(cb);
@@ -53,7 +53,7 @@ Page.get = (id, /*cb*/) => {
 
 Page.fromUrl = (url, /*cb*/) => {
   const fields = ['title', 'url', 'description', 'created_at', 'last_updated', '_id', 'created_by', 'image'];
-  const query = Page.find({ url }).select(fields.join(' '))
+  const query = Page.findOne({ url }).select(fields.join(' '))
     .populate('created_by', '-password').populate('image');
   return query;
   // return query.exec(cb);

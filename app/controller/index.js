@@ -44,22 +44,22 @@ class Index {
     // Get page details.
     try {
       const fields = ['title', 'url', 'description', 'created_at', 'last_updated', '_id', 'created_by', 'image'];
-      const query = await Page.find({ url: req.params.url }).select(fields.join(' '))
+      const query = await Page.findOne({ url: req.params.url }).select(fields.join(' '))
         .populate('created_by', '-password').populate('image');
 
-      if (query.length > 0) {
+      if (query) {
         const contentFields = ['title', 'content', 'content_column', '_id'];
-        const contentQuery = await Content.find({ page_id: query[0]._id }).select(contentFields.join(' '));
+        const contentQuery = await Content.find({ page_id: query._id }).select(contentFields.join(' '));
 
         /*
          * Add to statistics.
          */
-        Stat.record('page', query[0]._id, req, req.useragent);
+        Stat.record('page', query._id, req, req.useragent);
 
         res.render(`themes/${process.env.SITE_THEME}/page`, {
-          route: `page:${query[0]._id}`,
-          title: query[0].title,
-          page: query[0],
+          route: `page:${query._id}`,
+          title: query.title,
+          page: query,
           boxes: contentQuery,
         });
       } else {
@@ -73,19 +73,18 @@ class Index {
   async post(req, res) {
     try {
       const post = await Post.fromUrl(req.params.url);
-      if (post.length > 0) {
-
+      if (post) {
         /*
          * Add to statistics.
          */
-        Stat.record('post', post[0]._id, req, req.useragent);
+        Stat.record('post', post._id, req, req.useragent);
 
         res.render(`themes/${process.env.SITE_THEME}/post`, {
-          route: `post:${post[0]._id}`,
-          title: post[0].title,
-          post: post[0],
-          previous: await Post.findPrevious(post[0].created_at),
-          next: await Post.findNext(post[0].created_at),
+          route: `post:${post._id}`,
+          title: post.title,
+          post,
+          previous: await Post.findPrevious(post.created_at),
+          next: await Post.findNext(post.created_at),
         });
       } else {
         res.redirect('/');
@@ -100,15 +99,15 @@ class Index {
 
     try {
       const fields = ['title', 'url', 'content', 'created_at'];
-      const query = await Tag.find({ url: req.params.url }).select(fields.join(' '));
+      const query = await Tag.findOne({ url: req.params.url }).select(fields.join(' '));
 
-      if (query.length > 0) {
+      if (query) {
         // If the tag exists.
         res.render(`themes/${process.env.SITE_THEME}/tag`, {
-          route: `tag:${query[0]._id}`,
-          title: query[0].title,
-          tag: query[0],
-          posts: await Post.page(page, { tag: query[0]._id, hidden: false, created_at: { $lte: new Date() } }),
+          route: `tag:${query._id}`,
+          title: query.title,
+          tag: query,
+          posts: await Post.page(page, { tag: query._id, hidden: false, created_at: { $lte: new Date() } }),
         });
       } else {
         res.redirect('/');
@@ -122,14 +121,14 @@ class Index {
     const page = (req.params.page != null) ? req.params.page : 1;
     try {
       const fields = ['username', 'email', 'about', 'created_at', 'avatar', '_id'];
-      const query = await User.find({ _id: req.params.id }).select(fields.join(' '));
+      const query = await User.findOne({ _id: req.params.id }).select(fields.join(' '));
 
-      if (query.length > 0) {
+      if (query) {
         res.render(`themes/${process.env.SITE_THEME}/user`, {
-          route: `user:${query[0]._id}`,
-          title: query[0].username,
-          user: query[0],
-          posts: await Post.page(page, { created_by: query[0]._id, hidden: false, created_at: { $lte: new Date() } }),
+          route: `user:${query._id}`,
+          title: query.username,
+          user: query,
+          posts: await Post.page(page, { created_by: query._id, hidden: false, created_at: { $lte: new Date() } }),
         });
       } else {
         res.redirect('/');

@@ -7,16 +7,16 @@ async function isLogged(req, res, next) {
   if (req.headers.session_id && req.headers.session_token) {
     try {
       const findById = await Session.findById(req.headers.session_id);
-      if (findById.length > 0) {
-        const tokenCompare = await Bcrypt.compare(req.headers.session_token, findById[0].token);
+      if (findById) {
+        const tokenCompare = await Bcrypt.compare(req.headers.session_token, findById.token);
 
         if (tokenCompare) {
-          req.currentUser = findById[0].user._id;
-          req.userDetails = findById[0].user;
+          req.currentUser = findById.user._id;
+          req.userDetails = findById.user;
           next();
         } else {
           // throw new Error('Session token does not match.');
-          throw new Error(`${req.originalUrl} - User (${findById[0].user.username} - ${findById[0].user._id}}) session token does not match.`);
+          throw new Error(`${req.originalUrl} - User (${findById.user.username} - ${findById.user._id}}) session token does not match.`);
         }
       } else {
         // throw new Error('Session ID does not exist.');

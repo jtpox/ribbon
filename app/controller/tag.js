@@ -35,18 +35,18 @@ class TagC {
     try {
       const fromUrl = await Tag.fromUrl(req.params.url);
 
-      if (fromUrl.length > 0) {
+      if (fromUrl) {
         // If the tag exists.
         const paginate = await Post.page(
           page,
           {
-            tag: fromUrl[0]._id,
+            tag: fromUrl._id,
             hidden: false,
             created_at: { $lte: new Date() },
           },
         );
         res.json({
-          tag: fromUrl[0],
+          tag: fromUrl,
           posts: paginate,
         });
       } else {
@@ -91,7 +91,7 @@ class TagC {
   update(req, res) {
     // Update a tag.
     if (req.body.title && req.body.content) {
-      Tag.update({ _id: req.params.id }, { title: req.body.title, url: Slugify(req.body.title), content: req.body.content }, (err) => {
+      Tag.updateOne({ _id: req.params.id }, { title: req.body.title, url: Slugify(req.body.title), content: req.body.content }, (err) => {
         if (err) {
           res.json({
             error: 1,
@@ -111,7 +111,7 @@ class TagC {
 
   delete(req, res) {
     // Delete a blog post.
-    Tag.find({ _id: req.params.id }).remove().exec();
+    Tag.findOne({ _id: req.params.id }).remove().exec();
     res.json({
       error: 0,
     });

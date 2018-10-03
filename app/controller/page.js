@@ -38,11 +38,11 @@ class PageC {
     // Get page details.
     try {
       const page = await Page.get(req.params.id);
-      if (page.length > 0) {
+      if (page) {
         const contentFields = ['title', 'content', 'content_column', '_id'];
         const contentQuery = await Content.find({ page_id: req.params.id }).select(contentFields.join(' '));
         res.json({
-          details: page[0],
+          details: page,
           boxes: contentQuery,
         });
       } else {
@@ -60,18 +60,18 @@ class PageC {
     // Get page details.
     try {
       const page = await Page.fromUrl(req.params.url);
-      if (page.length > 0) {
+      if (page) {
         const contentFields = ['title', 'content', 'content_column', '_id'];
-        const contentQuery = await Content.find({ page_id: page[0]._id }).select(contentFields.join(' '));
+        const contentQuery = await Content.find({ page_id: page._id }).select(contentFields.join(' '));
 
         /*
          * Add to statistics.
          */
-        Stat.record('page', page[0]._id, req, req.useragent);
+        Stat.record('page', page._id, req, req.useragent);
 
         res.json({
           error: 0,
-          details: page[0],
+          details: page,
           boxes: contentQuery,
         });
       } else {
@@ -134,7 +134,7 @@ class PageC {
     // console.log(req.body);
     if (req.body.title && req.body.content && req.body.boxes) {
       try {
-        const update = await Page.update({ _id: req.params.id }, {
+        const update = await Page.updateOne({ _id: req.params.id }, {
           title: req.body.title,
           url: (req.body.url) ? Slugify(req.body.url) : Slugify(req.body.title),
           description: req.body.content,

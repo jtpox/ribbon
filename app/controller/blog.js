@@ -85,12 +85,12 @@ class Blog {
       /*
        * Add to statistics.
        */
-      Stat.record('post', post[0]._id, req, req.useragent);
+      Stat.record('post', post._id, req, req.useragent);
 
       res.json({
         post,
-        previous: await Post.findPrevious(post[0].created_at),
-        next: await Post.findNext(post[0].created_at),
+        previous: await Post.findPrevious(post.created_at),
+        next: await Post.findNext(post.created_at),
       });
     } catch (err) {
       req.log.error(err);
@@ -146,7 +146,7 @@ class Blog {
     // Update a blog post.
     if (req.body.title && req.body.content && req.body.tag && req.body.schedule) {
       try {
-        const update = await Post.update({ _id: req.params.id }, {
+        const update = await Post.updateOne({ _id: req.params.id }, {
           title: req.body.title,
           url: (req.body.url) ? Slugify(req.body.url) : Slugify(req.body.title),
           content: req.body.content,

@@ -26,9 +26,9 @@ class NavigationC {
           const new_link = new Navigation({
             title: nav[i].title,
             page: (nav[i].page) ? nav[i].page : null,
-            post: null,
-            tag: null,
-            user: null,
+            post: (nav[i].post) ? nav[i].link : null,
+            tag: (nav[i].tag) ? nav[i].link : null,
+            user: (nav[i].user) ? nav[i].link : null,
             link: (nav[i].link) ? nav[i].link : null,
           });
 

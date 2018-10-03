@@ -25,7 +25,7 @@ Tag.list = (/*cb*/) => {
 
 Tag.get = (id, /*cb*/) => {
   const fields = ['title', 'url', 'content', 'created_at', 'last_updated', '_id', 'posts'];
-  const query = Tag.find({ _id: id }).select(fields.join(' '))
+  const query = Tag.findOne({ _id: id }).select(fields.join(' '))
     .populate({
       path: 'posts',
       match: {
@@ -42,7 +42,7 @@ Tag.get = (id, /*cb*/) => {
 
 Tag.fromUrl = (url, /*cb*/) => {
   const fields = ['title', 'url', 'content', 'created_at'];
-  const query = Tag.find({ url }).select(fields.join(' '));
+  const query = Tag.findOne({ url }).select(fields.join(' '));
 
   return query;
   //return query.exec(cb);

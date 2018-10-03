@@ -35,7 +35,7 @@ Stat.post = (id, days = 7, populate = false) => {
   cutOff.setDate(cutOff.getDate() - days);
 
   const fields = ['post', 'address', 'platform', 'browser', 'os', 'created_at', 'last_updated'];
-  const query = (populate) ? Stat.find({
+  const query = (populate) ? Stat.findOne({
     post: id,
     created_at: {
       '$gte': cutOff
@@ -58,7 +58,7 @@ Stat.page = (id, days = 7, populate = false) => {
   // console.log(id);
 
   const fields = ['page', 'address', 'platform', 'browser', 'os', 'created_at', 'last_updated'];
-  const query = (populate) ? Stat.find({
+  const query = (populate) ? Stat.findOne({
     page: id,
     created_at: {
       '$gte': cutOff
@@ -98,8 +98,8 @@ Stat.record = (type = 'post', id, req, useragent) => {
         }
       };
 
-    Stat.find(find, (err, docs) => {
-      if (docs.length < 1) {
+    Stat.findOne(find, (err, docs) => {
+      if (docs) {
         const newRecord = new Stat({
           post: (type == 'post') ? id : null,
           page: (type == 'page') ? id : null,

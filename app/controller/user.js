@@ -24,10 +24,10 @@ class UserC {
     try {
       const user = await User.get(req.params.id);
 
-      if (user.length > 0) {
+      if (user) {
         res.json({
-          user: user[0],
-          posts: await Post.page(page, { created_by: user[0]._id, hidden: false, created_at: { $lte: new Date() } }),
+          user,
+          posts: await Post.page(page, { created_by: user._id, hidden: false, created_at: { $lte: new Date() } }),
         });
       } else {
         throw new Error('User does not exist.');
@@ -44,8 +44,8 @@ class UserC {
     // Add a user.
     if (req.body.username && req.body.password && req.body.email) {
       try {
-        const emailCheck = await User.find({ email: req.body.email });
-        const usernameCheck = await User.find({ username: req.body.username });
+        const emailCheck = await User.findOne({ email: req.body.email });
+        const usernameCheck = await User.findOne({ username: req.body.username });
 
         if (usernameCheck.length < 1 && emailCheck.length < 1) {
           const newUser = new User({
@@ -82,7 +82,7 @@ class UserC {
       // Check if password field is there.
       if (req.body.password && req.body.password !== null) {
         try {
-          const update = await User.update(
+          const update = await User.updateOne(
             { _id: req.params.id },
             {
               username: req.body.username,
@@ -102,7 +102,7 @@ class UserC {
         }
       } else {
         try {
-          const update = await User.update(
+          const update = await User.updateOne(
             { _id: req.params.id },
             {
               username: req.body.username,

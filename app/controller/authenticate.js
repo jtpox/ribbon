@@ -125,7 +125,7 @@ class Authenticate {
   async updateAbout(req, res) {
     if (req.body.about) {
       try {
-        const update = await User.update({ _id: req.currentUser }, { about: req.body.about });
+        const update = await User.updateOne({ _id: req.currentUser }, { about: req.body.about });
         res.json({
           error: 0,
         });
@@ -153,7 +153,7 @@ class Authenticate {
       const fields = ['username', 'email', 'about', 'avatar', 'created_at', 'last_updated'];
       const user = await User.find({ _id: req.currentUser }).select(fields.join(' '));
 
-      const update = await User.update({ _id: req.currentUser }, { avatar: req.upload });
+      const update = await User.updateOne({ _id: req.currentUser }, { avatar: req.upload });
 
       if (user[0].avatar !== 'default.png') {
         // Delete the image if it's not default.png.
@@ -183,7 +183,7 @@ class Authenticate {
         const passwordCompare = await Bcrypt.compare(req.body.old, user[0].password);
         if (passwordCompare) {
           const newPassword = await Bcrypt.hash(req.body.new, parseInt(process.env.HASH_SALT_ROUNDS, 10));
-          const update = await User.update({ _id: req.currentUser }, { password: newPassword });
+          const update = await User.updateOne({ _id: req.currentUser }, { password: newPassword });
 
           res.json({
             error: 0,

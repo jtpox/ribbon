@@ -56,13 +56,13 @@
          * Get blog post by ID.
          */
         $http.get($rootScope.api + '/blog/url/' + $state.params.post).then(function(res) {
-            if( res.data.post.length > 0 )
+            if( res.data.post )
             {
-                $rootScope.page_title       = res.data.post[0].title;
+                $rootScope.page_title       = res.data.post.title;
                 $scope.post                 = res.data.post;
-                $rootScope.meta_description = res.data.post[0].title + ' by ' + res.data.post[0].created_by.username + ' on ' + format_date(res.data.post[0].created_at);
+                $rootScope.meta_description = res.data.post.title + ' by ' + res.data.post.created_by.username + ' on ' + format_date(res.data.post.created_at);
                 // console.log(res.data[0].image);
-                $rootScope.meta_image       = (res.data.post[0].image)? '/uploads/images/' + res.data.post[0].image.file_name : '/assets/img/represent.png';
+                $rootScope.meta_image       = (res.data.post.image)? '/uploads/images/' + res.data.post.image.file_name : '/assets/img/represent.png';
 
                 $scope.previous             = res.data.previous;
                 $scope.next                 = res.data.next;
@@ -109,17 +109,22 @@
          * Get blog posts.
          */
         $http.get($rootScope.api + '/tags/' + $state.params.tag + '/page/' + $scope.page).then(function(res) {
-            $rootScope.loader     = false;
+            // console.log(res.data);
+            if( res.data.tag ) {
+                $rootScope.loader     = false;
 
-            $rootScope.page_title       = res.data.tag.title;
-            $rootScope.meta_description = res.data.tag.title + ' - ' + res.data.tag.content;
-            $rootScope.meta_image       = '/assets/img/represent.png';
+                $rootScope.page_title       = res.data.tag.title;
+                $rootScope.meta_description = res.data.tag.title + ' - ' + res.data.tag.content;
+                $rootScope.meta_image       = '/assets/img/represent.png';
 
-            //console.log(res.data.docs);
-            $scope.list        = res.data.tag;
-            $scope.total_pages = res.data.posts.pages;
-            $scope.posts       = res.data.posts.docs;
-            //console.log($scope.posts);
+                //console.log(res.data.docs);
+                $scope.list        = res.data.tag;
+                $scope.total_pages = res.data.posts.pages;
+                $scope.posts       = res.data.posts.docs;
+                //console.log($scope.posts);
+            } else {
+                $state.go('index');
+            }
         });
 
         /*
@@ -150,20 +155,24 @@
          * Get blog posts.
          */
         $http.get($rootScope.api + '/users/' + $state.params.author + '/page/' + $scope.page).then(function(res) {
-            $rootScope.loader     = false;
+            if( res.data.user ) {
+                $rootScope.loader     = false;
 
-            $rootScope.page_title       = res.data.user.username;
-            $rootScope.meta_description = res.data.user.username + ' - ' + res.data.user.about;
-            $rootScope.meta_image       = '/uploads/profile/' + res.data.user.avatar;
+                $rootScope.page_title       = res.data.user.username;
+                $rootScope.meta_description = res.data.user.username + ' - ' + res.data.user.about;
+                $rootScope.meta_image       = '/uploads/profile/' + res.data.user.avatar;
 
-            //console.log(res.data.docs);
-            $scope.list        = {
-                title: res.data.user.username,
-                content: res.data.user.about
-            };
-            $scope.total_pages = res.data.posts.pages;
-            $scope.posts       = res.data.posts.docs;
-            //console.log($scope.posts);
+                //console.log(res.data.docs);
+                $scope.list        = {
+                    title: res.data.user.username,
+                    content: res.data.user.about
+                };
+                $scope.total_pages = res.data.posts.pages;
+                $scope.posts       = res.data.posts.docs;
+                //console.log($scope.posts);
+            } else {
+                $state.go('index');
+            }
         });
 
         /*

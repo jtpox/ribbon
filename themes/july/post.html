@@ -36,17 +36,17 @@ block content
         
         .col-md-12.post
             span.float-left
-                if previous.length > 0
+                if previous
                   h5
-                    a(href="/post/"+previous[0].url)
+                    a(href="/post/"+previous.url)
                         i.fas.fa-angle-left
                         | 
-                        span=previous[0].title
+                        span=previous.title
             span.float-right
-                if next.length > 0
+                if next
                   h4
-                    a(href="/post/"+next[0].url)
-                        span=next[0].title
+                    a(href="/post/"+next.url)
+                        span=next.title
                         | 
                         i.fas.fa-angle-right
 
