@@ -23,7 +23,7 @@ async function isLogged(req, res, next) {
         throw new Error(`${req.originalUrl} - Session ID does not exist.`);
       }
     } catch (err) {
-      req.log.error(err);
+      req.log.error((process.env.RECORD_STAT.toLowerCase() === 'true') ? `[${req.ip}]: ${err}` : err);
       res.json({
         error: 1,
       });

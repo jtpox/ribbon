@@ -1,7 +1,6 @@
 import Stat from '../model/stat';
 
 class StatC {
-
   async postArray(req, res) {
     /*
      * Get a range of dates.

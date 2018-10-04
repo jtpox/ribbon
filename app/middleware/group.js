@@ -6,7 +6,7 @@ function isAdmin(req, res, next) {
       throw new Error(`${req.originalUrl} - User (${req.userDetails.username} - ${req.userDetails._id}}) is not admin.`);
     }
   } catch (err) {
-    req.log.error(err);
+    req.log.error((process.env.RECORD_STAT.toLowerCase() === 'true') ? `[${req.ip}]: ${err}` : err);
     res.json({
       error: 1,
     });
@@ -21,7 +21,7 @@ function isEditor(req, res, next) {
       throw new Error(`${req.originalUrl} - User (${req.userDetails.username} - ${req.userDetails._id}}) is not editor.`);
     }
   } catch (err) {
-    req.log.error(err);
+    req.log.error((process.env.RECORD_STAT.toLowerCase() === 'true') ? `[${req.ip}]: ${err}` : err);
     res.json({
       error: 1,
     });
