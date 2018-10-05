@@ -99,7 +99,7 @@ Stat.record = (type = 'post', id, req, useragent) => {
       };
 
     Stat.findOne(find, (err, docs) => {
-      if (docs) {
+      if (!docs) {
         const newRecord = new Stat({
           post: (type == 'post') ? id : null,
           page: (type == 'page') ? id : null,
