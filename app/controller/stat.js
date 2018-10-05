@@ -39,7 +39,7 @@ class StatC {
    * There must be some better way to do this.
    */
   async postBrowser(req, res) {
-    const days = (req.params.days !== undefined) ? req.param.days : 7;
+    const days = (req.params.days !== undefined) ? req.params.days : 7;
     const stats = await Stat.post(req.params.id, days);
     // console.log(stats);
 
@@ -70,7 +70,7 @@ class StatC {
   }
 
   async postOs(req, res) {
-    const days = (req.params.days !== undefined) ? req.param.days : 7;
+    const days = (req.params.days !== undefined) ? req.params.days : 7;
     const stats = await Stat.post(req.params.id, days);
     // console.log(stats);
 
@@ -101,7 +101,7 @@ class StatC {
   }
 
   async postPlatform(req, res) {
-    const days = (req.params.days !== undefined) ? req.param.days : 7;
+    const days = (req.params.days !== undefined) ? req.params.days : 7;
     const stats = await Stat.post(req.params.id, days);
     // console.log(stats);
 
@@ -132,7 +132,7 @@ class StatC {
   }
 
   async post(req, res) {
-    const days = (req.params.days !== undefined) ? req.param.days : 7;
+    const days = (req.params.days !== undefined) ? req.params.days : 7;
     try {
       res.json(await Stat.post(req.params.id, days));
     } catch (err) {
@@ -141,12 +141,12 @@ class StatC {
   }
 
   async pageLog(req, res) {
-    const days = (req.params.days !== undefined) ? req.param.days : 7;
+    const days = (req.params.days !== undefined) ? req.params.days : 7;
     res.json(await Stat.page(req.params.id, days));
   }
 
   async pageArray(req, res) {
-    const days = (req.params.days !== undefined) ? req.param.days : 7;
+    const days = (req.params.days !== undefined) ? req.params.days : 7;
     /*
      * Get a range of dates.
      */
@@ -178,7 +178,7 @@ class StatC {
    * There must be some better way to do this.
    */
   async pageBrowser(req, res) {
-    const days = (req.params.days !== undefined) ? req.param.days : 7;
+    const days = (req.params.days !== undefined) ? req.params.days : 7;
     const stats = await Stat.page(req.params.id, days);
     // console.log(stats);
 
@@ -209,7 +209,7 @@ class StatC {
   }
 
   async pageOs(req, res) {
-    const days = (req.params.days !== undefined) ? req.param.days : 7;
+    const days = (req.params.days !== undefined) ? req.params.days : 7;
     const stats = await Stat.page(req.params.id, days);
     // console.log(stats);
 
@@ -240,7 +240,7 @@ class StatC {
   }
 
   async pagePlatform(req, res) {
-    const days = (req.params.days !== undefined) ? req.param.days : 7;
+    const days = (req.params.days !== undefined) ? req.params.days : 7;
     const stats = await Stat.page(req.params.id, days);
     // console.log(stats);
 
@@ -270,7 +270,7 @@ class StatC {
   }
 
   async page(req, res) {
-    const days = (req.params.days !== undefined) ? req.param.days : 7;
+    const days = (req.params.days !== undefined) ? req.params.days : 7;
     try {
       res.json(await Stat.page(req.params.id, days));
     } catch (err) {
