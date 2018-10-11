@@ -22,7 +22,7 @@ class Ribbon {
     this.server = null;
     this.app = app;
     this.log = log;
-    this.routes = null;
+    // this.routes = null;
 
     // Start the Express server.
     this.app.enable('trust proxy', true);
@@ -49,8 +49,9 @@ class Ribbon {
 
     this.setLocals();
     this.setHeaders();
+    this.loadRoutes();
     // this.routes = Routes.routes(this.app);
-    this.routes = Routes(this.app);
+    // this.routes = Routes(this.app);
     this.loadPlugins();
     this.start();
   }
@@ -124,6 +125,21 @@ class Ribbon {
 
   getPluginDirectories() {
     return Fs.readdirSync('./app/plugin').filter(file => Fs.statSync(`./app/plugin/${file}`).isDirectory());
+  }
+
+  async loadRoutes() {
+    const routes = this.getRouteFiles();
+    // console.log(routes);
+    routes.forEach((file) => {
+      // console.log(file);
+      /* eslint-disable */
+      require(`./route/${file}`)(this.app);
+      /* eslint-enable */
+    });
+  }
+
+  getRouteFiles() {
+    return Fs.readdirSync('./app/route');
   }
 }
 
