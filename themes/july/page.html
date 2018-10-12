@@ -21,7 +21,7 @@ block content
     
     .row
         each box in boxes
-            div(class="col-md-"+box.content_column)
+            div(class="col-md-"+box.content_column class=(box.content_offset === 0)? "" : "offset-md-" + box.content_offset)
                 .card
                     .card-body
                         h5.card-title=box.title

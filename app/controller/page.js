@@ -39,7 +39,7 @@ class PageC {
     try {
       const page = await Page.get(req.params.id);
       if (page) {
-        const contentFields = ['title', 'content', 'content_column', '_id'];
+        const contentFields = ['title', 'content', 'content_column', 'content_offset', '_id'];
         const contentQuery = await Content.find({ page_id: req.params.id }).select(contentFields.join(' '));
         res.json({
           details: page,
@@ -61,7 +61,7 @@ class PageC {
     try {
       const page = await Page.fromUrl(req.params.url);
       if (page) {
-        const contentFields = ['title', 'content', 'content_column', '_id'];
+        const contentFields = ['title', 'content', 'content_column', 'content_offset', '_id'];
         const contentQuery = await Content.find({ page_id: page._id }).select(contentFields.join(' '));
 
         /*
@@ -106,6 +106,7 @@ class PageC {
             title: contents[i].title,
             content: contents[i].content,
             content_column: contents[i].content_column,
+            content_offset: contents[i].content_offset,
             created_by: Db.Types.ObjectId(req.currentUser),
             page_id: Db.Types.ObjectId(newPage._id),
           });
@@ -155,6 +156,7 @@ class PageC {
             page_id: Db.Types.ObjectId(req.params.id),
             content: contents[i].content,
             content_column: contents[i].content_column,
+            content_offset: contents[i].content_offset,
             created_by: Db.Types.ObjectId(req.currentUser),
           });
         }

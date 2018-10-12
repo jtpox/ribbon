@@ -48,7 +48,7 @@ class Index {
         .populate('created_by', '-password').populate('image');
 
       if (query) {
-        const contentFields = ['title', 'content', 'content_column', '_id'];
+        const contentFields = ['title', 'content', 'content_column', 'content_offset', '_id'];
         const contentQuery = await Content.find({ page_id: query._id }).select(contentFields.join(' '));
 
         /*

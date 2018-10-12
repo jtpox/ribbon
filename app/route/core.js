@@ -4,6 +4,8 @@ import { avatar } from '../middleware/image_upload';
 
 import { isAdmin } from '../middleware/group';
 
+import navigationMiddleware from '../middleware/navigation';
+
 import Auth from '../controller/authenticate';
 
 import Blog from '../controller/blog';
@@ -14,6 +16,8 @@ module.exports = (app) => {
   const auth = new Auth();
   const blog = new Blog();
   const navigation = new Navigation();
+
+  app.use(navigationMiddleware);
 
   app.post('/api/auth', notLogged, auth.signin);
   app.post('/api/auth/check', auth.check);

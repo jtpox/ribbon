@@ -1,6 +1,7 @@
 /*
-    * Obtaining middlewares.
-    */
+  * This file is deprecated.
+  * Obtaining middlewares.
+  */
 import { isLogged, notLogged } from './middleware/auth';
 
 import { isAdmin, isEditor } from './middleware/group';

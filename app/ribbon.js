@@ -14,8 +14,6 @@ import Pug from 'pug';
 
 import Moment from 'moment';
 
-import Routes from './route';
-
 class Ribbon {
   constructor(express, app, log) {
     this.express = express;
@@ -49,9 +47,8 @@ class Ribbon {
 
     this.setLocals();
     this.setHeaders();
+
     this.loadRoutes();
-    // this.routes = Routes.routes(this.app);
-    // this.routes = Routes(this.app);
     this.loadPlugins();
     this.start();
   }

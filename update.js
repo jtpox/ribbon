@@ -4,6 +4,8 @@ import Prompt from 'prompt';
 
 import User from './app/model/user';
 
+import Content from './app/model/content';
+
 import Session from './app/model/session';
 
 DotEnv.config();
@@ -20,7 +22,7 @@ const Schema = {
 };
 
 console.log('\x1b[47m\x1b[35m', 'ribbon Update', '\x1b[0m');
-console.log('\x1b[47m\x1b[35m', 'Note that this upgrade script will only work on an existing ribbon 2018.9.17 installation.', '\x1b[0m');
+console.log('\x1b[47m\x1b[35m', 'Note that this upgrade script will only work on ribbon 2018.9.17 or older.', '\x1b[0m');
 
 /*
  * Script for future use.
@@ -29,6 +31,7 @@ console.log('\x1b[47m\x1b[35m', 'Note that this upgrade script will only work on
 Prompt.get(Schema, async (prompt_err, prompt) => {
   if (prompt.continue.toLowerCase() === 'y') {
     await User.updateMany({}, { group: 1 }, { multi: true });
+    await Content.updateMany({}, { content_offset: 0 }, { multi: true });
 
     /*
      * Remove all existing sessions. With the change in usergroup, everyone has to log in again.
