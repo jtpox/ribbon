@@ -1,6 +1,6 @@
 {
   "name": "ribbon",
-  "version": "2018.10.12",
+  "version": "2018.11.24",
   "description": "A platform to share your stories.",
   "main": "dist/ribbon.js",
   "scripts": {
@@ -41,10 +41,13 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-airbnb": "^2.5.3",
+    "chai": "^4.2.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.13.0",
+    "mocha": "^5.2.0",
     "nodemon": "^1.18.3",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "sinon": "^7.1.1"
   },
   "nodemonConfig": {
     "ignore": [
