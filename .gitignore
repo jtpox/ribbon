@@ -5,6 +5,7 @@ themes/flac/.sass-cache/
 themes/flac/scss/
 themes/
 admin/
+plugins/
 dist/
 combined.log
 package-lock.json
