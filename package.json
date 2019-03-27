@@ -1,13 +1,13 @@
 {
   "name": "ribbon",
-  "version": "2018.11.24",
+  "version": "2019.3.27",
   "description": "A platform to share your stories.",
   "main": "dist/ribbon.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "./node_modules/.bin/eslint app/*",
     "eslint_fix": "./node_modules/.bin/eslint app/* --fix",
-    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./npm-debug.log,./config,./public,./themes,./admin,./combined.log --copy-files",
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./npm-debug.log,./config,./public,./themes,./admin,./plugins,./combined.log --copy-files",
     "dev": "nodemon ribbon.js --exec babel-node",
     "setup": "npm install && npm run build && node dist/install.js",
     "upgrade": "npm install && npm run build && node dist/update.js"
@@ -54,7 +54,8 @@
       "themes/*",
       "admin/*",
       "public/*",
-      "dist/*"
+      "dist/*",
+      "plugins/*"
     ]
   }
 }

@@ -106,22 +106,21 @@ class Ribbon {
   async loadPlugins() {
     const plugins = this.getPluginDirectories();
     const enabled = process.env.PLUGINS.split(',');
-
     plugins.forEach((file) => {
       // Retrieve package.json.
       /* eslint-disable */
-      const plugin_info = require(`./plugin/${file}/package.json`);
+      const plugin_info = require(`${process.cwd()}/plugins/${file}/package.json`);
       if (enabled.indexOf(plugin_info.name) !== -1) {
         this.log.plugin(`${plugin_info.name} (${plugin_info.version})`);
         
-        require(`./plugin/${file}/${plugin_info.main}`)(this.app, this.log); // eslint-disable-line global-require
+        require(`${process.cwd()}/plugins/${file}/${plugin_info.main}`)(this.app, this.log); // eslint-disable-line global-require
       }
       /* eslint-enable */
     });
   }
 
   getPluginDirectories() {
-    return Fs.readdirSync('./app/plugin').filter(file => Fs.statSync(`./app/plugin/${file}`).isDirectory());
+    return Fs.readdirSync(`${process.cwd()}/plugins`).filter(file => Fs.statSync(`${process.cwd()}/plugins/${file}`).isDirectory());
   }
 
   async loadRoutes() {
