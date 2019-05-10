@@ -2,7 +2,8 @@ class Rss {
   /*
    * url = URL of the RSS feed.
    */
-  constructor(url) {
+  constructor(description, url) {
+    this.description = description;
     this.url = url;
     this.items = '';
   }
@@ -27,7 +28,7 @@ class Rss {
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>${process.env.SITE_NAME}</title>
-    <description>${process.env.SITE_NAME}</description>
+    <description>${this.description}</description>
     <link>${process.env.SITE_DOMAIN}</link>
     <atom:link href="${this.url}" rel="self" type="application/rss+xml" />
     ${this.items}
